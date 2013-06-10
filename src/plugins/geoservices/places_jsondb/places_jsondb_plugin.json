@@ -1,0 +1,14 @@
+{
+    "Keys": ["places_jsondb"],
+    "Provider": "places_jsondb",
+    "Version": 100,
+    "Experimental": false,
+    "Features": [
+        "OfflinePlacesFeature",
+        "SavePlaceFeature",
+        "RemovePlaceFeature",
+        "SaveCategoryFeature",
+        "RemoveCategoryFeature",
+        "PlaceMatchingFeature"
+    ]
+}
