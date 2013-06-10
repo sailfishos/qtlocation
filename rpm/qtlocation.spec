@@ -56,6 +56,14 @@ Requires:   %{name} = %{version}-%{release}
 %description plugin-geoservices-nokia
 This package contains the geoservices plugin for Nokia devices
 
+%package plugin-geoservices-osm
+Summary:    Qt Geoservices plugin for OpenStreetMaps
+Group:      Qt/Qt
+Requires:   %{name} = %{version}-%{release}
+
+%description plugin-geoservices-osm
+This package contains the geoservices plugin for OpenStreetMaps
+
 #### Build section
 
 %prep
@@ -105,13 +113,13 @@ rm -rf %{buildroot}/%{_includedir}/qt5/Qt
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/libQtLocation.so.5
-%{_libdir}/libQtLocation.so.5.*
+%{_libdir}/libQt5Location.so.5
+%{_libdir}/libQt5Location.so.5.*
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/libQtLocation.so
-%{_libdir}/libQtLocation.prl
+%{_libdir}/libQt5Location.so
+%{_libdir}/libQt5Location.prl
 %{_libdir}/pkgconfig/*
 %{_includedir}/qt5/*
 %{_datadir}/qt5/mkspecs/
@@ -119,11 +127,16 @@ rm -rf %{buildroot}/%{_includedir}/qt5/Qt
 
 %files -n qt5-qtdeclarative-import-location
 %defattr(-,root,root,-)
-%{_libdir}/qt5/imports/QtLocation/
+%{_libdir}/qt5/qml/QtLocation/
 
 %files plugin-geoservices-nokia
 %defattr(-,root,root,-)
-%{_libdir}/qt5/plugins/geoservices/
+%{_libdir}/qt5/plugins/geoservices/*nokia*
+
+%files plugin-geoservices-osm
+%defattr(-,root,root,-)
+%{_libdir}/qt5/plugins/geoservices/*osm*
+
 
 
 #### No changelog section, separate $pkg.changelog contains the history
