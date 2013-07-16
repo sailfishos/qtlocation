@@ -67,7 +67,7 @@ This package contains the geoservices plugin for OpenStreetMaps
 #### Build section
 
 %prep
-%setup -q -n %{name}-%{version}/qtlocation 
+%setup -q -n %{name}-%{version}/qtlocation
 
 %build
 export QTDIR=/usr/share/qt5
