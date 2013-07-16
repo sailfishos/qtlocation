@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -155,7 +155,7 @@ QT_BEGIN_NAMESPACE
     flicking and pinch-to-zoom gesture used on touch displays.
 
     A MapGestureArea is automatically created with a new Map and available with
-    the \l{QtLocation5::Map::pinch}{pinch} property. This is the only way
+    the \l{Map::gesture}{gesture} property. This is the only way
     to create a MapGestureArea, and once created this way cannot be destroyed
     without its parent Map.
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the test suite of the Qt Toolkit.
@@ -90,7 +90,6 @@ void tst_QPlaceManagerNokia::initTestCase()
     qRegisterMetaType<QPlaceIdReply *>();
 
     QStringList providers = QGeoServiceProvider::availableServiceProviders();
-    providers.contains("places_jsondb");
 
     QMap<QString, QVariant> params;
     params.insert("app_id", "stub");

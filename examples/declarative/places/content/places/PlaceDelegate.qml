@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the examples of the Qt Toolkit.
@@ -247,8 +247,7 @@ Item {
 
                         function reset()
                         {
-                            saveButton.visible = (placesPlugin.name !== "places_jsondb")
-                                                && (placeSearchModel.favoritesPlugin !== null);
+                            saveButton.visible = (placeSearchModel.favoritesPlugin !== null);
                             saveStatus.visible = false;
                         }
 

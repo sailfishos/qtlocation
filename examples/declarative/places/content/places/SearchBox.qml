@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the examples of the Qt Toolkit.
@@ -206,7 +206,7 @@ Rectangle {
     PlaceSearchSuggestionModel {
         id: suggestionModel
         plugin: placesPlugin
-        searchArea: plugin.name === "places_jsondb" ? null : placeSearchModel.searchArea
+        searchArea: placeSearchModel.searchArea
 
         onStatusChanged: {
             if (status == PlaceSearchSuggestionModel.Ready)

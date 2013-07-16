@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the examples of the Qt Toolkit.
@@ -72,7 +72,8 @@ Dialog {
             id: enableFavoritesButton
 
             function resetVisibility() {
-                if (placesPlugin.name !== "places_jsondb") {
+                //jsondb plug-in is no more but saving of places may come back
+                /*if (placesPlugin.name !== "places_jsondb") {
                     var pluginNames = placesPlugin.availableServiceProviders;
                     for (var i = 0; i < pluginNames.length; ++i) {
                         if (pluginNames[i] === "places_jsondb") {
@@ -80,7 +81,7 @@ Dialog {
                             return;
                         }
                     }
-                }
+                }*/
                 enableFavoritesButton.visible = false;
             }
 
