@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -67,10 +67,10 @@ QT_USE_NAMESPACE
 
     The following example shows how to create and display a supplier in QML:
 
-    \snippet snippets/declarative/places.qml QtQuick import
-    \snippet snippets/declarative/places.qml QtLocation import
+    \snippet declarative/places.qml QtQuick import
+    \snippet declarative/places.qml QtLocation import
     \codeline
-    \snippet snippets/declarative/places.qml Supplier
+    \snippet declarative/places.qml Supplier
 */
 
 QDeclarativeSupplier::QDeclarativeSupplier(QObject *parent)

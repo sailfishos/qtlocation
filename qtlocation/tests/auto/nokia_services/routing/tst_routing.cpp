@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the test suite of the Qt Toolkit.
@@ -227,7 +227,7 @@ tst_nokia_routing::tst_nokia_routing()
 
 void tst_nokia_routing::loadReply(const QString& filename)
 {
-    QFile* file = new QFile(filename);
+    QFile* file = new QFile(QFINDTESTDATA(filename));
     if (!file->open(QIODevice::ReadOnly)) {
         delete file;
         file = 0;

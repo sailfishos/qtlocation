@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -88,10 +88,10 @@ void QPlaceContentRequestPrivate::clear()
     retrieve rich content like images and reviews in a paginated fashion.
     The following code would request a set of 5 images from the 10th index:
 
-    \snippet snippets/places/requesthandler.h Content request
+    \snippet places/requesthandler.h Content request
     \dots
     \dots
-    \snippet snippets/places/requesthandler.h Content handler
+    \snippet places/requesthandler.h Content handler
 
     \sa QPlaceContentReply
 */

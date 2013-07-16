@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the test suite of the Qt Toolkit.
@@ -46,6 +46,15 @@
 class tst_QNmeaPositionInfoSource_Simulation_Generic : public TestQGeoPositionInfoSource
 {
     Q_OBJECT
+public:
+    tst_QNmeaPositionInfoSource_Simulation_Generic()
+    {
+        /*
+         * Set custom path since CI doesn't install test plugins
+         */
+        QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath()
+                                         + QStringLiteral("/../../../../plugins"));
+    }
 
 protected:
     QGeoPositionInfoSource *createTestSource()

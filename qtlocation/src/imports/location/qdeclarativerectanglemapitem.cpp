@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -68,7 +68,7 @@ QT_BEGIN_NAMESPACE
     right side have the same longitude.
 
     To specify the rectangle, it requires a \l topLeft and \l bottomRight point,
-    both given by a \l {QtLocation5::coordinate}{coordinate}.
+    both given by a \l {coordinate}.
 
     By default, the rectangle is displayed with transparent fill and a 1-pixel
     thick black border. This can be changed using the \l color, \l border.color
@@ -113,7 +113,7 @@ QT_BEGIN_NAMESPACE
     }
     \endcode
 
-    \image ../../../doc/src/images/api-maprectangle.png
+    \image api-maprectangle.png
 */
 
 struct Vertex

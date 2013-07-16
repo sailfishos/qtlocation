@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the test suite of the Qt Toolkit.
@@ -86,6 +86,11 @@ private:
 private slots:
     void initTestCase()
     {
+        /*
+         * Set custom path since CI doesn't install plugins
+         */
+        QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath()
+                                         + QStringLiteral("/../../../plugins"));
         qRegisterMetaType<QGeoPositionInfo>();
     }
 
