@@ -49,8 +49,6 @@
 #include <QtQml/QQmlInfo>
 #include <QtQml/QQmlContext>
 #include <QtQml/private/qqmlengine_p.h>
-#include <private/qqmlvaluetypewrapper_p.h>
-#include <private/qjsvalue_p.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <qnumeric.h>
@@ -385,19 +383,19 @@ QJSValue QDeclarativePolygonMapItem::path() const
     QQmlContext *context = QQmlEngine::contextForObject(parent());
     QQmlEngine *engine = context->engine();
     QV8Engine *v8Engine = QQmlEnginePrivate::getV8Engine(engine);
-    QV4::ExecutionEngine *v4 = QV8Engine::getV4(v8Engine);
+    QV8ValueTypeWrapper *valueTypeWrapper = v8Engine->valueTypeWrapper();
 
-    QV4::ArrayObject *pathArray = v4->newArrayObject(path_.length());
+    v8::Local<v8::Array> pathArray = v8::Array::New(path_.length());
     for (int i = 0; i < path_.length(); ++i) {
         const QGeoCoordinate &c = path_.at(i);
 
         QQmlValueType *vt = QQmlValueTypeFactory::valueType(qMetaTypeId<QGeoCoordinate>());
-        QV4::Value cv = QV4::QmlValueTypeWrapper::create(v8Engine, QVariant::fromValue(c), vt);
+        v8::Local<v8::Object> cv = valueTypeWrapper->newValueType(QVariant::fromValue(c), vt);
 
-        pathArray->putIndexed(i, cv);
+        pathArray->Set(i, cv);
     }
 
-    return new QJSValuePrivate(pathArray);
+    return v8Engine->scriptValueFromInternal(pathArray);
 }
 
 void QDeclarativePolygonMapItem::setPath(const QJSValue &value)
