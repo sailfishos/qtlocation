@@ -16,6 +16,8 @@ BuildRequires:  qt5-qtdeclarative-qtquick-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  qt5-qmake
 BuildRequires:  qt5-qtv8-devel
+BuildRequires:  geoclue-devel
+BuildRequires:  gconf-devel
 BuildRequires:  fdupes
 
 %description
@@ -63,6 +65,14 @@ Requires:   %{name} = %{version}-%{release}
 
 %description plugin-geoservices-osm
 This package contains the geoservices plugin for OpenStreetMaps
+
+%package plugin-position-geoclue
+Summary:    Qt Position plugin for Geoclue
+Group:      Qt/Qt
+Requires:   %{name} = %{version}-%{release}
+
+%description plugin-position-geoclue
+This package contains the position plugin for Geoclue
 
 #### Build section
 
@@ -137,6 +147,9 @@ rm -rf %{buildroot}/%{_includedir}/qt5/Qt
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/geoservices/*osm*
 
+%files plugin-position-geoclue
+%defattr(-,root,root,-)
+%{_libdir}/qt5/plugins/position/*geoclue*
 
 
 #### No changelog section, separate $pkg.changelog contains the history

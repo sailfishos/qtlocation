@@ -70,7 +70,7 @@ Item {
 
     //=====================Menu=====================
     Menu {
-:        id:mainMenu
+        id:mainMenu
         anchors.bottom: parent.bottom
         z: backgroundRect.z + 3
 
@@ -519,7 +519,9 @@ Item {
             MapItemView {
                 model: placeSearchModel
                 delegate: MapQuickItem {
-                    coordinate: place.location.coordinate
+                    coordinate: model.type === PlaceSearchModel.PlaceResult ? place.location.coordinate : QtLocation.coordinate()
+
+                    visible: model.type === PlaceSearchModel.PlaceResult
 
                     anchorPoint.x: image.width * 0.28
                     anchorPoint.y: image.height
