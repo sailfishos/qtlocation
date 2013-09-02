@@ -64,6 +64,16 @@ Requires:   %{name} = %{version}-%{release}
 %description plugin-geoservices-osm
 This package contains the geoservices plugin for OpenStreetMaps
 
+%package plugin-position-poll
+Summary:    Qt positioning plugin (pollling)
+Group:      Qt/Qt
+Requires:   %{name} = %{version}-%{release}
+
+%description plugin-position-poll
+This package contains the polling positioning plugin. It provides the
+generic polling based area monitor.
+
+
 #### Build section
 
 %prep
@@ -137,6 +147,9 @@ rm -rf %{buildroot}/%{_includedir}/qt5/Qt
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/geoservices/*osm*
 
+%files plugin-position-poll
+%defattr(-,root,root,-)
+%{_libdir}/qt5/plugins/position/*positionpoll*
 
 
 #### No changelog section, separate $pkg.changelog contains the history

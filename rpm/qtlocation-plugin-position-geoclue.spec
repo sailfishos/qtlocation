@@ -10,7 +10,6 @@ BuildRequires:  qt5-qtlocation-devel
 BuildRequires:  qt5-qtgui-devel
 BuildRequires:  qt5-qmake
 BuildRequires:  geoclue-devel
-BuildRequires:  gconf-devel
 
 %description
 This package contains the position plugin for Geoclue
