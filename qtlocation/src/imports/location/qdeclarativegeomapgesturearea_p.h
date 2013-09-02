@@ -115,7 +115,7 @@ class QDeclarativeGeoMapGestureArea: public QObject
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(bool pinchEnabled READ pinchEnabled WRITE setPinchEnabled NOTIFY pinchEnabledChanged)
     Q_PROPERTY(bool panEnabled READ panEnabled WRITE setPanEnabled NOTIFY panEnabledChanged)
-    Q_PROPERTY(bool isPinchActive READ isPinchActive WRITE setPinchActive NOTIFY pinchActiveChanged)
+    Q_PROPERTY(bool isPinchActive READ isPinchActive NOTIFY pinchActiveChanged)
     Q_PROPERTY(bool isPanActive READ isPanActive)
     Q_PROPERTY(ActiveGestures activeGestures READ activeGestures WRITE setActiveGestures NOTIFY activeGesturesChanged)
     Q_PROPERTY(qreal maximumZoomLevelChange READ maximumZoomLevelChange WRITE setMaximumZoomLevelChange NOTIFY maximumZoomLevelChangeChanged)
@@ -160,7 +160,7 @@ public:
     qreal flickDeceleration() const;
     void setFlickDeceleration(qreal deceleration);
 
-    void touchEvent(QTouchEvent *event);
+    bool touchEvent(QTouchEvent *event);
 
     bool mousePressEvent(QMouseEvent *event);
     bool mouseMoveEvent(QMouseEvent *event);
@@ -229,6 +229,7 @@ private:
     QGeoMap *map_;
     QDeclarativeGeoMap *declarativeMap_;
     bool enabled_;
+    bool usingTouch_;
 
     struct Pinch
     {

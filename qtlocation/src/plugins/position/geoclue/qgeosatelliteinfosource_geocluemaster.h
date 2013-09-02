@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Jolla Ltd, author: Aaron McCarthy <aaron.mccarthy@jollamobile.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -39,52 +39,55 @@
 **
 ****************************************************************************/
 
-#include "qgeopositioninfosourcefactory.h"
+#ifndef QGEOSATELLITEINFOSOURCE_GEOCLUEMASTER_H
+#define QGEOSATELLITEINFOSOURCE_GEOCLUEMASTER_H
+
+#include "qgeocluemaster.h"
+
+#include <geoclue/geoclue-satellite.h>
+
+#include <QtCore/qcompilerdetection.h>
+#include <QtCore/QTimer>
+#include <QtLocation/QGeoSatelliteInfoSource>
 
 QT_BEGIN_NAMESPACE
 
-/*!
-  \class QGeoPositionInfoSourceFactory
-  \inmodule QtLocation
-  \ingroup QtLocation-impl
-  \since Qt Location 5.0
+class QGeoSatelliteInfoSourceGeoclueMaster : public QGeoSatelliteInfoSource, public QGeoclueMaster
+{
+    Q_OBJECT
 
-  \brief The QGeoPositionInfoSourceFactory class is a factory class used
-  as the plugin interface for external providers of positioning data.
+public:
+    explicit QGeoSatelliteInfoSourceGeoclueMaster(QObject *parent = 0);
+    ~QGeoSatelliteInfoSourceGeoclueMaster();
 
-  The other functions must be overridden by all plugins, other than
-  sourcePriority() which defaults to returning 0. Higher values of
-  priority will be preferred to lower ones.
-*/
+    bool init();
 
-/*!
-  \fn QGeoPositionInfoSource *QGeoPositionInfoSourceFactory::positionInfoSource(QObject *parent)
+    int minimumUpdateInterval() const Q_DECL_OVERRIDE;
+    Error error() const Q_DECL_OVERRIDE;
 
-  Returns a new QGeoPositionInfoSource associated with this plugin
-  with parent \a parent. Can also return 0, in which case the plugin
-  loader will use the factory with the next highest priority.
-  */
+    void startUpdates() Q_DECL_OVERRIDE;
+    void stopUpdates() Q_DECL_OVERRIDE;
+    void requestUpdate(int timeout = 0) Q_DECL_OVERRIDE;
 
-/*!
-  \fn QGeoSatelliteInfoSource *QGeoPositionInfoSourceFactory::satelliteInfoSource(QObject *parent)
+    void satelliteChanged(int timestamp, int satellitesUsed, int satellitesVisible,
+                          const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
 
-  Returns a new QGeoSatelliteInfoSource associated with this plugin
-  with parent \a parent. Can also return 0, in which case the plugin
-  loader will use the factory with the next highest priority.
-  */
+    void requestUpdateFinished(int timestamp, int satellitesUsed, int satellitesVisible,
+                               const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
 
-/*!
-  \fn QGeoAreaMonitor *QGeoPositionInfoSourceFactory::areaMonitor(QObject *parent);
+private slots:
+    void positionProviderChanged(const QByteArray &service, const QByteArray &path);
 
-  Returns a new QGeoAreaMonitor associated with this plugin with parent \a parent.
-  Can also return 0, in which case the plugin loader will use the factory with the
-  next highest priority.
-  */
+private:
+    bool configureSatelliteSource();
+    void cleanupSatelliteSource();
 
-/*!
-    Destroys the position info source factory.
-*/
-QGeoPositionInfoSourceFactory::~QGeoPositionInfoSourceFactory()
-{}
+    GeoclueSatellite *m_sat;
+    QTimer m_requestTimer;
+    QList<QGeoSatelliteInfo> m_inView;
+    QList<QGeoSatelliteInfo> m_inUse;
+};
 
 QT_END_NAMESPACE
+
+#endif // QGEOSATELLITEINFOSOURCE_GEOCLUEMASTER_H
