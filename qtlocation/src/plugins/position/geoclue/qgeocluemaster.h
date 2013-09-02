@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Jolla Ltd, author: Aaron McCarthy <aaron.mccarthy@jollamobile.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -39,53 +39,31 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOAREAMONITORPOLLING_H
-#define QGEOAREAMONITORPOLLING_H
+#ifndef QGEOCLUEMASTER_H
+#define QGEOCLUEMASTER_H
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+#include <QtCore/QObject>
 
-#include "qgeoareamonitor.h"
-#include "qgeopositioninfosource.h"
+#include <geoclue/geoclue-master.h>
 
 QT_BEGIN_NAMESPACE
 
-/**
- *  QGeoAreaMonitorPolling
- *
- */
-class QGeoAreaMonitorPolling : public QGeoAreaMonitor
+class QGeoclueMaster
 {
-    Q_OBJECT
+public:
+    QGeoclueMaster(QObject *handler);
+    virtual ~QGeoclueMaster();
 
-public :
-    explicit QGeoAreaMonitorPolling(QObject *parent = 0);
-    ~QGeoAreaMonitorPolling();
-    void setCenter(const QGeoCoordinate &coordinate);
-    void setRadius(qreal radius);
-
-    inline bool isValid() { return location; }
-
-private Q_SLOTS:
-    void positionUpdated(const QGeoPositionInfo &info);
+    bool createMasterClient(GeoclueAccuracyLevel accuracy, GeoclueResourceFlags resourceFlags);
+    void releaseMasterClient();
 
 private:
-    bool insideArea;
-    QGeoPositionInfoSource *location;
+    GeoclueMasterClient *m_client;
+    GeocluePosition *m_masterPosition;
 
-    void connectNotify(const QMetaMethod &signal);
-    void disconnectNotify(const QMetaMethod &signal);
-
-    void checkStartStop();
+    QObject *m_handler;
 };
 
 QT_END_NAMESPACE
-#endif // QGEOAREAMONITORPOLLING_H
+
+#endif // QGEOCLUEMASTER_H
