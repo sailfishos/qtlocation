@@ -216,22 +216,22 @@ and walking directions).
 \section1 Geocoding
 
 In C++, an address-to-coordinate query is performed using the
-\l{QGeocodingManager::geocode()}{geocode()} method of the QGeocodingManager
+\l{QGeoCodingManager::geocode()}{geocode()} method of the QGeoCodingManager
 class. For coordinate-to-address queries, the
-\l{QGeocodingManager::reverseGeocode()}{reverseGeocode()} method is available
-on the same class. Instances of QGeocodingManager are available via
+\l{QGeoCodingManager::reverseGeocode()}{reverseGeocode()} method is available
+on the same class. Instances of QGeoCodingManager are available via
 \l{QGeoServiceProvider}.
 
 \b{Key Classes}
 \table
     \row
         \li \l{QGeoServiceProvider}
-        \li Provides a QGeocodingManager instance ready for use.
+        \li Provides a QGeoCodingManager instance ready for use.
     \row
-        \li \l{QGeocodingManager}
-        \li Accepts queries and produces QGeocodeReply objects.
+        \li \l{QGeoCodingManager}
+        \li Accepts queries and produces QGeoCodeReply objects.
     \row
-        \li \l{QGeocodeReply}
+        \li \l{QGeoCodeReply}
         \li Contains the results of a geocoding query.
 \endtable
 */
