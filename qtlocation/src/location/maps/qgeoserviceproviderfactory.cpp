@@ -66,7 +66,7 @@ Destroys this QGeoServiceProviderFactory instance.
 */
 
 /*!
-    Returns a new QGeocodingManagerEngine instance, initialized with \a
+    Returns a new QGeoCodingManagerEngine instance, initialized with \a
     parameters, which implements the location geocoding functionality.
 
     If \a error is not 0 it should be set to QGeoServiceProvider::NoError on
@@ -78,9 +78,9 @@ Destroys this QGeoServiceProviderFactory instance.
     The default implementation returns 0, which causes a
     QGeoServiceProvider::NotSupportedError in QGeoServiceProvider.
 */
-QGeocodingManagerEngine *QGeoServiceProviderFactory::createGeocodingManagerEngine(const QMap<QString, QVariant> &parameters,
-        QGeoServiceProvider::Error *error,
-        QString *errorString) const
+QGeoCodingManagerEngine *QGeoServiceProviderFactory::createGeocodingManagerEngine(const QMap<QString, QVariant> &parameters,
+                                                                                  QGeoServiceProvider::Error *error,
+                                                                                  QString *errorString) const
 {
     Q_UNUSED(parameters)
     Q_UNUSED(error)
@@ -103,8 +103,8 @@ QGeocodingManagerEngine *QGeoServiceProviderFactory::createGeocodingManagerEngin
     QGeoServiceProvider::NotSupportedError in QGeoServiceProvider.
 */
 QGeoMappingManagerEngine *QGeoServiceProviderFactory::createMappingManagerEngine(const QMap<QString, QVariant> &parameters,
-        QGeoServiceProvider::Error *error,
-        QString *errorString) const
+                                                                                 QGeoServiceProvider::Error *error,
+                                                                                 QString *errorString) const
 {
     Q_UNUSED(parameters)
     Q_UNUSED(error)
@@ -127,8 +127,8 @@ QGeoMappingManagerEngine *QGeoServiceProviderFactory::createMappingManagerEngine
     QGeoServiceProvider::NotSupportedError in QGeoServiceProvider.
 */
 QGeoRoutingManagerEngine *QGeoServiceProviderFactory::createRoutingManagerEngine(const QMap<QString, QVariant> &parameters,
-        QGeoServiceProvider::Error *error,
-        QString *errorString) const
+                                                                                 QGeoServiceProvider::Error *error,
+                                                                                 QString *errorString) const
 
 {
     Q_UNUSED(parameters)
@@ -152,8 +152,8 @@ QGeoRoutingManagerEngine *QGeoServiceProviderFactory::createRoutingManagerEngine
     QGeoServiceProvider::NotSupportedError in QGeoServiceProvider.
 */
 QPlaceManagerEngine *QGeoServiceProviderFactory::createPlaceManagerEngine(const QMap<QString, QVariant> &parameters,
-        QGeoServiceProvider::Error *error,
-        QString *errorString) const
+                                                                          QGeoServiceProvider::Error *error,
+                                                                          QString *errorString) const
 
 {
     Q_UNUSED(parameters)

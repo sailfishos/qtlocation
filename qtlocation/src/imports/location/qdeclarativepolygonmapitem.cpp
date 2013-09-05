@@ -161,7 +161,7 @@ void QGeoMapPolygonGeometry::updateSourcePoints(const QGeoMap &map,
     QPointF lastPoint;
     srcPath_ = QPainterPath();
 
-    double unwrapBelowX = 0;
+    qreal unwrapBelowX = 0;
     if (preserveGeometry_ )
         unwrapBelowX = map.coordinateToScreenPosition(geoLeftBound_, false).x();
 

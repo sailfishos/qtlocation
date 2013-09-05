@@ -45,7 +45,7 @@
 
 #include <QtQml/qqmlinfo.h>
 #include <QtLocation/QGeoServiceProvider>
-#include <QtLocation/QGeocodingManager>
+#include <QtLocation/QGeoCodingManager>
 #include <QtLocation/QGeoCircle>
 
 QT_BEGIN_NAMESPACE
@@ -154,7 +154,7 @@ void QDeclarativeGeocodeModel::update()
     if (!serviceProvider)
         return;
 
-    QGeocodingManager *geocodingManager = serviceProvider->geocodingManager();
+    QGeoCodingManager *geocodingManager = serviceProvider->geocodingManager();
     if (!geocodingManager) {
         qmlInfo(this) << QCoreApplication::translate(CONTEXT_NAME, GEOCODE_MGR_NOT_SET);
         return;
@@ -172,7 +172,7 @@ void QDeclarativeGeocodeModel::update()
         setStatus(QDeclarativeGeocodeModel::Loading);
         reply_ = geocodingManager->reverseGeocode(coordinate_, boundingArea_);
         if (reply_->isFinished()) {
-            if (reply_->error() == QGeocodeReply::NoError) {
+            if (reply_->error() == QGeoCodeReply::NoError) {
                 geocodeFinished(reply_);
             } else {
                 geocodeError(reply_, reply_->error(), reply_->errorString());
@@ -182,7 +182,7 @@ void QDeclarativeGeocodeModel::update()
         setStatus(QDeclarativeGeocodeModel::Loading);
         reply_ = geocodingManager->geocode(address_->address(), boundingArea_);
         if (reply_->isFinished()) {
-            if (reply_->error() == QGeocodeReply::NoError) {
+            if (reply_->error() == QGeoCodeReply::NoError) {
                 geocodeFinished(reply_);
             } else {
                 geocodeError(reply_, reply_->error(), reply_->errorString());
@@ -192,7 +192,7 @@ void QDeclarativeGeocodeModel::update()
         setStatus(QDeclarativeGeocodeModel::Loading);
         reply_ = geocodingManager->geocode(searchString_, limit_, offset_, boundingArea_);
         if (reply_->isFinished()) {
-            if (reply_->error() == QGeocodeReply::NoError) {
+            if (reply_->error() == QGeoCodeReply::NoError) {
                 geocodeFinished(reply_);
             } else {
                 geocodeError(reply_, reply_->error(), reply_->errorString());
@@ -286,15 +286,15 @@ void QDeclarativeGeocodeModel::setPlugin(QDeclarativeGeoServiceProvider *plugin)
 void QDeclarativeGeocodeModel::pluginReady()
 {
     QGeoServiceProvider *serviceProvider = plugin_->sharedGeoServiceProvider();
-    QGeocodingManager *geocodingManager = serviceProvider->geocodingManager();
+    QGeoCodingManager *geocodingManager = serviceProvider->geocodingManager();
     if (!geocodingManager || serviceProvider->error() != QGeoServiceProvider::NoError) {
         qmlInfo(this) << QCoreApplication::translate(CONTEXT_NAME, PLUGIN_DOESNOT_SUPPORT_GEOCODING).arg(serviceProvider->errorString());
         return;
     }
-    connect(geocodingManager, SIGNAL(finished(QGeocodeReply*)),
-            this, SLOT(geocodeFinished(QGeocodeReply*)));
-    connect(geocodingManager, SIGNAL(error(QGeocodeReply*,QGeocodeReply::Error,QString)),
-            this, SLOT(geocodeError(QGeocodeReply*,QGeocodeReply::Error,QString)));
+    connect(geocodingManager, SIGNAL(finished(QGeoCodeReply*)),
+            this, SLOT(geocodeFinished(QGeoCodeReply*)));
+    connect(geocodingManager, SIGNAL(error(QGeoCodeReply*,QGeoCodeReply::Error,QString)),
+            this, SLOT(geocodeError(QGeoCodeReply*,QGeoCodeReply::Error,QString)));
 }
 
 /*!
@@ -351,9 +351,9 @@ QVariant QDeclarativeGeocodeModel::bounds() const
         return QVariant::fromValue(boundingArea_);
 }
 
-void QDeclarativeGeocodeModel::geocodeFinished(QGeocodeReply *reply)
+void QDeclarativeGeocodeModel::geocodeFinished(QGeoCodeReply *reply)
 {
-    if (reply != reply_ || reply->error() != QGeocodeReply::NoError)
+    if (reply != reply_ || reply->error() != QGeoCodeReply::NoError)
         return;
     int oldCount = declarativeLocations_.count();
     setLocations(reply->locations());
@@ -370,8 +370,8 @@ void QDeclarativeGeocodeModel::geocodeFinished(QGeocodeReply *reply)
 /*!
     \internal
 */
-void QDeclarativeGeocodeModel::geocodeError(QGeocodeReply *reply,
-        QGeocodeReply::Error error,
+void QDeclarativeGeocodeModel::geocodeError(QGeoCodeReply *reply,
+        QGeoCodeReply::Error error,
         const QString &errorString)
 {
     if (reply != reply_)
