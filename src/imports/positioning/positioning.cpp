@@ -51,6 +51,7 @@
 #include "qdeclarativegeorectangle.h"
 #include "qdeclarativegeocircle.h"
 #include "qdeclarativecoordinate_p.h"
+#include "qdeclarativegeocoordinateanimation_p.h"
 
 #include "locationsingleton.h"
 
@@ -105,6 +106,7 @@ public:
             qRegisterMetaType<QGeoCircle>("QGeoCircle");
             qRegisterMetaType<QGeoLocation>("QGeoLocation");
 
+            qRegisterAnimationInterpolator<QGeoCoordinate>(geoCoordinateInterpolator);
             QQml_addValueTypeProvider(getValueTypeProvider());
 
             // Register the 5.0 types
@@ -124,6 +126,11 @@ public:
             qmlRegisterType<QDeclarativePositionSource  >(uri, major, minor, "PositionSource");
             qmlRegisterType<QDeclarativeGeoAddress      >(uri, major, minor, "Address");
             qmlRegisterType<QDeclarativeGeoLocation     >(uri, major, minor, "Location");
+
+            // Register the 5.3 types
+            // Introduction of 5.3 version; existing 5.2 exports automatically become availabe under 5.3 as well
+            minor = 3;
+            qmlRegisterType<QDeclarativeGeoCoordinateAnimation  >(uri, major, minor, "CoordinateAnimation");
         } else {
             qDebug() << "Unsupported URI given to load positioning QML plugin: " << QLatin1String(uri);
         }
