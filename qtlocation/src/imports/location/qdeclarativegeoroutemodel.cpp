@@ -42,7 +42,7 @@
 #include "qdeclarativegeoroutemodel_p.h"
 #include "qdeclarativegeoroute_p.h"
 #include "error_messages.h"
-#include "locationvaluetypeprovider.h"
+#include "locationvaluetypehelper_p.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtQml/QQmlEngine>
@@ -50,7 +50,7 @@
 #include <QtQml/qqmlinfo.h>
 #include <QtQml/private/qqmlengine_p.h>
 #include <QtLocation/QGeoRoutingManager>
-#include <QtLocation/QGeoRectangle>
+#include <QtPositioning/QGeoRectangle>
 
 QT_BEGIN_NAMESPACE
 
@@ -775,7 +775,7 @@ void QDeclarativeGeoRouteQuery::setWaypoints(const QJSValue &value)
 }
 
 /*!
-    \qmlproperty QQmlListProperty<GeoRectangle> RouteQuery::excludedAreas
+    \qmlproperty list<georectangle> RouteQuery::excludedAreas
 
     Areas that the route must not cross.
 
@@ -833,7 +833,7 @@ void QDeclarativeGeoRouteQuery::setExcludedAreas(const QJSValue &value)
 }
 
 /*!
-    \qmlmethod QtLocation5::RouteQuery::addExcludedArea(GeoRectangle)
+    \qmlmethod QtLocation5::RouteQuery::addExcludedArea(georectangle)
 
     Adds the given area to excluded areas (areas that the route must not cross).
     Same area can only be added once.
@@ -863,7 +863,7 @@ void QDeclarativeGeoRouteQuery::addExcludedArea(const QGeoRectangle &area)
 }
 
 /*!
-    \qmlmethod QtLocation5::RouteQuery::removeExcludedArea(GeoRectangle)
+    \qmlmethod QtLocation5::RouteQuery::removeExcludedArea(georectangle)
 
     Removes the given area to excluded areas (areas that the route must not cross).
 
@@ -1084,10 +1084,9 @@ void QDeclarativeGeoRouteQuery::setTravelModes(QDeclarativeGeoRouteQuery::Travel
 
 
 /*!
-    \qmlproperty SegmentDetail RouteQuery::segmentDetail
+    \qmlproperty enumeration RouteQuery::segmentDetail
 
     The level of detail which will be used in the representation of routing segments.
-    Values can be combined with OR ('|') -operator.
 
     \list
     \li RouteQuery.NoSegmentData - No segment data should be included with the route
@@ -1114,10 +1113,9 @@ QDeclarativeGeoRouteQuery::SegmentDetail QDeclarativeGeoRouteQuery::segmentDetai
 }
 
 /*!
-    \qmlproperty ManeuverDetail RouteQuery::maneuverDetail
+    \qmlproperty enumeration RouteQuery::maneuverDetail
 
     The level of detail which will be used in the representation of routing maneuvers.
-    Values can be combined with OR ('|') -operator.
 
     \list
     \li RouteQuery.NoManeuvers - No maneuvers should be included with the route
@@ -1180,7 +1178,7 @@ QDeclarativeGeoRouteQuery::TravelModes QDeclarativeGeoRouteQuery::travelModes() 
 }
 
 /*!
-    \qmlproperty RouteOptimizations RouteQuery::routeOptimizations
+    \qmlproperty enumeration RouteQuery::routeOptimizations
 
     The route optimizations which should be considered during the planning of the route.
     Values can be combined with OR ('|') -operator.

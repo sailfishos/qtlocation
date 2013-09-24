@@ -41,7 +41,6 @@
 
 #include "qdeclarativegeomapgesturearea_p.h"
 #include "qdeclarativegeomap_p.h"
-#include "qdeclarativecoordinate_p.h"
 #include "error_messages.h"
 
 #include <QtGui/QGuiApplication>
@@ -567,6 +566,9 @@ QTouchEvent::TouchPoint makeTouchPointFromMouseEvent(QMouseEvent *event, Qt::Tou
 */
 bool QDeclarativeGeoMapGestureArea::mousePressEvent(QMouseEvent *event)
 {
+    if (!(enabled_ && activeGestures_))
+        return false;
+
     touchPoints_.clear();
     touchPoints_ << makeTouchPointFromMouseEvent(event, Qt::TouchPointPressed);
 
@@ -579,6 +581,9 @@ bool QDeclarativeGeoMapGestureArea::mousePressEvent(QMouseEvent *event)
 */
 bool QDeclarativeGeoMapGestureArea::mouseMoveEvent(QMouseEvent *event)
 {
+    if (!(enabled_ && activeGestures_))
+        return false;
+
     touchPoints_.clear();
 
     touchPoints_ << makeTouchPointFromMouseEvent(event, Qt::TouchPointMoved);
@@ -591,6 +596,9 @@ bool QDeclarativeGeoMapGestureArea::mouseMoveEvent(QMouseEvent *event)
 */
 bool QDeclarativeGeoMapGestureArea::mouseReleaseEvent(QMouseEvent *)
 {
+    if (!(enabled_ && activeGestures_))
+        return false;
+
     touchPoints_.clear();
     update();
     return true;

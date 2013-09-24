@@ -3,7 +3,7 @@
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtLocation module of the Qt Toolkit.
+** This file is part of the QtPositioning module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -54,10 +54,9 @@ QGeoSatelliteInfoSource *PositionPollFactory::satelliteInfoSource(QObject *paren
     return 0;
 }
 
-QGeoAreaMonitor *PositionPollFactory::areaMonitor(QObject *parent)
+QGeoAreaMonitorSource *PositionPollFactory::areaMonitor(QObject *parent)
 {
-    QGeoAreaMonitorPolling *ret = 0;
-    ret = new QGeoAreaMonitorPolling(parent);
+    QGeoAreaMonitorPolling *ret = new QGeoAreaMonitorPolling(parent);
     if (ret && ret->isValid())
         return ret;
     delete ret;
