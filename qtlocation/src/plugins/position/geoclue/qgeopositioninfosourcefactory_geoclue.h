@@ -5,7 +5,7 @@
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtLocation module of the Qt Toolkit.
+** This file is part of the QtPositioning module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -65,7 +65,7 @@ class QGeoPositionInfoSourceFactoryGeoclue : public QObject, public QGeoPosition
 public:
     QGeoPositionInfoSource *positionInfoSource(QObject *parent);
     QGeoSatelliteInfoSource *satelliteInfoSource(QObject *parent);
-    QGeoAreaMonitor *areaMonitor(QObject *parent);
+    QGeoAreaMonitorSource *areaMonitor(QObject *parent);
 };
 
 #endif

@@ -40,13 +40,13 @@
 ****************************************************************************/
 
 #include "qdeclarativegeoroute_p.h"
-#include "locationvaluetypeprovider.h"
+#include "locationvaluetypehelper_p.h"
 
 #include <QtQml/QQmlEngine>
 #include <QtQml/QQmlContext>
 #include <QtQml/qqmlinfo.h>
 #include <QtQml/private/qqmlengine_p.h>
-#include <QtLocation/QGeoRectangle>
+#include <QtPositioning/QGeoRectangle>
 
 QT_BEGIN_NAMESPACE
 
@@ -112,7 +112,7 @@ QList<QGeoCoordinate> QDeclarativeGeoRoute::routePath()
 }
 
 /*!
-    \qmlproperty GeoRectangle QtLocation5::Route::bounds
+    \qmlproperty georectangle QtLocation5::Route::bounds
 
     Read-only property which holds a bounding box which encompasses the entire route.
 
@@ -158,7 +158,7 @@ qreal QDeclarativeGeoRoute::distance() const
     indicates the number of objects and 'path[index starting from zero]' gives
     the actual object.
 
-    \sa QtLocation::coordinate
+    \sa QtPositioning::coordinate
 */
 
 QJSValue QDeclarativeGeoRoute::path() const

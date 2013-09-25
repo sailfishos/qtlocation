@@ -1,4 +1,4 @@
-Name:       qt5-qtlocation-plugin-position-geoclue
+Name:       qt5-plugin-position-geoclue
 Summary:    Qt Positioning plugin for Geoclue
 Version:    5.0.0
 Release:    1%{?dist}
@@ -6,9 +6,9 @@ Group:      Qt/Qt
 License:    LGPLv2.1 with exception or GPLv3
 URL:        http://qt-project.org/
 Source0:    %{name}-%{version}.tar.xz
-BuildRequires:  qt5-qtlocation-devel
-BuildRequires:  qt5-qtgui-devel
+BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  qt5-qmake
+BuildRequires:  qt5-tools
 BuildRequires:  geoclue-devel
 
 %description
@@ -38,9 +38,6 @@ cd src/plugins/position/geoclue
 
 
 #### Pre/Post section
-
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
 
 
 #### File section
