@@ -1,4 +1,4 @@
-Name:       qt5
+Name:       qt5-qtlocation-source
 Summary:    Cross-platform application and UI framework
 Version:    5.0.0
 Release:    1%{?dist}
@@ -30,98 +30,102 @@ write web-enabled applications once and deploy them across desktop,
 mobile and embedded systems without rewriting the source code.
 
 
-%package qtpositioning
+%package -n qt5-qtpositioning
 Summary:    The QtPositioning library
 Group:      Qt/Qt
 Requires(post):     /sbin/ldconfig
 Requires(postun):   /sbin/ldconfig
 
-%description qtpositioning
+%description -n qt5-qtpositioning
 This package contains the QtPositioning library
 
 
-%package qtpositioning-devel
+%package -n qt5-qtpositioning-devel
 Summary:    Development files for QtPositioning
 Group:      Qt/Qt
-Requires:   %{name}-qtpositioning = %{version}-%{release}
+Requires:   qt5-qtpositioning = %{version}-%{release}
 
-%description qtpositioning-devel
+%description -n qt5-qtpositioning-devel
 This package contains the files necessary to develop applications
 that use the QtPositioning library
 
 
-%package plugin-position-poll
+%package -n qt5-plugin-position-poll
 Summary:    Qt positioning plugin (pollling)
 Group:      Qt/Qt
-Requires:   %{name}-qtpositioning = %{version}-%{release}
-Conflicts:  qt5-qtlocation-plugin-position-poll
+Requires:   qt5-qtpositioning = %{version}-%{release}
+Obsoletes:  qt5-qtlocation-plugin-position-poll <= 5.1.0+git7
+Provides:   qt5-qtlocation-plugin-position-poll > 5.1.0+git7
 
-%description plugin-position-poll
+%description -n qt5-plugin-position-poll
 This package contains the polling positioning plugin. It provides the
 generic polling based area monitor.
 
 
-%package qtdeclarative-import-positioning
+%package -n qt5-qtdeclarative-import-positioning
 Summary:    QtDeclarative positioning import
 Group:      Qt/Qt
-Requires:   %{name}-qtpositioning = %{version}-%{release}
+Requires:   qt5-qtpositioning = %{version}-%{release}
 Requires:   qt5-qtdeclarative
 
-%description qtdeclarative-import-positioning
+%description -n qt5-qtdeclarative-import-positioning
 This package contains the Positioning import for QtDeclarative
 
 
 
 
-%package qtlocation
+%package -n qt5-qtlocation
 Summary:    The QtLocation library
 Group:      Qt/Qt
-Requires:   %{name}-qtpositioning = %{version}-%{release}
+Requires:   qt5-qtpositioning = %{version}-%{release}
 Requires(post):     /sbin/ldconfig
 Requires(postun):   /sbin/ldconfig
 
-%description qtlocation
+%description -n qt5-qtlocation
 This package contains the QtLocation library
 
 
-%package qtlocation-devel
+%package -n qt5-qtlocation-devel
 Summary:    Development files for QtLocation
 Group:      Qt/Qt
-Requires:   %{name}-qtlocation = %{version}-%{release}
+Requires:   qt5-qtlocation = %{version}-%{release}
+Requires:   qt5-qtpositioning-devel = %{version}-%{release}
 
-%description qtlocation-devel
+%description -n qt5-qtlocation-devel
 This package contains the files necessary to develop
 applications that use QtLocation
 
 
-%package plugin-geoservices-nokia
+%package -n qt5-plugin-geoservices-nokia
 Summary:    Qt Geoservices plugin for Nokia devices
 Group:      Qt/Qt
-Requires:   %{name}-qtlocation = %{version}-%{release}
-Conflicts:  qt5-qtlocation-plugin-geoservices-nokia
+Requires:   qt5-qtlocation = %{version}-%{release}
+Obsoletes:  qt5-qtlocation-plugin-geoservices-nokia <= 5.1.0+git7
+Provides:   qt5-qtlocation-plugin-geoservices-nokia > 5.1.0+git7
 
-%description plugin-geoservices-nokia
+%description -n qt5-plugin-geoservices-nokia
 This package contains the geoservices plugin for Nokia devices
 
 
-%package plugin-geoservices-osm
+%package -n qt5-plugin-geoservices-osm
 Summary:    Qt Geoservices plugin for OpenStreetMaps
 Group:      Qt/Qt
-Requires:   %{name}-qtlocation = %{version}-%{release}
-Conflicts:  qt5-qtlocation-plugin-geoservices-osm
+Requires:   qt5-qtlocation = %{version}-%{release}
+Obsoletes:  qt5-qtlocation-plugin-geoservices-osm <= 5.1.0+git7
+Provides:   qt5-qtlocation-plugin-geoservices-osm > 5.1.0+git7
 
-%description plugin-geoservices-osm
+%description -n qt5-plugin-geoservices-osm
 This package contains the geoservices plugin for OpenStreetMaps
 
 
-%package qtdeclarative-import-location
+%package -n qt5-qtdeclarative-import-location
 Summary:    QtDeclarative location import
 Group:      Qt/Qt
-Requires:   %{name}-qtlocation = %{version}-%{release}
+Requires:   qt5-qtlocation = %{version}-%{release}
 Requires:   qt5-qtdeclarative
 
 
-%description qtdeclarative-import-location
+%description -n qt5-qtdeclarative-import-location
 This package contains the Location import for QtDeclarative
 
 
@@ -160,21 +164,21 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 
 #### Pre/Post section
 
-%post qtpositioning -p /sbin/ldconfig
-%postun qtpositioning -p /sbin/ldconfig
+%post -n qt5-qtpositioning -p /sbin/ldconfig
+%postun -n qt5-qtpositioning -p /sbin/ldconfig
 
-%post qtlocation -p /sbin/ldconfig
-%postun qtlocation -p /sbin/ldconfig
+%post -n qt5-qtlocation -p /sbin/ldconfig
+%postun -n qt5-qtlocation -p /sbin/ldconfig
 
 #### File section
 
 
-%files qtpositioning
+%files -n qt5-qtpositioning
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Positioning.so.5
 %{_libdir}/libQt5Positioning.so.5.*
 
-%files qtpositioning-devel
+%files -n qt5-qtpositioning-devel
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Positioning.so
 %{_libdir}/libQt5Positioning.prl
@@ -183,22 +187,22 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %{_datadir}/qt5/mkspecs/modules/qt_lib_positioning.pri
 %{_libdir}/cmake/Qt5Positioning/
 
-%files plugin-position-poll
+%files -n qt5-plugin-position-poll
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/position/*positionpoll*
 
-%files qtdeclarative-import-positioning
+%files -n qt5-qtdeclarative-import-positioning
 %defattr(-,root,root,-)
 %{_libdir}/qt5/qml/QtPositioning/
 
 
 
-%files qtlocation
+%files -n qt5-qtlocation
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Location.so.5
 %{_libdir}/libQt5Location.so.5.*
 
-%files qtlocation-devel
+%files -n qt5-qtlocation-devel
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Location.so
 %{_libdir}/libQt5Location.prl
@@ -207,15 +211,15 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %{_datadir}/qt5/mkspecs/modules/qt_lib_location.pri
 %{_libdir}/cmake/Qt5Location/
 
-%files plugin-geoservices-nokia
+%files -n qt5-plugin-geoservices-nokia
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/geoservices/*nokia*
 
-%files plugin-geoservices-osm
+%files -n qt5-plugin-geoservices-osm
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/geoservices/*osm*
 
-%files qtdeclarative-import-location
+%files -n qt5-qtdeclarative-import-location
 %defattr(-,root,root,-)
 %{_libdir}/qt5/qml/QtLocation/
 
