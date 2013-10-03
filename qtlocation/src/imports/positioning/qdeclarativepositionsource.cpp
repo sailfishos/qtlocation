@@ -55,7 +55,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype PositionSource
     \instantiates QDeclarativePositionSource
-    \inqmlmodule QtPositioning 5.0
+    \inqmlmodule QtPositioning
     \since Qt Positioning 5.0
 
     \brief The PositionSource type provides the device's current position.
@@ -111,7 +111,7 @@ QT_BEGIN_NAMESPACE
     a PositionSource in your application to retrieve local data for users
     from a REST web service.
 
-    \sa {QtPositioning5::Position}, {QGeoPositionInfoSource}
+    \sa {QtPositioning::Position}, {QGeoPositionInfoSource}
 
 */
 
