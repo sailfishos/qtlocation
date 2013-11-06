@@ -44,6 +44,7 @@
 #include "qlocationutils_p.h"
 #include "error_messages.h"
 #include "locationvaluetypehelper_p.h"
+#include "qdoublevector2d_p.h"
 
 #include <QtQml/QQmlInfo>
 #include <QtQml/QQmlContext>
@@ -188,10 +189,10 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
                                                  const QList<QGeoCoordinate> &path)
 {
     bool foundValid = false;
-    qreal minX = -1.0;
-    qreal minY = -1.0;
-    qreal maxX = -1.0;
-    qreal maxY = -1.0;
+    double minX = -1.0;
+    double minY = -1.0;
+    double maxX = -1.0;
+    double maxY = -1.0;
 
     if (!sourceDirty_)
         return;
@@ -202,9 +203,9 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
     srcPointTypes_.clear();
     srcPointTypes_.reserve(path.size());
 
-    QPointF origin, lastPoint, lastAddedPoint;
+    QDoubleVector2D origin, lastPoint, lastAddedPoint;
 
-    qreal unwrapBelowX = 0;
+    double unwrapBelowX = 0;
     if (preserveGeometry_)
         unwrapBelowX = map.coordinateToScreenPosition(geoLeftBound_, false).x();
 
@@ -214,7 +215,7 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
         if (!coord.isValid())
             continue;
 
-        QPointF point = map.coordinateToScreenPosition(coord, false);
+        QDoubleVector2D point = map.coordinateToScreenPosition(coord, false);
 
         // We can get NaN if the map isn't set up correctly, or the projection
         // is faulty -- probably best thing to do is abort
@@ -229,7 +230,7 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
             foundValid = true;
             srcOrigin_ = coord;
             origin = point;
-            point = QPointF(0,0);
+            point = QDoubleVector2D(0,0);
 
             minX = point.x();
             maxX = minX;
@@ -239,8 +240,6 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
             srcPoints_ << point.x() << point.y();
             srcPointTypes_ << QPainterPath::MoveToElement;
             lastAddedPoint = point;
-
-
         } else {
             point -= origin;
 
@@ -262,7 +261,7 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
 
     sourceBounds_ = QRectF(QPointF(minX, minY), QPointF(maxX, maxY));
     geoLeftBound_ = map.screenPositionToCoordinate(
-                                    QPointF(minX + origin.x(), minY + origin.y()), false);
+                                    QDoubleVector2D(minX + origin.x(), minY + origin.y()), false);
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -388,7 +387,7 @@ void QGeoMapPolylineGeometry::updateScreenPoints(const QGeoMap &map,
     if (!screenDirty_)
         return;
 
-    QPointF origin = map.coordinateToScreenPosition(srcOrigin_, false);
+    QPointF origin = map.coordinateToScreenPosition(srcOrigin_, false).toPointF();
 
     if (!qIsFinite(origin.x()) || !qIsFinite(origin.y())) {
         clear();
@@ -696,7 +695,7 @@ void QDeclarativePolylineMapItem::dragStarted()
 */
 void QDeclarativePolylineMapItem::dragEnded()
 {
-    QPointF newPoint = QPointF(x(),y()) + geometry_.firstPointOffset();
+    QDoubleVector2D newPoint = QDoubleVector2D(x(),y()) + QDoubleVector2D(geometry_.firstPointOffset());
     QGeoCoordinate newCoordinate = map()->screenPositionToCoordinate(newPoint, false);
     if (newCoordinate.isValid()) {
         double firstLongitude = path_.at(0).longitude();
