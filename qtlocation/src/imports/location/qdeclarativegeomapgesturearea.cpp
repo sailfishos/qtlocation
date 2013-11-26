@@ -689,28 +689,22 @@ bool QDeclarativeGeoMapGestureArea::filterMapChildMouseEvent(QMouseEvent *event)
     if (usingTouch_)
         return false;
 
-    if (!(enabled_ && activeGestures_))
-        return false;
-
-    if (isPanActive() || isPinchActive())
-        return true;
-
-    // Don't filter the event, but use it to see if we should start
-    // a gesture.
+    bool used = false;
     switch (event->type()) {
     case QEvent::MouseButtonPress:
-        mousePressEvent(event);
+        used = mousePressEvent(event);
         break;
     case QEvent::MouseButtonRelease:
-        mouseReleaseEvent(event);
+        used = mouseReleaseEvent(event);
         break;
     case QEvent::MouseMove:
-        mouseMoveEvent(event);
+        used = mouseMoveEvent(event);
         break;
     default:
+        used = false;
         break;
     }
-    return false;
+    return used && (isPanActive() || isPinchActive());
 }
 
 /*!
@@ -1099,14 +1093,10 @@ void QDeclarativeGeoMapGestureArea::panStateMachine()
     switch (panState_) {
     case panInactive:
         if (canStartPan()) {
-            if (touchPointState_ == touchPoints1) {
-                // Update startCoord_ to ensure smooth start for panning when going over startDragDistance
-                QGeoCoordinate newStartCoord = map_->screenPositionToCoordinate(lastPos_, false);
-                startCoord_.setLongitude(newStartCoord.longitude() -
-                                         touchCenterCoord_.longitude());
-                startCoord_.setLatitude(newStartCoord.latitude() -
-                                        touchCenterCoord_.latitude());
-            }
+            // Update startCoord_ to ensure smooth start for panning when going over startDragDistance
+            QGeoCoordinate newStartCoord = map_->screenPositionToCoordinate(QDoubleVector2D(lastPos_), false);
+            startCoord_.setLongitude(newStartCoord.longitude());
+            startCoord_.setLatitude(newStartCoord.latitude());
             panState_ = panActive;
         }
         break;
