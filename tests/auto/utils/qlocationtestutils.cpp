@@ -28,6 +28,8 @@
 
 #include "qlocationtestutils_p.h"
 
+#include <QLocale>
+
 bool QLocationTestUtils::hasDefaultSource()
 {
     return false;
@@ -53,8 +55,8 @@ QString QLocationTestUtils::addNmeaChecksumAndBreaks(const QString &sentence)
 
 QString QLocationTestUtils::createRmcSentence(const QDateTime &dt)
 {
-    QString time = dt.toString("hhmmss.zzz");
-    QString date = dt.toString("ddMMyy");
+    QString time = QLocale::c().toString(dt, QStringLiteral("hhmmss.zzz"));
+    QString date = QLocale::c().toString(dt, QStringLiteral("ddMMyy"));
     QString nmea = QString("$GPRMC,%1,A,2730.83609,S,15301.87844,E,0.7,9.0,%2,11.2,W,A*")
         .arg(time).arg(date);
     return addNmeaChecksumAndBreaks(nmea);
@@ -75,9 +77,11 @@ QString QLocationTestUtils::createGgaSentence(int lat, int lng, const QTime &tim
 
 QString QLocationTestUtils::createZdaSentence(const QDateTime &dt)
 {
-    QString time = dt.toString("hhmmss.zzz");
     QString nmea = QString("$GPZDA,%1,%2,%3,%4,,*")
-        .arg(time).arg(dt.toString("dd")).arg(dt.toString("MM")).arg(dt.toString("yyyy"));
+        .arg(QLocale::c().toString(dt, QStringLiteral("hhmmss.zzz")))
+        .arg(QLocale::c().toString(dt, QStringLiteral("dd")))
+        .arg(QLocale::c().toString(dt, QStringLiteral("MM")))
+        .arg(QLocale::c().toString(dt, QStringLiteral("yyyy")));
     return addNmeaChecksumAndBreaks(nmea);
 }
 
