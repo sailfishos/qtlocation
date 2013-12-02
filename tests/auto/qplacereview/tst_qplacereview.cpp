@@ -26,6 +26,7 @@
 **
 ****************************************************************************/
 
+#include <QtCore/QLocale>
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 
@@ -83,8 +84,8 @@ QPlaceReview tst_QPlaceReview::initialSubObject()
     review.setText("text");
     review.setRating(4.5);
     review.setLanguage("en");
-    review.setDateTime(QDateTime::fromString("01:02 03/04/2000",
-                                             "hh:mm dd/MM/yyyy"));
+    review.setDateTime(QLocale::c().toDateTime("01:02 03/04/2000",
+                                               "hh:mm dd/MM/yyyy"));
     review.setUser(user);
     review.setSupplier(supplier);
     review.setAttribution("attribution");
