@@ -51,24 +51,13 @@ Q_DECLARE_METATYPE(QGeoPositionInfo)
 
 QGeoPositionInfoSource *QGeoPositionInfoSourceFactoryGeoclue::positionInfoSource(QObject *parent)
 {
-    qRegisterMetaType<QGeoPositionInfo>();
-    QGeoPositionInfoSourceGeoclueMaster *src = new QGeoPositionInfoSourceGeoclueMaster(parent);
-    if (!src->init()) {
-        delete src;
-        src = 0;
-    }
-    return src;
+    return new QGeoPositionInfoSourceGeoclueMaster(parent);
 }
 
 QGeoSatelliteInfoSource *QGeoPositionInfoSourceFactoryGeoclue::satelliteInfoSource(QObject *parent)
 {
 #ifdef HAS_SATELLITE
-    QGeoSatelliteInfoSourceGeoclueMaster *src = new QGeoSatelliteInfoSourceGeoclueMaster(parent);
-    if (!src->init()) {
-        delete src;
-        src = 0;
-    }
-    return src;
+    return new QGeoSatelliteInfoSourceGeoclueMaster(parent);
 #else
     Q_UNUSED(parent)
 

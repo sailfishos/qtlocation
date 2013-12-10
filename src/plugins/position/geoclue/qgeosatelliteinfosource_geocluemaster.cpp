@@ -168,13 +168,6 @@ QGeoSatelliteInfoSourceGeoclueMaster::~QGeoSatelliteInfoSourceGeoclueMaster()
     cleanupSatelliteSource();
 }
 
-bool QGeoSatelliteInfoSourceGeoclueMaster::init()
-{
-    g_type_init();
-
-    return true;
-}
-
 int QGeoSatelliteInfoSourceGeoclueMaster::minimumUpdateInterval() const
 {
     return MINIMUM_UPDATE_INTERVAL;
