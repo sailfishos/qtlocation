@@ -7,6 +7,7 @@ License:    LGPLv2.1 with exception or GPLv3
 URL:        http://qt-project.org/
 Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  qt5-qtpositioning-devel
+BuildRequires:  qt5-qtdbus-devel
 BuildRequires:  qt5-qmake
 BuildRequires:  qt5-tools
 BuildRequires:  geoclue-devel
