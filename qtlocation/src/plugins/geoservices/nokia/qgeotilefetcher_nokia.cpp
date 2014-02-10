@@ -98,6 +98,14 @@ namespace
             registeredTypes[9] = "hybrid.day.mobile";
             registeredTypes[10] = "normal.day.transit.mobile";
             registeredTypes[11] = "normal.day.grey.mobile";
+            registeredTypes[12] = "normal.day.custom";
+            registeredTypes[13] = "normal.night";
+            registeredTypes[14] = "normal.night.mobile";
+            registeredTypes[15] = "normal.night.grey";
+            registeredTypes[16] = "normal.night.grey.mobile";
+            registeredTypes[17] = "pedestrian.day";
+            registeredTypes[18] = "pedestrian.night";
+            registeredTypes[19] = "carnav.day.grey";
         }
 
         MapTypeRegistry::const_iterator it = registeredTypes.find(mapId);
@@ -107,6 +115,11 @@ namespace
 
         qWarning() << "Unknown mapId: " << mapId;
         return "normal.day";
+    }
+
+    bool isAerialType(const QString mapType)
+    {
+        return mapType.startsWith("satellite") || mapType.startsWith("hybrid") || mapType.startsWith("terrain");
     }
 }
 QGeoTileFetcherNokia::QGeoTileFetcherNokia(
@@ -120,7 +133,8 @@ QGeoTileFetcherNokia::QGeoTileFetcherNokia(
           m_parameters(parameters),
           m_tileSize(tileSize),
           m_copyrightsReply(0),
-          m_uriProvider(new QGeoUriProvider(this, parameters, "mapping.host", MAP_TILES_HOST, MAP_TILES_HOST_CN))
+          m_baseUriProvider(new QGeoUriProvider(this, parameters, "mapping.host", MAP_TILES_HOST)),
+          m_aerialUriProvider(new QGeoUriProvider(this, parameters, "mapping.host.aerial", MAP_TILES_HOST_AERIAL))
 {
     Q_ASSERT(networkManager);
     m_networkManager->setParent(this);
@@ -160,15 +174,19 @@ QGeoTiledMapReply *QGeoTileFetcherNokia::getTileImage(const QGeoTileSpec &spec)
 QString QGeoTileFetcherNokia::getRequestString(const QGeoTileSpec &spec)
 {
     static const QString http("http://");
-    static const QString path("/maptiler/v2/maptile/newest/");
+    static const QString path("/maptile/2.1/maptile/newest/");
     static const QChar slash('/');
 
     QString requestString = http;
 
-    requestString += m_uriProvider->getCurrentHost();
-    requestString += path;
+    QString mapType = mapIdToStr(spec.mapId());
+    if (isAerialType(mapType))
+        requestString += m_aerialUriProvider->getCurrentHost();
+    else
+        requestString += m_baseUriProvider->getCurrentHost();
 
-    requestString += mapIdToStr(spec.mapId());
+    requestString += path;
+    requestString += mapType;
     requestString += slash;
     requestString += QString::number(spec.zoom());
     requestString += slash;
@@ -196,35 +214,68 @@ QString QGeoTileFetcherNokia::getRequestString(const QGeoTileSpec &spec)
 
 QString QGeoTileFetcherNokia::getLanguageString() const
 {
-    const QLocale::Language lang = m_engineNokia.data()->locale().language();
+    if (!m_engineNokia)
+        return QStringLiteral("ENG");
+
+    QLocale locale = m_engineNokia.data()->locale();
+
     // English is the default, where no ln is specified. We hardcode the languages
     // here even though the entire list is updated automagically from the server.
     // The current languages are Arabic, Chinese, Simplified Chinese, English
     // French, German, Italian, Polish, Russian and Spanish. The default is English.
     // These are acually available from the same host under the URL: /maptiler/v2/info
 
-    switch (lang) {
+    switch (locale.language()) {
     case QLocale::Arabic:
-        return "ARA";
+        return QStringLiteral("ARA");
     case QLocale::Chinese:
-        if (QLocale::TraditionalChineseScript == m_engineNokia.data()->locale().script())
-            return "CHI";
+        if (locale.script() == QLocale::TraditionalChineseScript)
+            return QStringLiteral("CHI");
         else
-            return "CHT";
+            return QStringLiteral("CHT");
+    case QLocale::Dutch:
+        return QStringLiteral("DUT");
     case QLocale::French:
-        return "FRE";
+        return QStringLiteral("FRE");
     case QLocale::German:
-        return "GER";
+        return QStringLiteral("GER");
+    case QLocale::Gaelic:
+        return QStringLiteral("GLE");
+    case QLocale::Greek:
+        return QStringLiteral("GRE");
+    case QLocale::Hebrew:
+        return QStringLiteral("HEB");
+    case QLocale::Hindi:
+        return QStringLiteral("HIN");
+    case QLocale::Indonesian:
+        return QStringLiteral("IND");
     case QLocale::Italian:
-        return "ITA";
+        return QStringLiteral("ITA");
+    case QLocale::Persian:
+        return QStringLiteral("PER");
     case QLocale::Polish:
-        return "POL";
+        return QStringLiteral("POL");
+    case QLocale::Portuguese:
+        return QStringLiteral("POR");
     case QLocale::Russian:
-        return "RUS";
+        return QStringLiteral("RUS");
+    case QLocale::Sinhala:
+        return QStringLiteral("SIN");
     case QLocale::Spanish:
-        return "SPA";
+        return QStringLiteral("SPA");
+    case QLocale::Thai:
+        return QStringLiteral("THA");
+    case QLocale::Turkish:
+        return QStringLiteral("TUR");
+    case QLocale::Ukrainian:
+        return QStringLiteral("UKR");
+    case QLocale::Urdu:
+        return QStringLiteral("URD");
+    case QLocale::Vietnamese:
+        return QStringLiteral("VIE");
+
     default:
-        return "ENG";
+        return QStringLiteral("ENG");
     }
     // No "lg" param means that we want English.
 }
@@ -253,8 +304,8 @@ void QGeoTileFetcherNokia::fetchCopyrightsData()
 {
     QString copyrightUrl = "http://";
 
-    copyrightUrl += m_uriProvider->getCurrentHost();
-    copyrightUrl += "/maptiler/v2/copyright/newest?output=json";
+    copyrightUrl += m_baseUriProvider->getCurrentHost();
+    copyrightUrl += "/maptile/2.1/copyright/newest?output=json";
 
     if (!token().isEmpty()) {
         copyrightUrl += "&token=";
