@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Appello Systems AB.
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -46,69 +46,46 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOTILEFETCHER_NOKIA_H
-#define QGEOTILEFETCHER_NOKIA_H
+#include "qgeomapversion.h"
 
-#include "qgeoserviceproviderplugin_nokia.h"
-
-#include <QtLocation/private/qgeotilefetcher_p.h>
+#include <QJsonDocument>
 
 QT_BEGIN_NAMESPACE
 
-class QGeoTiledMapReply;
-class QGeoTileSpec;
-class QGeoTiledMappingManagerEngine;
-class QGeoTiledMappingManagerEngineNokia;
-class QNetworkReply;
-class QGeoNetworkAccessManager;
-class QGeoUriProvider;
+QGeoMapVersion::QGeoMapVersion()
+    : m_version(-1) {}
 
-class QGeoTileFetcherNokia : public QGeoTileFetcher
+bool QGeoMapVersion::isNewVersion(const QJsonObject &newVersionData)
 {
-    Q_OBJECT
+    return m_versionData != newVersionData;
+}
 
-public:
-    QGeoTileFetcherNokia(
-            const QMap<QString, QVariant> &parameters,
-            QGeoNetworkAccessManager *networkManager,
-            QGeoTiledMappingManagerEngine *engine,
-            const QSize &tileSize);
+int QGeoMapVersion::version() const
+{
+    return m_version;
+}
 
-    ~QGeoTileFetcherNokia();
+void QGeoMapVersion::setVersion(int version)
+{
+    m_version = version;
+}
 
-    bool init();
+void QGeoMapVersion::setVersionData(const QJsonObject &versionData)
+{
+    m_versionData = versionData;
+}
 
-    QGeoTiledMapReply *getTileImage(const QGeoTileSpec &spec);
 
-    QString token() const;
-    QString applicationId() const;
+QByteArray QGeoMapVersion::toJson() const
+{
 
-public Q_SLOTS:
-    void copyrightsFetched();
-    void fetchCopyrightsData();
-    void versionFetched();
-    void fetchVersionData();
+    QJsonObject object;
+    object[QLatin1String("version")] = m_version;
+    object[QLatin1String("data")] = m_versionData;
 
-private:
-    Q_DISABLE_COPY(QGeoTileFetcherNokia)
+    QJsonDocument document(object);
 
-    QString getRequestString(const QGeoTileSpec &spec);
-
-    QString getLanguageString() const;
-
-    QPointer<QGeoTiledMappingManagerEngineNokia> m_engineNokia;
-    QGeoNetworkAccessManager *m_networkManager;
-    QMap<QString, QVariant> m_parameters;
-    QSize m_tileSize;
-    QString m_token;
-    QNetworkReply *m_copyrightsReply;
-    QNetworkReply *m_versionReply;
-
-    QString m_applicationId;
-    QGeoUriProvider *m_baseUriProvider;
-    QGeoUriProvider *m_aerialUriProvider;
-};
+    return document.toJson();
+}
 
 QT_END_NAMESPACE
-
-#endif
