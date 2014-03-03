@@ -68,6 +68,7 @@ QT_BEGIN_NAMESPACE
 class QGeoPositionInfoSourceGeoclueMaster : public QGeoPositionInfoSource, public QGeoclueMaster
 {
     Q_OBJECT
+
 public:
     QGeoPositionInfoSourceGeoclueMaster(QObject *parent = 0);
     ~QGeoPositionInfoSourceGeoclueMaster();
@@ -80,19 +81,11 @@ public:
     int minimumUpdateInterval() const;
     bool init();
 
-    void singleUpdateSucceeded(GeocluePositionFields fields,
-                               int                   timestamp,
-                               double                latitude,
-                               double                longitude,
-                               double                altitude,
-                               GeoclueAccuracy      *accuracy);
+    void updatePosition(GeocluePositionFields fields, int timestamp, double latitude,
+                        double longitude, double altitude, GeoclueAccuracy *accuracy);
+
     void regularUpdateFailed();
-    void regularUpdateSucceeded(GeocluePositionFields fields,
-                                int                   timestamp,
-                                double                latitude,
-                                double                longitude,
-                                double                altitude,
-                                GeoclueAccuracy      *accuracy);
+
     void velocityUpdateFailed();
     void velocityUpdateSucceeded(GeoclueVelocityFields fields, int timestamp, double speed,
                                  double direction, double climb);
@@ -106,26 +99,19 @@ public slots:
 
 private slots:
     void requestUpdateTimeout();
-    void startUpdatesTimeout();
     void positionProviderChanged(const QByteArray &service, const QByteArray &path);
 
 private:
     bool configurePositionSource();
     void cleanupPositionSource();
-    QGeoPositionInfo geoclueToPositionInfo(GeocluePositionFields fields,
-                                           int                   timestamp,
-                                           double                latitude,
-                                           double                longitude,
-                                           double                altitude,
-                                           GeoclueAccuracy *     accuracy);
+    void setOptions();
+
 private:
-    int m_updateInterval;
     GeocluePosition *m_pos;
     GeoclueVelocity *m_vel;
-    QTimer m_updateTimer;
     QTimer m_requestTimer;
-    bool m_lastPositionIsFresh;
     bool m_lastVelocityIsFresh;
+    bool m_regularUpdateTimedOut;
     double m_lastVelocity;
     double m_lastDirection;
     double m_lastClimb;
