@@ -296,7 +296,7 @@ void QGeoTiledMappingManagerEngineNokia::loadMapVersion()
 
     QJsonObject object = doc.object();
 
-    m_mapVersion.setVersion(object[QLatin1String("version")].toInt());
+    m_mapVersion.setVersion(object[QLatin1String("version")].toDouble());
     m_mapVersion.setVersionData(object[QLatin1String("data")].toObject());
 }
 
