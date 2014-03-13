@@ -64,6 +64,8 @@
 #include "qgeotilespec_p.h"
 #include "qgeotiledmappingmanagerengine_p.h"
 
+#include <QImage>
+
 QT_BEGIN_NAMESPACE
 
 class QGeoMappingManager;
@@ -71,7 +73,6 @@ class QGeoMappingManager;
 class QGeoTile;
 class QGeoCachedTileMemory;
 class QGeoTileCache;
-class QGLTexture2D;
 
 class QPixmap;
 class QThread;
@@ -98,7 +99,7 @@ public:
     ~QGeoTileTexture();
 
     QGeoTileSpec spec;
-    QGLTexture2D *texture;
+    QImage image;
     bool textureBound;
 };
 
@@ -132,14 +133,11 @@ public:
     int minTextureUsage() const;
     int textureUsage() const;
 
-    void GLContextAvailable();
-
     QSharedPointer<QGeoTileTexture> get(const QGeoTileSpec &spec);
 
     // can be called without a specific tileCache pointer
     static void evictFromDiskCache(QGeoCachedTileDisk *td);
     static void evictFromMemoryCache(QGeoCachedTileMemory *tm);
-    static void evictFromTextureCache(QGeoTileTexture *tt);
 
     void insert(const QGeoTileSpec &spec,
                 const QByteArray &bytes,
@@ -167,9 +165,6 @@ private:
 
     int minTextureUsage_;
     int extraTextureUsage_;
-
-    static QMutex cleanupMutex_;
-    static QList<QGLTexture2D*> cleanupList_;
 };
 
 QT_END_NAMESPACE
