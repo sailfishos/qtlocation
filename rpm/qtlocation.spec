@@ -129,10 +129,6 @@ Requires:   qt5-qtdeclarative
 This package contains the Location import for QtDeclarative
 
 
-
-
-##### Build section
-
 %prep
 %setup -q -n %{name}-%{version}/qtlocation
 
@@ -162,15 +158,11 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %fdupes %{buildroot}/%{_includedir}
 
 
-#### Pre/Post section
-
 %post -n qt5-qtpositioning -p /sbin/ldconfig
 %postun -n qt5-qtpositioning -p /sbin/ldconfig
 
 %post -n qt5-qtlocation -p /sbin/ldconfig
 %postun -n qt5-qtlocation -p /sbin/ldconfig
-
-#### File section
 
 
 %files -n qt5-qtpositioning
