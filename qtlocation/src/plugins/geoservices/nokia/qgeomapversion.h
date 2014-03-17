@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Appello Systems AB.
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -46,69 +46,30 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOTILEFETCHER_NOKIA_H
-#define QGEOTILEFETCHER_NOKIA_H
+#ifndef QGEOMAPVERSION_H
+#define QGEOMAPVERSION_H
 
-#include "qgeoserviceproviderplugin_nokia.h"
-
-#include <QtLocation/private/qgeotilefetcher_p.h>
+#include <QByteArray>
+#include <QJsonObject>
 
 QT_BEGIN_NAMESPACE
 
-class QGeoTiledMapReply;
-class QGeoTileSpec;
-class QGeoTiledMappingManagerEngine;
-class QGeoTiledMappingManagerEngineNokia;
-class QNetworkReply;
-class QGeoNetworkAccessManager;
-class QGeoUriProvider;
-
-class QGeoTileFetcherNokia : public QGeoTileFetcher
+class QGeoMapVersion
 {
-    Q_OBJECT
 
 public:
-    QGeoTileFetcherNokia(
-            const QMap<QString, QVariant> &parameters,
-            QGeoNetworkAccessManager *networkManager,
-            QGeoTiledMappingManagerEngine *engine,
-            const QSize &tileSize);
-
-    ~QGeoTileFetcherNokia();
-
-    bool init();
-
-    QGeoTiledMapReply *getTileImage(const QGeoTileSpec &spec);
-
-    QString token() const;
-    QString applicationId() const;
-
-public Q_SLOTS:
-    void copyrightsFetched();
-    void fetchCopyrightsData();
-    void versionFetched();
-    void fetchVersionData();
+    QGeoMapVersion();
+    bool isNewVersion(const QJsonObject &newVersionData);
+    int version() const;
+    void setVersion(const int);
+    void setVersionData(const QJsonObject &versionData);
+    QByteArray toJson() const;
 
 private:
-    Q_DISABLE_COPY(QGeoTileFetcherNokia)
-
-    QString getRequestString(const QGeoTileSpec &spec);
-
-    QString getLanguageString() const;
-
-    QPointer<QGeoTiledMappingManagerEngineNokia> m_engineNokia;
-    QGeoNetworkAccessManager *m_networkManager;
-    QMap<QString, QVariant> m_parameters;
-    QSize m_tileSize;
-    QString m_token;
-    QNetworkReply *m_copyrightsReply;
-    QNetworkReply *m_versionReply;
-
-    QString m_applicationId;
-    QGeoUriProvider *m_baseUriProvider;
-    QGeoUriProvider *m_aerialUriProvider;
+    int m_version;
+    QJsonObject m_versionData;
 };
 
 QT_END_NAMESPACE
 
-#endif
+#endif // QGEOMAPVERSION_H

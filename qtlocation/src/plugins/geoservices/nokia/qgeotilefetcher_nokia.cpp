@@ -81,45 +81,9 @@ namespace
             return s128;
     }
 
-    QString mapIdToStr(int mapId)
+    bool isAerialType(const QString mapScheme)
     {
-        typedef std::map<int, QString> MapTypeRegistry;
-        static MapTypeRegistry registeredTypes;
-        if (registeredTypes.empty()) {
-            registeredTypes[0] = "normal.day";
-            registeredTypes[1] = "normal.day";
-            registeredTypes[2] = "satellite.day";
-            registeredTypes[3] = "terrain.day";
-            registeredTypes[4] = "hybrid.day";
-            registeredTypes[5] = "normal.day.transit";
-            registeredTypes[6] = "normal.day.grey";
-            registeredTypes[7] = "normal.day.mobile";
-            registeredTypes[8] = "terrain.day.mobile";
-            registeredTypes[9] = "hybrid.day.mobile";
-            registeredTypes[10] = "normal.day.transit.mobile";
-            registeredTypes[11] = "normal.day.grey.mobile";
-            registeredTypes[12] = "normal.day.custom";
-            registeredTypes[13] = "normal.night";
-            registeredTypes[14] = "normal.night.mobile";
-            registeredTypes[15] = "normal.night.grey";
-            registeredTypes[16] = "normal.night.grey.mobile";
-            registeredTypes[17] = "pedestrian.day";
-            registeredTypes[18] = "pedestrian.night";
-            registeredTypes[19] = "carnav.day.grey";
-        }
-
-        MapTypeRegistry::const_iterator it = registeredTypes.find(mapId);
-        if (it != registeredTypes.end()) {
-            return it->second;
-        }
-
-        qWarning() << "Unknown mapId: " << mapId;
-        return "normal.day";
-    }
-
-    bool isAerialType(const QString mapType)
-    {
-        return mapType.startsWith("satellite") || mapType.startsWith("hybrid") || mapType.startsWith("terrain");
+        return mapScheme.startsWith("satellite") || mapScheme.startsWith("hybrid") || mapScheme.startsWith("terrain");
     }
 }
 QGeoTileFetcherNokia::QGeoTileFetcherNokia(
@@ -179,14 +143,14 @@ QString QGeoTileFetcherNokia::getRequestString(const QGeoTileSpec &spec)
 
     QString requestString = http;
 
-    QString mapType = mapIdToStr(spec.mapId());
-    if (isAerialType(mapType))
+    const QString mapScheme = m_engineNokia->getScheme(spec.mapId());
+    if (isAerialType(mapScheme))
         requestString += m_aerialUriProvider->getCurrentHost();
     else
         requestString += m_baseUriProvider->getCurrentHost();
 
     requestString += path;
-    requestString += mapType;
+    requestString += mapScheme;
     requestString += slash;
     requestString += QString::number(spec.zoom());
     requestString += slash;
@@ -292,28 +256,42 @@ QString QGeoTileFetcherNokia::applicationId() const
 
 void QGeoTileFetcherNokia::copyrightsFetched()
 {
-    if (m_engineNokia) {
+    if (m_engineNokia && m_copyrightsReply->error() == QNetworkReply::NoError) {
         QMetaObject::invokeMethod(m_engineNokia.data(),
                                   "loadCopyrightsDescriptorsFromJson",
                                   Qt::QueuedConnection,
                                   Q_ARG(QByteArray, m_copyrightsReply->readAll()));
     }
+
+    m_copyrightsReply->deleteLater();
+}
+
+void QGeoTileFetcherNokia::versionFetched()
+{
+    if (m_engineNokia && m_versionReply->error() == QNetworkReply::NoError) {
+        QMetaObject::invokeMethod(m_engineNokia.data(),
+                                  "parseNewVersionInfo",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(QByteArray, m_versionReply->readAll()));
+    }
+
+    m_versionReply->deleteLater();
 }
 
 void QGeoTileFetcherNokia::fetchCopyrightsData()
 {
-    QString copyrightUrl = "http://";
+    QString copyrightUrl = QStringLiteral("http://");
 
     copyrightUrl += m_baseUriProvider->getCurrentHost();
-    copyrightUrl += "/maptile/2.1/copyright/newest?output=json";
+    copyrightUrl += QStringLiteral("/maptile/2.1/copyright/newest?output=json");
 
     if (!token().isEmpty()) {
-        copyrightUrl += "&token=";
+        copyrightUrl += QStringLiteral("&token=");
         copyrightUrl += token();
     }
 
     if (!applicationId().isEmpty()) {
-        copyrightUrl += "&app_id=";
+        copyrightUrl += QStringLiteral("&app_id=");
         copyrightUrl += applicationId();
     }
 
@@ -330,6 +308,38 @@ void QGeoTileFetcherNokia::fetchCopyrightsData()
     } else {
         connect(m_copyrightsReply, SIGNAL(finished()), this, SLOT(copyrightsFetched()));
     }
+}
+
+void QGeoTileFetcherNokia::fetchVersionData()
+{
+    QString versionUrl = QStringLiteral("http://");
+
+    versionUrl += m_baseUriProvider->getCurrentHost();
+    versionUrl += QStringLiteral("/maptile/2.1/version");
+
+    if (!token().isEmpty()) {
+        versionUrl += QStringLiteral("?token=");
+        versionUrl += token();
+    }
+
+    if (!applicationId().isEmpty()) {
+        versionUrl += QStringLiteral("&app_id=");
+        versionUrl += applicationId();
+    }
+
+    QNetworkRequest netRequest((QUrl(versionUrl)));
+    m_versionReply = m_networkManager->get(netRequest);
+
+    if (m_versionReply->error() != QNetworkReply::NoError) {
+        qWarning() << __FUNCTION__ << m_versionReply->errorString();
+        m_versionReply->deleteLater();
+        return;
+    }
+
+    if (m_versionReply->isFinished())
+        versionFetched();
+    else
+        connect(m_versionReply, SIGNAL(finished()), this, SLOT(versionFetched()));
 }
 
 QT_END_NAMESPACE
