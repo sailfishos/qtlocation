@@ -46,6 +46,7 @@
 #include "qdeclarativegeoroute_p.h"
 #include <QtQml/QQmlInfo>
 #include <QtGui/QPainter>
+#include <QtPositioning/QGeoRectangle>
 
 /*!
     \qmltype MapRoute
@@ -104,7 +105,7 @@ void QDeclarativeRouteMapItem::updateAfterLinePropertiesChanged()
 {
     // mark dirty just in case we're a width change
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -115,7 +116,7 @@ void QDeclarativeRouteMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *map
     QDeclarativeGeoMapItemBase::setMap(quickMap,map);
     if (map) {
         geometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -144,7 +145,7 @@ void QDeclarativeRouteMapItem::setRoute(QDeclarativeGeoRoute *route)
     }
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit routeChanged(route_);
 
 }
@@ -157,7 +158,6 @@ QSGNode *QDeclarativeRouteMapItem::updateMapItemPaintNode(QSGNode *oldNode, Upda
     Q_UNUSED(data);
 
     MapPolylineNode *node = static_cast<MapPolylineNode *>(oldNode);
-
     if (!node) {
         node = new MapPolylineNode();
     }
@@ -194,10 +194,30 @@ QDeclarativeMapLineProperties *QDeclarativeRouteMapItem::line()
 /*!
     \internal
 */
-void QDeclarativeRouteMapItem::updateMapItem()
+void QDeclarativeRouteMapItem::updatePolish()
 {
     if (!map() || path_.isEmpty())
         return;
+
+    QGeoRectangle r = map()->visibleRegion();
+
+    bool cull = true;
+    foreach (const QGeoCoordinate &c, path_) {
+        if (r.contains(c)) {
+            cull = false;
+            break;
+        }
+    }
+
+    if (cull) {
+        if (visibleOnMap()) {
+            setVisibleOnMap(false);
+            update();
+        }
+        return;
+    } else {
+        setVisibleOnMap(true);
+    }
 
     geometry_.updateSourcePoints(*map(), path_);
     geometry_.updateScreenPoints(*map(), line_.width());
@@ -234,7 +254,7 @@ void QDeclarativeRouteMapItem::afterViewportChanged(const QGeoMapViewportChangeE
 
     geometry_.setPreserveGeometry(true, geometry_.geoLeftBound());
     geometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!

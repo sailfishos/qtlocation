@@ -473,7 +473,7 @@ void QDeclarativePolylineMapItem::updateAfterLinePropertiesChanged()
 {
     // mark dirty just in case we're a width change
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -484,7 +484,7 @@ void QDeclarativePolylineMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *
     QDeclarativeGeoMapItemBase::setMap(quickMap,map);
     if (map) {
         geometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -541,7 +541,7 @@ void QDeclarativePolylineMapItem::setPath(const QJSValue &value)
     path_ = pathList;
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -558,7 +558,7 @@ void QDeclarativePolylineMapItem::addCoordinate(const QGeoCoordinate &coordinate
     path_.append(coordinate);
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -587,7 +587,7 @@ void QDeclarativePolylineMapItem::removeCoordinate(const QGeoCoordinate &coordin
     path_.removeAt(index);
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -638,13 +638,13 @@ void QDeclarativePolylineMapItem::afterViewportChanged(const QGeoMapViewportChan
     }
     geometry_.setPreserveGeometry(true, geometry_.geoLeftBound());
     geometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
     \internal
 */
-void QDeclarativePolylineMapItem::updateMapItem()
+void QDeclarativePolylineMapItem::updatePolish()
 {
     if (!map() || path_.count() == 0)
         return;
@@ -692,7 +692,7 @@ bool QDeclarativePolylineMapItem::contains(const QPointF &point) const
 void QDeclarativePolylineMapItem::dragStarted()
 {
     geometry_.markFullScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -733,7 +733,7 @@ void QDeclarativePolylineMapItem::dragEnded()
                            + newCoordinate.longitude() - firstLongitude));
         geometry_.setPreserveGeometry(true, leftBoundCoord);
         geometry_.markSourceDirty();
-        updateMapItem();
+        polish();
         emit pathChanged();
     }
 }

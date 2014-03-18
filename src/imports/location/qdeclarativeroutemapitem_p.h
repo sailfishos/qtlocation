@@ -67,6 +67,8 @@ public:
     //from QuickItem
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
 
+    void updatePolish();
+
     QDeclarativeGeoRoute *route() const;
     void setRoute(QDeclarativeGeoRoute *route);
 
@@ -78,7 +80,6 @@ Q_SIGNALS:
     void routeChanged(const QDeclarativeGeoRoute *route);
 
 protected Q_SLOTS:
-    virtual void updateMapItem();
     void updateAfterLinePropertiesChanged();
     void afterViewportChanged(const QGeoMapViewportChangeEvent &event);
 
