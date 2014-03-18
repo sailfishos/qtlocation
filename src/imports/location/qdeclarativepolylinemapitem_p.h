@@ -104,6 +104,8 @@ public:
        //from QuickItem
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
 
+    void updatePolish();
+
     Q_INVOKABLE void addCoordinate(const QGeoCoordinate &coordinate);
     Q_INVOKABLE void removeCoordinate(const QGeoCoordinate &coordinate);
 
@@ -121,7 +123,6 @@ protected:
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
-    virtual void updateMapItem();
     void updateAfterLinePropertiesChanged();
     void afterViewportChanged(const QGeoMapViewportChangeEvent &event);
 

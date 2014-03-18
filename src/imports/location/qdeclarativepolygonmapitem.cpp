@@ -332,7 +332,7 @@ QDeclarativePolygonMapItem::QDeclarativePolygonMapItem(QQuickItem *parent)
 void QDeclarativePolygonMapItem::handleBorderUpdated()
 {
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 QDeclarativePolygonMapItem::~QDeclarativePolygonMapItem()
@@ -367,7 +367,7 @@ void QDeclarativePolygonMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *m
     if (map) {
         geometry_.markSourceDirty();
         borderGeometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -426,7 +426,7 @@ void QDeclarativePolygonMapItem::setPath(const QJSValue &value)
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -444,7 +444,7 @@ void QDeclarativePolygonMapItem::addCoordinate(const QGeoCoordinate &coordinate)
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -475,7 +475,7 @@ void QDeclarativePolygonMapItem::removeCoordinate(const QGeoCoordinate &coordina
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -499,7 +499,7 @@ void QDeclarativePolygonMapItem::setColor(const QColor &color)
 
     color_ = color;
     dirtyMaterial_ = true;
-    updateMapItem();
+    polish();
     emit colorChanged(color_);
 }
 
@@ -529,7 +529,7 @@ QSGNode *QDeclarativePolygonMapItem::updateMapItemPaintNode(QSGNode *oldNode, Up
 /*!
     \internal
 */
-void QDeclarativePolygonMapItem::updateMapItem()
+void QDeclarativePolygonMapItem::updatePolish()
 {
     if (!map() || path_.count() == 0)
         return;
@@ -592,7 +592,7 @@ void QDeclarativePolygonMapItem::afterViewportChanged(const QGeoMapViewportChang
     borderGeometry_.setPreserveGeometry(true, borderGeometry_.geoLeftBound());
     geometry_.markScreenDirty();
     borderGeometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -649,7 +649,7 @@ void QDeclarativePolygonMapItem::geometryChanged(const QRectF &newGeometry, cons
         borderGeometry_.setPreserveGeometry(true, leftBoundCoord);
         geometry_.markSourceDirty();
         borderGeometry_.markSourceDirty();
-        updateMapItem();
+        polish();
         emit pathChanged();
     }
 

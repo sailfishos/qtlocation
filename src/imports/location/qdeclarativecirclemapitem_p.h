@@ -67,6 +67,8 @@ public:
     virtual void setMap(QDeclarativeGeoMap *quickMap, QGeoMap *map);
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
 
+    void updatePolish();
+
     QGeoCoordinate center();
     void setCenter(const QGeoCoordinate &center);
 
@@ -89,7 +91,6 @@ protected:
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
-    virtual void updateMapItem();
     void updateMapItemAssumeDirty();
     void afterViewportChanged(const QGeoMapViewportChangeEvent &event);
 

@@ -72,7 +72,7 @@ QGeoMapViewportChangeEvent &QGeoMapViewportChangeEvent::operator=(const QGeoMapV
 }
 
 QDeclarativeGeoMapItemBase::QDeclarativeGeoMapItemBase(QQuickItem *parent)
-:   QQuickItem(parent), map_(0), quickMap_(0)
+:   QQuickItem(parent), map_(0), quickMap_(0), visibleOnMap_(true)
 {
     setFiltersChildMouseEvents(true);
     connect(this, SIGNAL(childrenChanged()),
@@ -207,12 +207,22 @@ bool QDeclarativeGeoMapItemBase::childMouseEventFilter(QQuickItem *item, QEvent 
     }
 }
 
+void QDeclarativeGeoMapItemBase::setVisibleOnMap(bool visible)
+{
+    visibleOnMap_ = visible;
+}
+
+bool QDeclarativeGeoMapItemBase::visibleOnMap() const
+{
+    return visibleOnMap_;
+}
+
 /*!
     \internal
 */
 QSGNode *QDeclarativeGeoMapItemBase::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *pd)
 {
-    if (!map_ || !quickMap_) {
+    if (!map_ || !quickMap_ || !visibleOnMap_) {
         delete oldNode;
         return 0;
     }

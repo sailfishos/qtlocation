@@ -40,6 +40,7 @@
 #include "qgeocameracapabilities_p.h"
 #include "qgeomapcontroller_p.h"
 
+#include <QtPositioning/QGeoRectangle>
 #include <QtPositioning/private/qgeoprojection_p.h>
 #include <QtPositioning/private/qdoublevector3d_p.h>
 
@@ -104,6 +105,14 @@ int QGeoMap::height() const
 QGeoCameraCapabilities QGeoMap::cameraCapabilities() const
 {
     return mapData_->cameraCapabilities();
+}
+
+QGeoRectangle QGeoMap::visibleRegion() const
+{
+    QGeoCoordinate tl = screenPositionToCoordinate(QDoubleVector2D(0, 0));
+    QGeoCoordinate br = screenPositionToCoordinate(QDoubleVector2D(width(), height()));
+
+    return QGeoRectangle(tl, br);
 }
 
 void QGeoMap::setCameraData(const QGeoCameraData &cameraData)
