@@ -18,9 +18,7 @@ BuildRequires:  qt5-qtnetwork
 BuildRequires:  qt5-qtnetwork-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtdeclarative-qtquick-devel
-BuildRequires:  qt5-qt3d-devel
 BuildRequires:  qt5-qmake
-BuildRequires:  qt5-qtv8-devel
 BuildRequires:  qt5-tools
 BuildRequires:  fdupes
 

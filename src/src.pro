@@ -4,7 +4,7 @@ CONFIG += ordered
 SUBDIRS += positioning
 
 #no point in building QtLocation without Qt3D
-qtHaveModule(3d) {
+qtHaveModule(quick) {
     SUBDIRS += location 3rdparty
 }
 
