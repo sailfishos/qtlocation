@@ -59,7 +59,7 @@ QGeoTiledMappingManagerEngineOsm::QGeoTiledMappingManagerEngineOsm(const QVarian
     setTileSize(QSize(256, 256));
 
     QList<QGeoMapType> mapTypes;
-    mapTypes << QGeoMapType(QGeoMapType::StreetMap, tr("Street Map"), tr("Open street map street map"), false, 1);
+    mapTypes << QGeoMapType(QGeoMapType::StreetMap, tr("Street Map"), tr("Open street map street map"), false, false, 1);
     setSupportedMapTypes(mapTypes);
 
     QGeoTileFetcherOsm *tileFetcher = new QGeoTileFetcherOsm(this);
