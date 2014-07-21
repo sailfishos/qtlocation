@@ -83,25 +83,27 @@ QGeoTiledMappingManagerEngineNokia::QGeoTiledMappingManagerEngineNokia(
     setTileSize(QSize(256, 256));
 
     QList<QGeoMapType> types;
-    types << QGeoMapType(QGeoMapType::StreetMap, tr("Street Map"), tr("Normal map view in daylight mode"), false, 1);
-    types << QGeoMapType(QGeoMapType::SatelliteMapDay, tr("Satellite Map"), tr("Satellite map view in daylight mode"), false, 2);
-    types << QGeoMapType(QGeoMapType::TerrainMap, tr("Terrain Map"), tr("Terrain map view in daylight mode"), false, 3);
-    types << QGeoMapType(QGeoMapType::HybridMap, tr("Hybrid Map"), tr("Satellite map view with streets in daylight mode"), false, 4);
-    types << QGeoMapType(QGeoMapType::TransitMap, tr("Transit Map"), tr("Color-reduced map view with public transport scheme in daylight mode"), false, 5);
-    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Gray Street Map"), tr("Color-reduced map view in daylight mode (especially used for background maps)"), false, 6);
-    types << QGeoMapType(QGeoMapType::StreetMap, tr("Mobile Street Map"), tr("Mobile normal map view in daylight mode"), true, 7);
-    types << QGeoMapType(QGeoMapType::TerrainMap, tr("Mobile Terrain Map"), tr("Mobile terrain map view in daylight mode"), true, 8);
-    types << QGeoMapType(QGeoMapType::HybridMap, tr("Mobile Hybrid Map"), tr("Mobile satellite map view with streets in daylight mode"), true, 9);
-    types << QGeoMapType(QGeoMapType::TransitMap, tr("Mobile Transit Map"), tr("Mobile color-reduced map view with public transport scheme in daylight mode"), true, 10);
-    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Mobile Gray Street Map"), tr("Mobile color-reduced map view in daylight mode (especially used for background maps)"), true, 11);
-    types << QGeoMapType(QGeoMapType::StreetMap, tr("Custom Street Map"), tr("Normal map view in daylight mode"), false, 12);
-    types << QGeoMapType(QGeoMapType::StreetMap, tr("Night Street Map"), tr("Normal map view in night mode"), false, 13);
-    types << QGeoMapType(QGeoMapType::StreetMap, tr("Mobile Night Street Map"), tr("Mobile normal map view in night mode"), true, 14);
-    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Gray Night Street Map"), tr("Color-reduced map view in night mode (especially used for background maps)"), false, 15);
-    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Mobile Gray Night Street Map"), tr("Mobile color-reduced map view in night mode (especially used for background maps)"), true, 16);
-    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Pedestrian Street Map"), tr("Pedestrian map view in daylight mode for mobile usage"), true, 17);
-    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Pedestrian Night Street Map"), tr("Pedestrian map view in night mode for mobile usage"), true, 18);
-    types << QGeoMapType(QGeoMapType::CarNavigationMap, tr("Car Navigation Map"), tr("Normal map view in daylight mode for car navigation"), false, 19);
+    types << QGeoMapType(QGeoMapType::StreetMap, tr("Street Map"), tr("Normal map view in daylight mode"), false, false, 1);
+    types << QGeoMapType(QGeoMapType::SatelliteMapDay, tr("Satellite Map"), tr("Satellite map view in daylight mode"), false, false, 2);
+    types << QGeoMapType(QGeoMapType::TerrainMap, tr("Terrain Map"), tr("Terrain map view in daylight mode"), false, false, 3);
+    types << QGeoMapType(QGeoMapType::HybridMap, tr("Hybrid Map"), tr("Satellite map view with streets in daylight mode"), false, false, 4);
+    types << QGeoMapType(QGeoMapType::TransitMap, tr("Transit Map"), tr("Color-reduced map view with public transport scheme in daylight mode"), false, false, 5);
+    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Gray Street Map"), tr("Color-reduced map view in daylight mode (especially used for background maps)"), false, false, 6);
+    types << QGeoMapType(QGeoMapType::StreetMap, tr("Mobile Street Map"), tr("Mobile normal map view in daylight mode"), true, false, 7);
+    types << QGeoMapType(QGeoMapType::TerrainMap, tr("Mobile Terrain Map"), tr("Mobile terrain map view in daylight mode"), true, false, 8);
+    types << QGeoMapType(QGeoMapType::HybridMap, tr("Mobile Hybrid Map"), tr("Mobile satellite map view with streets in daylight mode"), true, false, 9);
+    types << QGeoMapType(QGeoMapType::TransitMap, tr("Mobile Transit Map"), tr("Mobile color-reduced map view with public transport scheme in daylight mode"), true, false, 10);
+    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Mobile Gray Street Map"), tr("Mobile color-reduced map view in daylight mode (especially used for background maps)"), true, false, 11);
+    types << QGeoMapType(QGeoMapType::StreetMap, tr("Custom Street Map"), tr("Normal map view in daylight mode"), false, false, 12);
+    types << QGeoMapType(QGeoMapType::StreetMap, tr("Night Street Map"), tr("Normal map view in night mode"), false, true, 13);
+    types << QGeoMapType(QGeoMapType::StreetMap, tr("Mobile Night Street Map"), tr("Mobile normal map view in night mode"), true, true, 14);
+    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Gray Night Street Map"), tr("Color-reduced map view in night mode (especially used for background maps)"), false, true, 15);
+    types << QGeoMapType(QGeoMapType::GrayStreetMap, tr("Mobile Gray Night Street Map"), tr("Mobile color-reduced map view in night mode (especially used for background maps)"), true, true, 16);
+    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Pedestrian Street Map"), tr("Pedestrian map view in daylight mode"), false, false, 17);
+    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Mobile Pedestrian Street Map"), tr("Mobile pedestrian map view in daylight mode for mobile usage"), true, false, 18);
+    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Pedestrian Night Street Map"), tr("Pedestrian map view in night mode"), false, true, 19);
+    types << QGeoMapType(QGeoMapType::PedestrianMap, tr("Mobile Pedestrian Night Street Map"), tr("Mobile pedestrian map view in night mode for mobile usage"), true, true, 20);
+    types << QGeoMapType(QGeoMapType::CarNavigationMap, tr("Car Navigation Map"), tr("Normal map view in daylight mode for car navigation"), false, false, 21);
     setSupportedMapTypes(types);
 
     QGeoTileFetcherNokia *fetcher = new QGeoTileFetcherNokia(parameters, networkManager, this, tileSize());
@@ -147,26 +149,28 @@ QGeoTiledMappingManagerEngineNokia::~QGeoTiledMappingManagerEngineNokia() {}
 
 void QGeoTiledMappingManagerEngineNokia::populateMapSchemes()
 {
-    m_mapSchemes[0] = QLatin1String("normal.day");
-    m_mapSchemes[1] = QLatin1String("normal.day");
-    m_mapSchemes[2] = QLatin1String("satellite.day");
-    m_mapSchemes[3] = QLatin1String("terrain.day");
-    m_mapSchemes[4] = QLatin1String("hybrid.day");
-    m_mapSchemes[5] = QLatin1String("normal.day.transit");
-    m_mapSchemes[6] = QLatin1String("normal.day.grey");
-    m_mapSchemes[7] = QLatin1String("normal.day.mobile");
-    m_mapSchemes[8] = QLatin1String("terrain.day.mobile");
-    m_mapSchemes[9] = QLatin1String("hybrid.day.mobile");
-    m_mapSchemes[10] = QLatin1String("normal.day.transit.mobile");
-    m_mapSchemes[11] = QLatin1String("normal.day.grey.mobile");
-    m_mapSchemes[12] = QLatin1String("normal.day.custom");
-    m_mapSchemes[13] = QLatin1String("normal.night");
-    m_mapSchemes[14] = QLatin1String("normal.night.mobile");
-    m_mapSchemes[15] = QLatin1String("normal.night.grey");
-    m_mapSchemes[16] = QLatin1String("normal.night.grey.mobile");
-    m_mapSchemes[17] = QLatin1String("pedestrian.day");
-    m_mapSchemes[18] = QLatin1String("pedestrian.night");
-    m_mapSchemes[19] = QLatin1String("carnav.day.grey");
+    m_mapSchemes[0] = QStringLiteral("normal.day");
+    m_mapSchemes[1] = QStringLiteral("normal.day");
+    m_mapSchemes[2] = QStringLiteral("satellite.day");
+    m_mapSchemes[3] = QStringLiteral("terrain.day");
+    m_mapSchemes[4] = QStringLiteral("hybrid.day");
+    m_mapSchemes[5] = QStringLiteral("normal.day.transit");
+    m_mapSchemes[6] = QStringLiteral("normal.day.grey");
+    m_mapSchemes[7] = QStringLiteral("normal.day.mobile");
+    m_mapSchemes[8] = QStringLiteral("terrain.day.mobile");
+    m_mapSchemes[9] = QStringLiteral("hybrid.day.mobile");
+    m_mapSchemes[10] = QStringLiteral("normal.day.transit.mobile");
+    m_mapSchemes[11] = QStringLiteral("normal.day.grey.mobile");
+    m_mapSchemes[12] = QStringLiteral("normal.day.custom");
+    m_mapSchemes[13] = QStringLiteral("normal.night");
+    m_mapSchemes[14] = QStringLiteral("normal.night.mobile");
+    m_mapSchemes[15] = QStringLiteral("normal.night.grey");
+    m_mapSchemes[16] = QStringLiteral("normal.night.grey.mobile");
+    m_mapSchemes[17] = QStringLiteral("pedestrian.day");
+    m_mapSchemes[18] = QStringLiteral("pedestrian.day.mobile");
+    m_mapSchemes[19] = QStringLiteral("pedestrian.night");
+    m_mapSchemes[20] = QStringLiteral("pedestrian.night.mobile");
+    m_mapSchemes[21] = QStringLiteral("carnav.day.grey");
 }
 
 QString QGeoTiledMappingManagerEngineNokia::getScheme(int mapId)
