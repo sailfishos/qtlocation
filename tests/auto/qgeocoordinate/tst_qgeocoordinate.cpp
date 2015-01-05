@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the test suite of the Qt Toolkit.
@@ -92,6 +92,12 @@ private:
     };
 
 private slots:
+    void initTestcase()
+    {
+        qRegisterMetaType<QGeoCoordinate>();
+        QMetaType::registerComparators<QGeoCoordinate>();
+    }
+
     void constructor()
     {
         QGeoCoordinate c;
@@ -289,6 +295,9 @@ private slots:
         QFETCH(bool, result);
 
         QCOMPARE(c1 == c2, result);
+        QVariant v1 = QVariant::fromValue(c1);
+        QVariant v2 = QVariant::fromValue(c2);
+        QCOMPARE(v2 == v1, result);
     }
 
     void comparison_data()

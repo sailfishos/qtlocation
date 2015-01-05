@@ -43,7 +43,7 @@
 #define QDECLARATIVEGEOCOORDINATEANIMATION_P_H
 
 #include <QtQuick/private/qquickanimation_p.h>
-#include "qdeclarativecoordinate_p.h"
+#include <QtPositioning/qgeocoordinate.h>
 
 QT_BEGIN_NAMESPACE
 
