@@ -164,7 +164,7 @@ QJSValue QDeclarativeGeoRouteSegment::path() const
         pathArray->putIndexed(i, cv);
     }
 
-    return new QJSValuePrivate(v4, QV4::ValueRef(pathArray));
+    return QJSValue(v4, pathArray.asReturnedValue());
 }
 
 #include "moc_qdeclarativegeoroutesegment_p.cpp"
