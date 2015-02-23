@@ -920,6 +920,7 @@ bool QDeclarativeGeoMap::childMouseEventFilter(QQuickItem *item, QEvent *event)
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
     case QEvent::TouchEnd:
+    case QEvent::TouchCancel:
         return gestureArea_->filterMapChildTouchEvent(static_cast<QTouchEvent *>(event));
     default:
         return false;
