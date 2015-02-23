@@ -818,6 +818,8 @@ bool QDeclarativeGeoMap::childMouseEventFilter(QQuickItem *item, QEvent *event)
             return false;
         grabMouse();
         return true;
+    case QEvent::TouchCancel:
+        return gestureArea_->filterMapChildTouchEvent(static_cast<QTouchEvent *>(event));
     case QEvent::Wheel:
         return gestureArea_->wheelEvent(static_cast<QWheelEvent *>(event));
     default:
