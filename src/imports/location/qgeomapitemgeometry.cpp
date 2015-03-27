@@ -132,6 +132,9 @@ double QGeoMapItemGeometry::geoDistanceToScreenWidth(const QGeoMap &map,
                                                      const QGeoCoordinate &fromCoord,
                                                      const QGeoCoordinate &toCoord)
 {
+    // Do not wrap around half the globe
+    Q_ASSERT(!qFuzzyCompare(fromCoord.longitude(), toCoord.longitude()));
+
     QGeoCoordinate mapMid = map.screenPositionToCoordinate(QDoubleVector2D(map.width()/2.0, 0));
     double halfGeoDist = toCoord.longitude() - fromCoord.longitude();
     if (toCoord.longitude() < fromCoord.longitude())
