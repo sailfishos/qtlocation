@@ -75,8 +75,8 @@ QGeoTiledMappingManagerEngineNokia::QGeoTiledMappingManagerEngineNokia(
 
     QGeoCameraCapabilities capabilities;
 
-    capabilities.setMinimumZoomLevel(0.0);
-    capabilities.setMaximumZoomLevel(20.0);
+    capabilities.setMinimumZoomLevel(1.0);
+    capabilities.setMaximumZoomLevel(19.0);
 
     setCameraCapabilities(capabilities);
 
