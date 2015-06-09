@@ -3,6 +3,9 @@ INCLUDEPATH += maps
 
 QT += gui quick
 
+# to get access to QSGPlainTexture in qgeommapscene.cpp
+QT += quick-private gui-private
+
 PUBLIC_HEADERS += \
                     maps/qgeocodereply.h \
                     maps/qgeocodingmanagerengine.h \

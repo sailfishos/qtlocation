@@ -52,6 +52,7 @@
 
 #include <QtQuick/QSGSimpleTextureNode>
 #include <QtQuick/QQuickWindow>
+#include <QtQuick/private/qsgtexture_p.h>
 
 #include <QHash>
 
@@ -718,7 +719,7 @@ void QGeoMapRootNode::updateTiles(QGeoMapTileContainerNode *root,
     }
 }
 
-QSGNode *QGeoMapScene::updateSceneGraph(QSGNode *oldNode, QQuickWindow *window)
+QSGNode *QGeoMapScene::updateSceneGraph(QSGNode *oldNode, QQuickWindow *)
 {
     Q_D(QGeoMapScene);
     float w = d->screenSize_.width();
@@ -750,7 +751,11 @@ QSGNode *QGeoMapScene::updateSceneGraph(QSGNode *oldNode, QQuickWindow *window)
         QGeoTileTexture *tileTexture = d->textures_.value(spec).data();
         if (!tileTexture || tileTexture->image.isNull())
             continue;
-        mapRoot->textures.insert(spec, window->createTextureFromImage(tileTexture->image));
+        QSGPlainTexture *texture = new QSGPlainTexture();
+        texture->setImage(tileTexture->image);
+        texture->setHasMipmaps(false);
+        texture->setHasAlphaChannel(false);
+        mapRoot->textures.insert(spec, texture);;
     }
 
     double sideLength = d->scaleFactor_ * d->tileSize_ * d->sideLength_;
