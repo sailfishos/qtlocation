@@ -75,12 +75,12 @@ QGeoTiledMappingManagerEngineNokia::QGeoTiledMappingManagerEngineNokia(
 
     QGeoCameraCapabilities capabilities;
 
-    capabilities.setMinimumZoomLevel(0.0);
-    capabilities.setMaximumZoomLevel(20.0);
+    capabilities.setMinimumZoomLevel(1.0);
+    capabilities.setMaximumZoomLevel(19.0);
 
     setCameraCapabilities(capabilities);
 
-    setTileSize(QSize(256, 256));
+    setTileSize(QSize(512, 512));
 
     QList<QGeoMapType> types;
     types << QGeoMapType(QGeoMapType::StreetMap, tr("Street Map"), tr("Normal map view in daylight mode"), false, false, 1);
