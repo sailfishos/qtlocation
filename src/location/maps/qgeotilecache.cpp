@@ -292,6 +292,11 @@ QSharedPointer<QGeoTileTexture> QGeoTileCache::get(const QGeoTileSpec &spec)
             return QSharedPointer<QGeoTileTexture>(0);
         }
 
+        if (pixmap.size() != tileSize_) {
+            evictFromDiskCache(td.data());
+            return QSharedPointer<QGeoTileTexture>();
+        }
+
         addToMemoryCache(spec, bytes, (parts.size() == 2 ? parts.at(1) : QLatin1String("")));
         QSharedPointer<QGeoTileTexture> tt = addToTextureCache(td->spec, pixmap);
         if (tt)
