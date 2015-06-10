@@ -701,7 +701,7 @@ void QGeoMapRootNode::updateTiles(QGeoMapTileContainerNode *root,
 
     foreach (const QGeoTileSpec &s, toAdd) {
         QGeoTileTexture *tileTexture = d->textures_.value(s).data();
-        if (!tileTexture || tileTexture->image.isNull())
+        if (!tileTexture || tileTexture->image.isNull() || !textures.value(s))
             continue;
         QSGSimpleTextureNode *tileNode = new QSGSimpleTextureNode();
         // note: setTexture will update coordinates so do it here, before we buildGeometry
@@ -755,7 +755,9 @@ QSGNode *QGeoMapScene::updateSceneGraph(QSGNode *oldNode, QQuickWindow *)
         texture->setImage(tileTexture->image);
         texture->setHasMipmaps(false);
         texture->setHasAlphaChannel(false);
-        mapRoot->textures.insert(spec, texture);;
+        mapRoot->textures.insert(spec, texture);
+        // only add one texture per frame to aid us in not skipping frames.
+        break;
     }
 
     double sideLength = d->scaleFactor_ * d->tileSize_ * d->sideLength_;
