@@ -136,6 +136,8 @@ public:
     QSharedPointer<QGeoTileTexture> get(const QGeoTileSpec &spec);
     QString directory() const;
 
+    void setTileSize(const QSize &size) { tileSize_ = size; }
+
     // can be called without a specific tileCache pointer
     static void evictFromDiskCache(QGeoCachedTileDisk *td);
     static void evictFromMemoryCache(QGeoCachedTileMemory *tm);
@@ -166,6 +168,8 @@ private:
 
     int minTextureUsage_;
     int extraTextureUsage_;
+
+    QSize tileSize_;
 };
 
 QT_END_NAMESPACE
