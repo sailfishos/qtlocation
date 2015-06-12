@@ -197,6 +197,7 @@ private Q_SLOTS:
     void mapBearingChanged(qreal bearing);
     void pluginReady();
     void onMapChildrenChanged();
+    void onMinimumZoomLevelChanged();
 
 private:
     void setupMapView(QDeclarativeGeoMapItemView *view);

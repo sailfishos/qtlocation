@@ -211,6 +211,7 @@ QDeclarativeGeoMap::QDeclarativeGeoMap(QQuickItem *parent)
     setFiltersChildMouseEvents(true);
 
     connect(this, SIGNAL(childrenChanged()), this, SLOT(onMapChildrenChanged()), Qt::QueuedConnection);
+    connect(this, SIGNAL(minimumZoomLevelChanged()), this, SLOT(onMinimumZoomLevelChanged()));
 
     // Create internal flickable and pinch area.
     gestureArea_ = new QDeclarativeGeoMapGestureArea(this, this);
@@ -276,6 +277,11 @@ void QDeclarativeGeoMap::onMapChildrenChanged()
 
     // put the copyrights notice object at the highest z order
     copyrights->setCopyrightsZ(maxChildZ + 1);
+}
+
+void QDeclarativeGeoMap::onMinimumZoomLevelChanged()
+{
+    setZoomLevel(qBound(minimumZoomLevel(), zoomLevel(), maximumZoomLevel()));
 }
 
 /*!
@@ -488,6 +494,7 @@ void QDeclarativeGeoMap::mappingManagerInitialized()
             SIGNAL(updateRequired()),
             this,
             SLOT(update()));
+    connect(map_, SIGNAL(minimumZoomChanged()), this, SIGNAL(minimumZoomLevelChanged()));
     connect(map_->mapController(),
             SIGNAL(centerChanged(QGeoCoordinate)),
             this,
@@ -587,12 +594,18 @@ void QDeclarativeGeoMap::setMinimumZoomLevel(qreal minimumZoomLevel)
 
 qreal QDeclarativeGeoMap::minimumZoomLevel() const
 {
+    qreal sceneZoom = -1.0;
+    qreal gestureZoom = -1.0;
+    qreal managerZoom = -1.0;
+
+    if (map_)
+        sceneZoom = map_->minimumZoom();
     if (gestureArea_->minimumZoomLevel() != -1)
-        return gestureArea_->minimumZoomLevel();
-    else if (mappingManager_ && mappingManagerInitialized_)
-        return mappingManager_->cameraCapabilities().minimumZoomLevel();
-    else
-        return -1.0;
+        gestureZoom = gestureArea_->minimumZoomLevel();
+    if (mappingManager_ && mappingManagerInitialized_)
+        managerZoom = mappingManager_->cameraCapabilities().minimumZoomLevel();
+
+    return qMax(sceneZoom, qMax(gestureZoom, managerZoom));
 }
 
 /*!
