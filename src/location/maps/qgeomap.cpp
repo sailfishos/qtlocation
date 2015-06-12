@@ -68,6 +68,7 @@ QGeoMap::QGeoMap(QGeoMapData *mapData, QObject *parent)
     connect(mapData_, SIGNAL(updateRequired()), this, SIGNAL(updateRequired()));
     connect(mapData_, SIGNAL(activeMapTypeChanged()), this, SIGNAL(activeMapTypeChanged()));
     connect(mapData_, SIGNAL(copyrightsChanged(QImage,QPoint)), this, SIGNAL(copyrightsChanged(QImage,QPoint)));
+    connect(mapData_, SIGNAL(minimumZoomChanged()), this, SIGNAL(minimumZoomChanged()));
 }
 
 QGeoMap::~QGeoMap()
@@ -148,6 +149,11 @@ const QGeoMapType QGeoMap::activeMapType() const
 QString QGeoMap::pluginString()
 {
     return mapData_->pluginString();
+}
+
+qreal QGeoMap::minimumZoom() const
+{
+    return mapData_->minimumZoom();
 }
 
 QT_END_NAMESPACE

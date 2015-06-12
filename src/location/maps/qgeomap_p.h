@@ -97,6 +97,8 @@ public:
 
     QString pluginString();
 
+    qreal minimumZoom() const;
+
 public Q_SLOTS:
     void update();
     void cameraStopped(); // optional hint for prefetch
@@ -106,6 +108,7 @@ Q_SIGNALS:
     void updateRequired();
     void activeMapTypeChanged();
     void copyrightsChanged(const QImage &copyrightsImage, const QPoint &copyrightsPos);
+    void minimumZoomChanged();
 
 private:
     QGeoMapData *mapData_;

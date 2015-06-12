@@ -294,6 +294,13 @@ void QGeoTiledMapDataPrivate::resized(int width, int height)
         int newSize = qMax(cache_->minTextureUsage(), texCacheSize);
         cache_->setMinTextureUsage(newSize);
     }
+
+    // Calculate the minimum zoom based on tileSize and scene height/width, preventing the map
+    // being zoomed smaller than the map item.
+    if (height >= width)
+        map_->setMinimumZoom(log2(qreal(height) / engine_->tileSize().height()));
+    else
+        map_->setMinimumZoom(log2(qreal(width) / engine_->tileSize().width()));
 }
 
 void QGeoTiledMapDataPrivate::newTileFetched(const QGeoTileSpec &spec)

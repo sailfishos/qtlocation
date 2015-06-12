@@ -88,10 +88,14 @@ public:
     void setActiveMapType(const QGeoMapType &mapType);
     QString pluginString();
 
+    void setMinimumZoom(qreal zoom);
+    qreal minimumZoom() const;
+
 private:
     int width_;
     int height_;
     double aspectRatio_;
+    qreal minimumZoom_;
 
     QGeoMapData *map_;
     QGeoMappingManagerEngine *engine_;
