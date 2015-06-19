@@ -48,7 +48,7 @@ class QDeclarativeGeoMap;
 class QTouchEvent;
 class QWheelEvent;
 class QGeoMap;
-class QPropertyAnimation;
+class QVariantAnimation;
 
 class QDeclarativeGeoMapPinchEvent : public QObject
 {
@@ -209,8 +209,10 @@ private:
     bool canStartPan();
     void updatePan();
     bool tryStartFlick();
-    void startFlick(int dx, int dy, int timeMs = 0);
+    void startFlick(const QVector2D &pixelChange, int timeMs = 0);
+
 private Q_SLOTS:
+    void updateFlick(const QVariant &value);
     void endFlick();
 
 private:
@@ -253,13 +255,13 @@ private:
     {
         qreal maxVelocity_;
         qreal deceleration_;
-        QPropertyAnimation *animation_;
+        QVariantAnimation *animation_;
+        QPointF previous_;
         bool enabled_;
     } pan_;
 
     // these are calculated regardless of gesture or number of touch points
-    qreal velocityX_;
-    qreal velocityY_;
+    QVector2D velocity_;
     QElapsedTimer lastPosTime_;
     QPointF lastPos_;
     QList<QTouchEvent::TouchPoint> touchPoints_;
