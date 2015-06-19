@@ -176,6 +176,8 @@ QGeoMapDataPrivate::QGeoMapDataPrivate(QGeoMappingManagerEngine *engine, QGeoMap
       height_(0),
       aspectRatio_(0.0),
       minimumZoom_(0),
+      minimumLatitude_(-90.0),
+      maximumLatitude_(90.0),
       map_(parent),
       engine_(engine),
       controller_(0),
@@ -216,6 +218,17 @@ qreal QGeoMapDataPrivate::minimumZoom() const
     return minimumZoom_;
 }
 
+void QGeoMapDataPrivate::updateLatitudeBounds()
+{
+    QDoubleVector2D pos = map_->coordinateToScreenPosition(QGeoCoordinate(90.0, 0.0), false);
+    pos.setY(pos.y() + double(map_->height())/2);
+    maximumLatitude_ = map_->screenPositionToCoordinate(pos, false).latitude();
+
+    pos = map_->coordinateToScreenPosition(QGeoCoordinate(-90.0, 0.0), false);
+    pos.setY(pos.y() - double(map_->height())/2);
+    minimumLatitude_ = map_->screenPositionToCoordinate(pos, false).latitude();
+}
+
 QGeoMapController *QGeoMapDataPrivate::mapController()
 {
     if (!controller_)
@@ -235,6 +248,13 @@ void QGeoMapDataPrivate::setCameraData(const QGeoCameraData &cameraData)
 
         if (cameraData_.zoomLevel() > capabilities.maximumZoomLevel())
             cameraData_.setZoomLevel(capabilities.maximumZoomLevel());
+
+        if (cameraData_.zoomLevel() != oldCameraData.zoomLevel())
+            updateLatitudeBounds();
+
+        QGeoCoordinate center = cameraData_.center();
+        center.setLatitude(qBound(minimumLatitude_, center.latitude(), maximumLatitude_));
+        cameraData_.setCenter(center);
 
         if (!capabilities.supportsBearing())
             cameraData_.setBearing(0.0);
@@ -273,6 +293,7 @@ void QGeoMapDataPrivate::resize(int width, int height)
     aspectRatio_ = 1.0 * width_ / height_;
     map_->mapResized(width, height);
     setCameraData(cameraData_);
+    updateLatitudeBounds();
 }
 
 int QGeoMapDataPrivate::width() const
