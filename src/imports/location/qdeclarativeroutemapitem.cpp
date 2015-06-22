@@ -150,9 +150,13 @@ QSGNode *QDeclarativeRouteMapItem::updateMapItemPaintNode(QSGNode *oldNode, Upda
     Q_UNUSED(data);
 
     MapPolylineNode *node = static_cast<MapPolylineNode *>(oldNode);
-    if (!node) {
-        node = new MapPolylineNode();
+    if (!visibleOnMap()) {
+        delete node;
+        return 0;
     }
+
+    if (!node)
+        node = new MapPolylineNode;
 
     //TODO: update only material
     if (geometry_.isScreenDirty() || dirtyMaterial_) {
