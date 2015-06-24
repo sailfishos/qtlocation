@@ -81,6 +81,7 @@ class QGeoCameraTilesPrivate
 {
 public:
     QGeoCameraTilesPrivate();
+    QGeoCameraTilesPrivate(const QGeoCameraTilesPrivate &other);
     ~QGeoCameraTilesPrivate();
 
     QString pluginString_;
@@ -89,6 +90,7 @@ public:
     QGeoCameraData camera_;
     QSize screenSize_;
     int tileSize_;
+    int minZoom_;
     int maxZoom_;
     QSet<QGeoTileSpec> tiles_;
 
@@ -137,65 +139,54 @@ QGeoCameraTiles::~QGeoCameraTiles()
     delete d_ptr;
 }
 
-void QGeoCameraTiles::findPrefetchTiles()
+QSet<QGeoTileSpec> QGeoCameraTiles::prefetchTiles() const
 {
 #if defined(ENABLE_PREFETCHING)
-    Q_D(QGeoCameraTiles);
+    QGeoCameraTilesPrivate prefetchPrivate(*d_ptr);
 
-    d->tiles_.clear();
-
-    // qDebug() << "prefetch called";
-    int zoom = static_cast<int>(std::floor(d->camera_.zoomLevel()));
-    d->intZoomLevel_ = zoom;
-    d->sideLength_ = 1 << d->intZoomLevel_;
-    d->updateGeometry(PREFETCH_FRUSTUM_SCALE);
+    int zoom = static_cast<int>(std::floor(prefetchPrivate.camera_.zoomLevel()));
+    prefetchPrivate.intZoomLevel_ = zoom;
+    prefetchPrivate.sideLength_ = 1 << zoom;
+    prefetchPrivate.updateGeometry(PREFETCH_FRUSTUM_SCALE);
 
 #if defined(PREFETCH_NEIGHBOUR_LAYER)
-    double zoomFraction = d->camera_.zoomLevel() - zoom;
+    double zoomFraction = prefetchPrivate.camera_.zoomLevel() - zoom;
     int nearestNeighbourLayer = zoomFraction > 0.5 ? zoom + 1 : zoom - 1;
-    if (nearestNeighbourLayer <= d->maxZoom_ && nearestNeighbourLayer >= 0)
-    {
-        double oldZoom = d->camera_.zoomLevel();
-        d->intZoomLevel_ = nearestNeighbourLayer;
-        d->sideLength_ = 1 << d->intZoomLevel_;
-        d->camera_.setZoomLevel(d->intZoomLevel_);
+    if (nearestNeighbourLayer <= prefetchPrivate.maxZoom_ &&
+        nearestNeighbourLayer >= prefetchPrivate.minZoom_) {
+        double oldZoom = prefetchPrivate.camera_.zoomLevel();
+        prefetchPrivate.intZoomLevel_ = nearestNeighbourLayer;
+        prefetchPrivate.sideLength_ = 1 << nearestNeighbourLayer;
+        prefetchPrivate.camera_.setZoomLevel(nearestNeighbourLayer);
 
         // Approx heuristic, keeping total # prefetched tiles roughly independent of the
         // fractional zoom level.
         double neighbourScale = (1.0 + zoomFraction)/2.0;
 
-        d->updateGeometry(PREFETCH_FRUSTUM_SCALE * neighbourScale);
-        d->camera_.setZoomLevel(oldZoom);
+        prefetchPrivate.updateGeometry(PREFETCH_FRUSTUM_SCALE * neighbourScale);
     }
 #elif defined(PREFETCH_TWO_NEIGHBOUR_LAYERS)
- //   int size1 = d->tiles_.size();
-
     // This is a simpler strategy, we just prefetch from layer above and below
     // for the layer below we only use half the size as this fills the screen
-    double oldZoom = d->camera_.zoomLevel();
-    if (zoom > 0)
-    {
-        d->intZoomLevel_ = zoom-1;
-        d->sideLength_ = 1 << d->intZoomLevel_;
-        d->camera_.setZoomLevel(d->intZoomLevel_);
-        d->updateGeometry(0.5);
+    if (zoom > prefetchPrivate.minZoom_) {
+        prefetchPrivate.intZoomLevel_ = zoom - 1;
+        prefetchPrivate.sideLength_ = 1 << prefetchPrivate.intZoomLevel_;
+        prefetchPrivate.camera_.setZoomLevel(prefetchPrivate.intZoomLevel_);
+        prefetchPrivate.updateGeometry(0.5);
     }
- //   int size2 = d->tiles_.size();
-    if (zoom < d->maxZoom_)
-    {
-        d->intZoomLevel_ = zoom+1;
-        d->sideLength_ = 1 << d->intZoomLevel_;
-        d->camera_.setZoomLevel(d->intZoomLevel_);
-        d->updateGeometry(1.0);
+
+    if (zoom < prefetchPrivate.maxZoom_) {
+        prefetchPrivate.intZoomLevel_ = zoom + 1;
+        prefetchPrivate.sideLength_ = 1 << prefetchPrivate.intZoomLevel_;
+        prefetchPrivate.camera_.setZoomLevel(prefetchPrivate.intZoomLevel_);
+        prefetchPrivate.updateGeometry(1.0);
     }
- //   qDebug() << "prefetched main tiles: " << size1 << " higher detail layer: " << d->tiles_.size() - size2 << " low detail layer: " << size2 - size1;
-    d->intZoomLevel_ = zoom;
-    d->sideLength_ = 1 << d->intZoomLevel_;
-    d->camera_.setZoomLevel(oldZoom);
 #endif
+    return prefetchPrivate.tiles_;
+#else
+    return QSet<QGeoTileSpec>();
 #endif
 }
-
 
 void QGeoCameraTiles::setCamera(const QGeoCameraData &camera)
 {
@@ -275,6 +266,18 @@ int QGeoCameraTiles::tileSize() const
     return d->tileSize_;
 }
 
+void QGeoCameraTiles::setMinimumZoomLevel(int minZoom)
+{
+    Q_D(QGeoCameraTiles);
+
+    if (d->minZoom_ == minZoom)
+        return;
+
+    d->minZoom_ = minZoom;
+    d->tiles_.clear();
+    d->updateGeometry();
+}
+
 void QGeoCameraTiles::setMaximumZoomLevel(int maxZoom)
 {
     Q_D(QGeoCameraTiles);
@@ -294,7 +297,15 @@ QSet<QGeoTileSpec> QGeoCameraTiles::tiles() const
 }
 
 QGeoCameraTilesPrivate::QGeoCameraTilesPrivate()
-:   mapVersion_(-1), tileSize_(0), maxZoom_(0), intZoomLevel_(0), sideLength_(0)
+:   mapVersion_(-1), tileSize_(0), minZoom_(0), maxZoom_(0), intZoomLevel_(0), sideLength_(0)
+{
+}
+
+QGeoCameraTilesPrivate::QGeoCameraTilesPrivate(const QGeoCameraTilesPrivate &other)
+:   pluginString_(other.pluginString_), mapType_(other.mapType_), mapVersion_(other.mapVersion_),
+    camera_(other.camera_), screenSize_(other.screenSize_), tileSize_(other.tileSize_),
+    minZoom_(other.minZoom_), maxZoom_(other.maxZoom_), intZoomLevel_(other.intZoomLevel_),
+    sideLength_(other.sideLength_)
 {
 }
 
