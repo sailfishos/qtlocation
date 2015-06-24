@@ -89,6 +89,8 @@ public:
     //from QuickItem
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
 
+    void updatePolish();
+
     Q_INVOKABLE void addCoordinate(const QGeoCoordinate &coordinate);
     Q_INVOKABLE void removeCoordinate(const QGeoCoordinate &coordinate);
 
@@ -109,7 +111,6 @@ Q_SIGNALS:
     void colorChanged(const QColor &color);
 
 protected Q_SLOTS:
-    virtual void updateMapItem();
     void handleBorderUpdated();
     void afterViewportChanged(const QGeoMapViewportChangeEvent &event);
 

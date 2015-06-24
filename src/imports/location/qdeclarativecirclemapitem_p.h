@@ -60,8 +60,6 @@ public:
     explicit QGeoMapCircleGeometry(QObject *parent = 0);
 
     void updateScreenPointsInvert(const QGeoMap &map);
-
-
 };
 
 class QDeclarativeCircleMapItem : public QDeclarativeGeoMapItemBase
@@ -78,6 +76,8 @@ public:
 
     virtual void setMap(QDeclarativeGeoMap *quickMap, QGeoMap *map);
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
+
+    void updatePolish();
 
     QGeoCoordinate center();
     void setCenter(const QGeoCoordinate &center);
@@ -100,7 +100,6 @@ Q_SIGNALS:
     void colorChanged(const QColor &color);
 
 protected Q_SLOTS:
-    virtual void updateMapItem();
     void updateMapItemAssumeDirty();
     void afterViewportChanged(const QGeoMapViewportChangeEvent &event);
 

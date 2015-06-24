@@ -341,7 +341,7 @@ void QDeclarativeCircleMapItem::updateMapItemAssumeDirty()
 {
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 void QDeclarativeCircleMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *map)
@@ -350,7 +350,7 @@ void QDeclarativeCircleMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *ma
     if (map) {
         geometry_.markSourceDirty();
         borderGeometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -370,7 +370,7 @@ void QDeclarativeCircleMapItem::setCenter(const QGeoCoordinate &center)
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit centerChanged(center_);
 }
 
@@ -391,7 +391,7 @@ void QDeclarativeCircleMapItem::setColor(const QColor &color)
         return;
     color_ = color;
     dirtyMaterial_ = true;
-    updateMapItem();
+    polish();
     emit colorChanged(color_);
 }
 
@@ -415,7 +415,7 @@ void QDeclarativeCircleMapItem::setRadius(qreal radius)
     radius_ = radius;
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit radiusChanged(radius);
 }
 
@@ -461,7 +461,7 @@ QSGNode *QDeclarativeCircleMapItem::updateMapItemPaintNode(QSGNode *oldNode, Upd
 /*!
     \internal
 */
-void QDeclarativeCircleMapItem::updateMapItem()
+void QDeclarativeCircleMapItem::updatePolish()
 {
     if (!map() || !center().isValid())
         return;
@@ -540,7 +540,7 @@ void QDeclarativeCircleMapItem::afterViewportChanged(const QGeoMapViewportChange
 
     geometry_.markScreenDirty();
     borderGeometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 
@@ -551,7 +551,7 @@ void QDeclarativeCircleMapItem::dragStarted()
 {
     geometry_.markFullScreenDirty();
     borderGeometry_.markFullScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
