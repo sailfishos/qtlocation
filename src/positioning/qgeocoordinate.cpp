@@ -592,7 +592,7 @@ QDebug operator<<(QDebug dbg, const QGeoCoordinate &coord)
         dbg.nospace() << ", ";
         dbg.nospace() << coord.altitude();
     }
-    dbg.nospace() << ')';
+    dbg.space() << ')';
     return dbg;
 }
 #endif
