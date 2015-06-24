@@ -159,10 +159,23 @@ QGeoMappingManagerEngine *QGeoMapData::engine()
     return d->engine();
 }
 
+void QGeoMapData::setMinimumZoom(qreal zoom)
+{
+    Q_D(QGeoMapData);
+    d->setMinimumZoom(zoom);
+}
+
+qreal QGeoMapData::minimumZoom() const
+{
+    Q_D(const QGeoMapData);
+    return d->minimumZoom();
+}
+
 QGeoMapDataPrivate::QGeoMapDataPrivate(QGeoMappingManagerEngine *engine, QGeoMapData *parent)
     : width_(0),
       height_(0),
       aspectRatio_(0.0),
+      minimumZoom_(0),
       map_(parent),
       engine_(engine),
       controller_(0),
@@ -187,6 +200,20 @@ QGeoMappingManagerEngine *QGeoMapDataPrivate::engine() const
 QString QGeoMapDataPrivate::pluginString()
 {
     return pluginString_;
+}
+
+void QGeoMapDataPrivate::setMinimumZoom(qreal zoom)
+{
+    if (minimumZoom_ == zoom)
+        return;
+
+    minimumZoom_ = zoom;
+    emit map_->minimumZoomChanged();
+}
+
+qreal QGeoMapDataPrivate::minimumZoom() const
+{
+    return minimumZoom_;
 }
 
 QGeoMapController *QGeoMapDataPrivate::mapController()
