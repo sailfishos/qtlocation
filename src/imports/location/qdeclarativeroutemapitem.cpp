@@ -159,7 +159,7 @@ QSGNode *QDeclarativeRouteMapItem::updateMapItemPaintNode(QSGNode *oldNode, Upda
         node = new MapPolylineNode;
 
     //TODO: update only material
-    if (geometry_.isScreenDirty() || dirtyMaterial_) {
+    if (geometry_.isScreenDirty() || dirtyMaterial_ || !oldNode) {
         geometry_.setPreserveGeometry(false);
         node->update(line_.color(), &geometry_);
         geometry_.markClean();
