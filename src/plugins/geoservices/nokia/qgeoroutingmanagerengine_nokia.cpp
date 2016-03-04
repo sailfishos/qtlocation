@@ -430,7 +430,7 @@ QString QGeoRoutingManagerEngineNokia::routeRequestString(const QGeoRouteRequest
     }
 
     requestString += "&departure=";
-    requestString += QDateTime::currentDateTime().toUTC().toString("yyyy-MM-ddThh:mm:ssZ");
+    requestString += QLocale::c().toString(QDateTime::currentDateTime().toUTC(), QStringLiteral("yyyy-MM-ddThh:mm:ssZ"));
 
     requestString += "&instructionformat=text";
 
