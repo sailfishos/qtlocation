@@ -98,7 +98,6 @@ public:
             // Register the 5.0 types
             // 5.0 is silent and not advertised
             qmlRegisterSingletonType<LocationSingleton  >(uri, major, minor, "QtPositioning", singleton_type_factory);
-            qmlRegisterValueTypeEnums<QGeoShape         >(uri, major, minor, "GeoShape");
             qmlRegisterType<QDeclarativePosition        >(uri, major, minor, "Position");
             qmlRegisterType<QDeclarativePositionSource  >(uri, major, minor, "PositionSource");
             qmlRegisterType<QDeclarativeGeoAddress      >(uri, major, minor, "Address");
