@@ -39,6 +39,9 @@ rm -rf %{buildroot}
 cd src/plugins/position/geoclue
 %qmake5_install
 
+# Remove the cmake file
+rm %{buildroot}/%{_libdir}/cmake/Qt5Positioning/Qt5Positioning_.cmake
+
 
 #### Pre/Post section
 

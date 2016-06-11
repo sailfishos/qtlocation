@@ -49,6 +49,7 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QVariantMap>
 #include <QtCore/QtNumeric>
+#include <QtCore/QDataStream>
 
 #ifdef Q_LOCATION_GEOCLUE_DEBUG
 #include <QDebug>
