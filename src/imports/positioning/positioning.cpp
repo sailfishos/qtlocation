@@ -113,7 +113,6 @@ public:
             // Register the 5.2 types
             minor = 2;
             qmlRegisterSingletonType<LocationSingleton  >(uri, major, minor, "QtPositioning", singleton_type_factory);
-            qmlRegisterValueTypeEnums<GeoShapeValueType >(uri, major, minor, "GeoShape");
             qmlRegisterType<QDeclarativePosition        >(uri, major, minor, "Position");
             qmlRegisterType<QDeclarativePositionSource  >(uri, major, minor, "PositionSource");
             qmlRegisterType<QDeclarativeGeoAddress      >(uri, major, minor, "Address");
