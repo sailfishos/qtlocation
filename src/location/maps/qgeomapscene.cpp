@@ -753,7 +753,6 @@ QSGNode *QGeoMapScene::updateSceneGraph(QSGNode *oldNode, QQuickWindow *)
             continue;
         QSGPlainTexture *texture = new QSGPlainTexture();
         texture->setImage(tileTexture->image);
-        texture->setHasMipmaps(false);
         texture->setHasAlphaChannel(false);
         mapRoot->textures.insert(spec, texture);;
     }
