@@ -21,7 +21,7 @@ This package contains the position plugin for Geoclue
 #### Build section
 
 %prep
-%setup -q -n %{name}-%{version}/qtlocation
+%setup -q -n %{name}-%{version}
 
 %build
 export QTDIR=/usr/share/qt5
