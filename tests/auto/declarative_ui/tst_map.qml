@@ -50,7 +50,7 @@ Item {
     // General-purpose elements for the test:
     Plugin { id: testPlugin; name: "qmlgeo.test.plugin"; allowExperimental: true }
     Plugin { id: testPlugin2; name: "gmlgeo.test.plugin"; allowExperimental: true }
-    Plugin { id: nokiaPlugin; name: "nokia";
+    Plugin { id: herePlugin; name: "here";
         parameters: [
                        PluginParameter {
                            name: "app_id"
@@ -71,7 +71,7 @@ Item {
     property variant altitudelessCoordinate: QtPositioning.coordinate(50, 50)
 
     Map {id: map; plugin: testPlugin; center: coordinate1; width: 100; height: 100}
-    Map {id: coordinateMap; plugin: nokiaPlugin; center: coordinate3; width: 1000; height: 1000; zoomLevel: 15}
+    Map {id: coordinateMap; plugin: herePlugin; center: coordinate3; width: 1000; height: 1000; zoomLevel: 15}
 
     SignalSpy {id: mapCenterSpy; target: map; signalName: 'centerChanged'}
 

@@ -123,7 +123,7 @@ Map {
     }
 
     MapQuickItem {
-        id: poiNokia
+        id: poiBrisbaneOffice
         sourceItem: Rectangle { width: 14; height: 14; color: "#1c94fc"; border.width: 2; border.color: "#242424"; smooth: true; radius: 7 }
         coordinate {
            latitude: -27.5796
@@ -136,15 +136,15 @@ Map {
 
     MapQuickItem {
         sourceItem: Text{
-            text: "Nokia"
+            text: "Brisbane Office"
             color:"#242424"
             font.bold: true
             styleColor: "#ECECEC"
             style: Text.Outline
         }
-        coordinate: poiNokia.coordinate
-        anchorPoint.x: -poiNokia.sourceItem.width * 0.5
-        anchorPoint.y: poiNokia.sourceItem.height * 1.5
+        coordinate: poiBrisbaneOffice.coordinate
+        anchorPoint.x: -poiBrisbaneOffice.sourceItem.width * 0.5
+        anchorPoint.y: poiBrisbaneOffice.sourceItem.height * 1.5
     }
 
 

@@ -45,7 +45,7 @@ import QtLocation 5.0
 import QtPositioning 5.2
 
 Item {
-    Plugin { id: nokiaPlugin; name: "qmlgeo.test.plugin"}
+    Plugin { id: testPlugin; name: "qmlgeo.test.plugin"}
     Plugin { id: invalidPlugin; name: "invalid"}
 
     property variant coordinate1: QtPositioning.coordinate(51, 41)
@@ -170,10 +170,10 @@ Item {
 
             // Plugin
             compare(pluginSpy.count, 0)
-            emptyModel.plugin = nokiaPlugin
+            emptyModel.plugin = testPlugin
             compare(pluginSpy.count, 1)
-            compare(emptyModel.plugin, nokiaPlugin)
-            emptyModel.plugin = nokiaPlugin
+            compare(emptyModel.plugin, testPlugin)
+            emptyModel.plugin = testPlugin
             compare(pluginSpy.count, 1)
             emptyModel.plugin = invalidPlugin
             compare(pluginSpy.count, 2)

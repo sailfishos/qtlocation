@@ -808,7 +808,7 @@ Rectangle {
         }
 
 
-        //plugin : Plugin {name : "nokia"}
+        //plugin : Plugin {name : "here"}
 
         plugin: Plugin {
             id: testPlugin;
@@ -902,7 +902,7 @@ Rectangle {
         // </unsupported so far>
     }
 
-    Plugin {id: nokia_plugin; name: "nokia"}
+    Plugin {id: here_plugin; name: "here"}
 
     Row {
         id: buttonRow
