@@ -290,7 +290,7 @@ Item {
             }
         }
         */
-        plugin : Plugin {name : "nokia"}
+        plugin : Plugin {name : "here"}
         // commented features are checked to work at least somehow
         x: 0
         y: 0

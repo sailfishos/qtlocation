@@ -89,7 +89,7 @@ QT_BEGIN_NAMESPACE
     \code
     Plugin {
         id: aPlugin
-        name: "nokia"
+        name: "here"
     }
 
     RouteQuery {

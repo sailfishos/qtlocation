@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
     Not all properties of an Address are necessarily available or relevant
     in all parts of the world and all locales. The \l district, \l state and
     \l county properties are particularly area-specific for many data sources
-    (including the provided Nokia plugin), and often only one or two of these
+    (including the provided HERE plugin), and often only one or two of these
     is available or useful.
 
     The Address has a \l text property which holds a formatted string.  It

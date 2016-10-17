@@ -25,7 +25,7 @@ qtHaveModule(location) {
            qplacesearchsuggestionreply \
            qplaceuser \
            qplacemanager \
-           qplacemanager_nokia \
+           qplacemanager_here \
            qplacemanager_unsupported \
            placesplugin_unsupported
 
@@ -53,7 +53,7 @@ qtHaveModule(location) {
            qgeoroutexmlparser \
            qgeomapcontroller \
            maptype \
-           nokia_services \
+           here_services \
            qgeocameratiles
 
     qtHaveModule(quick) {

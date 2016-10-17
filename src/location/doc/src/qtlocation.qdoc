@@ -196,7 +196,7 @@ New features of Qt Location includes
     \li Full QML API now available for routing and geocoding -- compatible with standard QML model-view design
     \li Service provider feature detection without having to open all the available plugins
     \li Unified \l Plugin QML type used by routing/geocoding/maps etc with easy-to-set \l PluginParameter
-    \li Two plugins are supplied with Qt (a Nokia and an OSM plugin for GeoServices).
+    \li Two plugins are supplied with Qt (a HERE and an OSM plugin for GeoServices).
     \li Landmarks API is replaced by the Places API
     \li \l Place supports viewing of richer content such as reviews, images, and editorials
     \li \l Place supports locale handling, sponsored search results, and supplier attribution
