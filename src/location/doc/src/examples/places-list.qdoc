@@ -39,9 +39,9 @@
     \snippet places_list/places_list.qml Imports
 
     Instantiate a \l Plugin instance.  The \l Plugin is effectively the backend
-    from where places are sourced from.  Because the \c nokia plugin has been
+    from where places are sourced from.  Because the \c here plugin has been
     specified, some mandatory parameters need to be filled in, see the \l
-    {Mandatory Parameters} {Nokia Plugin} documentation for details:
+    {Mandatory Parameters} {HERE Plugin} documentation for details:
 
     \snippet places_list/places_list.qml Initialize Plugin
 

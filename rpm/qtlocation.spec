@@ -94,15 +94,15 @@ This package contains the files necessary to develop
 applications that use QtLocation
 
 
-%package -n qt5-plugin-geoservices-nokia
-Summary:    Qt Geoservices plugin for Nokia devices
+%package -n qt5-plugin-geoservices-here
+Summary:    Qt Geoservices plugin using HERE location services
 Group:      Qt/Qt
 Requires:   qt5-qtlocation = %{version}-%{release}
-Obsoletes:  qt5-qtlocation-plugin-geoservices-nokia <= 5.1.0+git7
-Provides:   qt5-qtlocation-plugin-geoservices-nokia > 5.1.0+git7
+Obsoletes:  qt5-qtlocation-plugin-geoservices-nokia
+Provides:   qt5-qtlocation-plugin-geoservices-here
 
-%description -n qt5-plugin-geoservices-nokia
-This package contains the geoservices plugin for Nokia devices
+%description -n qt5-plugin-geoservices-here
+This package contains the geoservices plugin using HERE location services
 
 
 %package -n qt5-plugin-geoservices-osm
@@ -207,9 +207,9 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %{_datadir}/qt5/mkspecs/modules/qt_lib_location_private.pri
 %{_libdir}/cmake/Qt5Location/
 
-%files -n qt5-plugin-geoservices-nokia
+%files -n qt5-plugin-geoservices-here
 %defattr(-,root,root,-)
-%{_libdir}/qt5/plugins/geoservices/*nokia*
+%{_libdir}/qt5/plugins/geoservices/*here*
 
 %files -n qt5-plugin-geoservices-osm
 %defattr(-,root,root,-)

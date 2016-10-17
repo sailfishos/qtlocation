@@ -1,0 +1,491 @@
+Use of the QtLocation HERE Geoservices plugin is governed by the HERE Location Platform Services Online Terms and Conditions, the latest version of which can be found at: https://developer.here.com/terms-and-conditions
+
+HERE Location Platform Services Online Terms and Conditions
+
+Updated June 2015
+
+1. HERE Location Platform Terms
+
+1.1 Definitions
+
+The following definitions are used in these terms and conditions.
+
+Application
+has the meaning set out in section 4.1
+Availability
+has the meaning set out in section 9.3.1.
+Basic Service Availability
+has the meaning set out in section 9.3.1
+Content
+has the meaning set out in section 1.2
+HERE End-User Terms
+has the meaning set out in section 10.1
+Feedback
+has the meaning set out in section 14.
+HERE
+has the meaning set out in section 2.
+HERE Services
+has the meaning set out in section 1.2
+HERE Marks
+has the meaning set out in section 5.1.2
+HERE Materials
+has the meaning set out in section 1
+Internal Business Use
+has the meaning set out in section 4.1
+Request
+has the meaning set out in section 6
+Request Per Second
+has the meaning set out in section 11
+Result
+has the meaning set out in section 6
+Terms
+has the meaning set out in sections 1.2 and 1.3
+Transaction
+has the meaning set out in section 11
+You
+has the meaning set out in section 2
+Your Content
+has the meaning set out in section 5.2.1
+
+1.2 Acceptance of these Terms
+
+Your use of the HERE Services and the HERE Materials is governed by these terms and conditions ("Terms"). You may accept these Terms by
+
+* clicking "accept" or "agree" or similar, where this option is made available; or
+* signing with HERE or with an authorized HERE distributor a separate offering that refers to these Terms; or
+* using the HERE Materials, in which case Your use of the HERE Materials is considered Your acceptance of these Terms.
+
+Upon accepting these Terms, they become a binding agreement between You and HERE.
+
+"HERE Services" means the HERE location platform services and Content provided by HERE through the HERE Materials excluding mainland China. The HERE Services consist of different services (as set out in the service list for each subscription plan on developer.here.com) depending on the licensed HERE Materials and may include services delivered through the maps, directions, geocoding, places and traffic components.
+
+"HERE Materials" means any or all of the following as made available by HERE through developer.here.com site or through a separate offering by HERE or an authorized HERE distributor: access credentials, application programming interfaces (APIs), software development kits (SDKs), software and related materials and documentation.
+
+"Content" means any data or content including maps, satellite imagery, pictures of the view from streets, points of interest, user generated content, links, listings, trademarks, logos and third party commercial content.
+
+1.3 These Terms
+
+The Terms shall include and consist of the following documents:
+
+the terms and conditions set out in this document;
+the privacy policy available at https://legal.here.com/en/privacy/policy/us/;
+the subscription You have selected on developer.here.com or in a separate offering from HERE or through an authorized HERE distributor;
+any other terms and conditions and documents that are referred to in any of the above or in the HERE Materials or the HERE Services; and
+any updated version of the above.
+In the event there is a conflict between the above listed documents, the documents shall apply in the order as listed above and the first mentioned shall supersede the later mentioned documents.
+
+If the HERE Materials are made available through a separate offering by HERE or an authorized HERE distributor, for example within an SDK or a third party distributor offering, such HERE or third party terms may apply in addition to these Terms. If there is any conflict between different parts of these Terms (or the third party terms) with respect to the HERE Materials or the HERE Services, then the terms and conditions set out in this document shall govern unless otherwise agreed directly between You and HERE in writing.
+
+1.4 Updates to these Terms and the HERE Materials and the HERE Services
+
+HERE reserves the right to change these Terms at any time. HERE will provide the changed Terms on the developer.here.com site or in Your user account or inform You by email. To continue using the HERE Materials and the HERE Services, You must accept the changes. If You do not agree to the changes, Your access to the HERE Services may be suspended or terminated by HERE and You must immediately cease using the HERE Materials. Your continued use of the HERE Materials or the HERE Services is considered acceptance of the changed Terms. If a change is unacceptable to You, You may as Your sole and exclusive remedy terminate Your subscription by ceasing the use of the HERE Materials and the HERE Services and providing a notice of termination to HERE.
+
+HERE strives to continuously improve the HERE Services. Therefore HERE reserves the right to change the HERE Materials and HERE Services at any time. HERE will endeavor to inform You about any major changes as much as possible in advance either by email, through Your account or on developer.here.com. If such a change has a detrimental impact on Your use of the HERE Services, you may as Your sole and exclusive remedy terminate Your agreement with HERE by ceasing use of the HERE Materials and the HERE Services and by notifying HERE.
+
+2. You and HERE
+
+"You" is the person or entity (or both) using the HERE Materials and the HERE Services as intended in these Terms. If You accept these Terms on behalf of Your company, organization or other entity, You must have, and you represent that You have, full legal authority to bind Your company, organization or such other entity to these Terms.
+
+You may not use the HERE Services, the HERE Materials and may not accept these Terms if
+
+You are not of legal age in the country of Your official address or not authorized to form a binding agreement as intended herein;
+You are a person prohibited from using or receiving the HERE Materials or the HERE Services under applicable laws, including the laws of the country in which You are resident or from which You use the HERE Services; or
+You are a person barred from using the HERE Materials or the HERE Services under the laws of the United States of America or other countries or the European Union.
+"HERE" refers to either (i) HERE Europe B.V. with offices at De Run 1115, 5503 LB Veldhoven, the Netherlands, if Your official address is in any country within Europe, the Middle East or Africa, or (ii) HERE North America, LLC with offices at 425 West Randolph Street, 60606 Chicago, Illinois, USA, if Your official address is in any other country.
+
+3. Account and Access Credentials
+
+Unless You are contracting for the HERE Materials and the HERE Services through a separate offering from HERE or an authorized HERE distributor, You have to register for an account through developer.here.com to be able to use the HERE Materials and the HERE Services. In any case, You agree to provide truthful and complete information when registering or contracting and to keep that information updated.
+
+HERE (or a third party distributor authorized by HERE) issues access credentials to You for each Application. You must ensure that unique access credentials are used for each Application. Any use of the HERE Services through access credentials issued to You will be considered Your use and You are responsible for such use. You agree to take due care protecting such access credentials against misuse by others and disclosure to others and promptly notify HERE about any misuse or loss of access credentials. If You breach any security measures established by HERE, HERE may immediately terminate or suspend Your access to the HERE Services and may terminate Your subscription and You shall immediately cease using the HERE Materials and the HERE Services.
+
+4. Your Application Accessing the HERE Services
+
+4.1 Application
+
+An "Application" is each mobile or web application developed by You (or for You) that accesses HERE Services by using the HERE Materials and enables one of the use cases described below in this section 4.1. You may implement only the use case that is set out in the subscription You have selected and accepted through developer.here.com or contracted for directly with HERE or with an authorized HERE distributor.
+
+Use Cases:
+
+Enterprise Mapping refers to our offering of enterprise plans and means a use case where HERE Services are utilized for business applications for Internal Business Use. "Internal Business Use" means that the Application may be used by employees, contractors and agents of a business (and for the benefit of that business) to which the Application is licensed by You and excludes use by the general public.
+Consumer Mapping refers to our offering of consumer plans and means a use case where HERE Services are utilized for web domain or mobile solutions for consumer end-users.
+Geocoder refers to our offering of geocoding-only plans and means a use case where the geocoding components of the HERE Services are utilized to perform geocoding. While geocoding and reverse geocoding features are available in Enterprise Mapping and Consumer Mapping plans, You may only use batch forward and reverse geocoding features if You license a Geocoder plan.
+
+4.2 Applications That Are Not Allowed
+
+Unless otherwise explicitly permitted, Your Applications may not
+
+* be vehicle integrated which means that Your Application would be capable of interacting with a vehicle system, or any component thereof, to enable, assist or augment the delivery of HERE Services through such solution to an end-user, including vehicle positioning sensors (for example GPS, triangulation, odometer, compass, gyroscope or accelerometer), navigation terminals or black boxes, and display screens installed in the vehicle (including a windshield display). A vehicle integrated Application would include solutions stored on a mobile device capable of connecting to a vehicle head-unit in order to transfer or emulate the mobile device's screen image onto an in-vehicle head-unit display; or allowing the end-user to control or operate the mobile device through the vehicle head-unit or vice versa.
+* offer route guidance which means functionality for real-time provision of individual maneuvers of a calculated route such that the maneuvers are presented to the end-user, or the end-user is alerted to the maneuvers, in any manner synchronized with the end-user's position along such route, including calculating the end-user's position as the end-user traverses the route and communicating a maneuver to the end-user as the end-user approaches the location pertaining to such maneuver.
+* enable geomarketing which means a solution that analyzes and displays geographic, demographic, census and behavioral data to assist end-users in understanding and modeling relevant business data and making business decisions, including: (i) marketing analysis and segmentation; (ii) customer prospecting and analysis; (iii) sales territory analysis and definition; or (iv) distribution network site selection.
+* enable mobile asset management which means a solution where HERE Services would be utilized to perform any or all of tracking, routing or optimization of mobile assets including vehicles, persons, animals or cargo.
+Notwithstanding the foregoing, if You have chosen an evaluation subscription plan, Your Application may enable mobile asset management for the purposes of such evaluation subject to these Terms, specifically the limited evaluation license.
+
+4.3 Subscription Plans for Your Application
+
+You may choose between different subscription plans for Your Application. The plans are set out on developer.here.com or made available through a separate offering by HERE or an authorized HERE distributor. You must comply with the plan details (which form part of these Terms) as well as with these Terms. You must specifically observe the permitted use case, the license grant and whether Your subscription plan allows commercial use or not. You may upgrade or downgrade Your plan through developer.here.com. Such changes to annual plans will become effective immediately and to monthly plans at the beginning of the next billing cycle. Difference (pro rata) in fees for upgrades will be charged accordingly. Difference in fees for downgrades is not refundable.
+
+5. License Grants
+
+5.1 License Grant from HERE to You
+
+5.1.1 License to the HERE Materials
+
+Subject to Your compliance with these Terms, HERE grants You one of the following licenses:
+
+if You have opted for a commercial subscription (whether free or paid), a non-exclusive, non-transferable, non-sub-licensable, revocable, limited license to integrate the HERE Materials into Applications that You market, distribute and make available to end-users for the purpose of enabling such Applications to access the HERE Services.
+if You have opted for an evaluation or trial subscription, a non-exclusive, non-transferable, non-sublicensable, revocable, limited license to use and evaluate the HERE Materials in order to access and evaluate the HERE Services for possible commercial use; and develop Applications integrating the HERE Materials and make such Applications available to Your employees for internal evaluation. The Applications or the HERE Materials or the HERE Services may not be made available for any commercial or external use.
+
+5.1.2 License to and Use of the HERE Marks
+
+You shall conspicuously display HERE's copyright notices as specified by HERE or as set out in the HERE brand guidance (as may be provided by HERE from time to time) in connection with the Application and on all placements within or related to the Application. In all instances where HERE Services are used or where Your marketing materials references HERE Services (collectively "Collateral") You must attribute HERE as the creator and source of origin of the HERE Services and shall not in any way imply that You or any third party is the creator or source of origin of the HERE Services.
+
+You must prominently display HERE's trademarks, logos, service marks, trade names and similar designations (collectively, "HERE Marks") as specified by HERE (including as specified in the HERE brand guidance as may be provided by HERE from time to time) in connection with the HERE Services and on all Collateral.
+
+During Your subscription, HERE grants You a limited, non-exclusive, non-transferable, non-sub-licensable, revocable, royalty-free right to use the HERE Marks as required for purposes described in this section. You must conspicuously indicate in all materials displaying the HERE Marks (i) that HERE is the owner thereof; or (ii) that the HERE Marks are trademarks or service marks of HERE, as applicable, or (iii) both of the above, as applicable. Your use of the HERE Marks shall inure to the benefit of HERE.
+
+You agree that You will not in any way modify, alter or tamper with any proprietary marks, rights notices or other notices, HERE Marks, Results, or End-User Terms that may be provided through the HERE Services.
+
+Upon termination or expiration of Your subscription, You must immediately cease all use of HERE Marks.
+
+5.2 License Grant from You to HERE
+
+5.2.1 License to Your Content
+
+No right title or interest to Your Content is transferred to HERE by virtue of these Terms, except that by submitting, posting or displaying Your Content in the HERE Services or otherwise providing Your Content to HERE, You grant HERE and its affiliates a perpetual, irrevocable, worldwide, royalty-free, non-exclusive, sub-licensable license to reproduce, adapt, modify, translate, publicly perform, publicly display, distribute, process and transfer Your Content through the HERE Services in accordance with these Terms.
+
+"Your Content" means any content, data and information provided through the HERE Materials using the access credentials or otherwise to the HERE Services.
+
+HERE may remove Your Content from the HERE Services if HERE has any reason to believe that Your Content is illegal, infringing or in some way offensive or otherwise inappropriate.
+
+5.2.2 License to Your Marks
+
+During Your subscription You grant to HERE and its affiliates a worldwide, royalty-free, non-transferable, non-exclusive sub-licensable license to use Your marks, trade names, trademarks and logos including the names and descriptions of the Applications for purposes of referencing You as a HERE customer and to promote related HERE products and services. After Your subscription, HERE and its affiliates will cease all use of Your marks as soon as reasonably practicable. HERE's and its affiliates' use of Your marks shall inure to Your benefit.
+
+6. Restrictions on HERE Services and HERE Materials
+
+You must take all due care dealing with the HERE Materials and HERE Services and agree at all times to follow these Terms and not to do any acts that are not specifically permitted in these Terms. You are not allowed to:
+
+* make available to any third party (including any of Your affiliates and subcontractors) the HERE Materials (or any portions thereof) or the HERE Services;
+* tamper with HERE or third party branding, copyright information or other notices provided through the HERE Services;
+* create mash-ups, enhanced services or similar, if such will result in (i) the creation of a derivative location platform or content product that is competitive with a substantially similar product or service of HERE unless otherwise permitted herein; (ii) the degradation of the perceived quality of the HERE Materials or HERE Services or Content; or (iii) the incorrect attribution of Results or Content;
+* issue queries (i) not responsive to end-user actions; or (ii) that are subsequent or automatic follow-up queries related to an initial query or end-user action (such as triggering automatic Request based on an end-user's search result); or otherwise modify queries to the HERE Materials;
+* use Results to generate sales lead information in the form of ASCII or other text-formatted lists of category-specific business listings which include complete mailing address for each business, and contain a substantial portion of such listings for a particular county, city, state or zip code region;
+* use the HERE Materials or the HERE Services in connection with any unlawful, offensive, obscene, pornographic, harassing, libelous or otherwise inappropriate content or material;
+* use any data, content, materials or services of HERE not specified in these Terms;
+* reverse engineer, decompile, disassemble or otherwise attempt to discover the source code of all or any portion of the HERE Materials or HERE Services; or
+* use the HERE Materials to perform load testing, performance testing, health check testing or any other testing that may adversely impact any HERE Services.
+
+"Result" means each unique delivery of information delivered to an Application in response to a Request. Results explicitly exclude link attributes which are not licensed under these Terms but which may be made available (if explicitly agreed in writing) by HERE or an authorized HERE distributor in a separate offering.
+
+"Request" means each API call made to the HERE Services through the HERE Materials to request Results as initiated by an end-user using the Application. Internal server requests performed to respond to each API call shall not be counted as Requests.
+
+7. Use of Results, Content, Layering, Commingling
+
+7.1 Advertising
+
+You may not display third party advertising or third party products or services advertising in conjunction with Results. You can, however, promote Your own products and services within the Results. Your own products and services are such that You promote and market for Your own account.
+
+7.2 Caching
+
+Caching or storing Content or Results (or both) for the purpose of building a repository of assets (e.g. satellite imagery) or scaling one Request to serve multiple end-users is prohibited. You may not use Content or Results (or both) in a manner that pre-fetches, caches, or stores them, except for
+
+as explicitly allowed by the caching headers (HTTP/1.1 standard) returned by HERE Services; or
+storing or caching for no more than thirty (30) days only to the extent necessary for enabling or improving an end-user's use of the HERE Services.
+
+7.3 Layering
+
+Subject to appropriate content attribution, You may layer Your own and third party content in content categories not available from HERE for a particular geographical area within map, route and search canvases delivered through the HERE Services.
+
+When HERE launches Content similar to the content You have layered in accordance with the above paragraph for that particular geographical area, You may continue using such layered content instead of the HERE Content. However, You agree to use all reasonable endeavors to adopt the HERE Content. You are not permitted to use both the content layered by You and similar HERE Content concurrently for the same particular geographical area.
+
+You may layer third party geocodes on HERE map or imagery delivered through the HERE Services for Internal Business Use only.
+
+You are not allowed to display or visualize Results on any third party content (such as map, views from streets, or satellite imagery). Stand-alone use of Results from directions, places, and traffic services is, however, allowed. Stand-alone use means using the Results without any underlying map or imagery interface (whether from HERE, You or a third party).
+
+7.4 Third Party Content Available through HERE Services
+
+Depending on the licensed HERE Materials and the applicable HERE Services components, Content delivered through the HERE Services may contain Content provided by third parties. You accept such Content and that HERE may or may not (and is not obliged to and may not be able to) monitor, validate or verify such Content.
+
+8. Design and Use of Applications
+
+8.1 Design of Applications
+
+Applications and use of the HERE Materials and the HERE Services must comply with the following:
+
+* Each end-user must be provided with all legally required and otherwise appropriate instructions, warnings, notices and safety information related to the Applications and their use as required by applicable laws;
+* Applications shall not be designed or marketed for use in or with high risk systems, devices or products that are critical to health or security of people and property;
+* If an Application's screen size or other constraints prevent or restrict Results from being displayed, then end-users must be provided with a conspicuous notice informing the end-users that the Results cannot be so displayed; and
+* Unless otherwise explicitly agreed, neither the HERE Materials nor any information accessed through the HERE Services may be used to develop or enable features or functionality which provides an end-user with (i) individual maneuvers of a calculated route derived from the Results such that a textual, audible or visual alert is provided as to the next maneuver on the route as the end-user proceeds along such route; or (ii) automatic recalculation of routes (e.g., where an end-user deviates from the original route).
+
+The Results must be used according to the intended flow following the links made available within the Result and such links shall only be accessed by deliberate and specific user interaction. No shortcuts or automatic means to access the links or other information within the Results may be implemented. All Results must be used in accordance with the documentation and other instructions provided by HERE.
+
+To the extent reasonably possible (considering e.g. confidentiality and business secrets) You will provide HERE with a copy of the prototype and commercial versions (as applicable) of the Applications upon request. HERE is permitted, subject to Your reasonable instructions (considering e.g. confidentiality and business secrets), to use such Application for public demonstration purposes relating to the promotion of the HERE Services and related HERE products or services. If You have chosen an evaluation license, this does not apply to You.
+
+9. Support, Maintenance, Availability
+
+9.1 Support by You
+
+You must provide reasonable support and maintenance to Your customers for Your Application.
+
+9.2 Support and Maintenance, Changes to the HERE Services
+
+Unless and only to the extent otherwise explicitly stated in these Terms HERE has no obligation to provide You or end-users with any support or maintenance. HERE may change, improve and correct the HERE Services and the HERE Materials from time to time. HERE may also provide updates, upgrades or modifications to the HERE Services or the HERE Materials. If so instructed by HERE, You may not continue using the previous version of the HERE Services or the HERE Materials and the use of the previous version of the HERE Services or the HERE Materials may be prevented. HERE has no obligation to provide maintenance, bug fixes, patches or updates to the HERE Services or the HERE Materials. To the extent such are provided, they shall be deemed part of the applicable HERE Services or the HERE Materials.
+
+9.3 Service Levels
+
+This section 9.3 only applies to paid subscription plans.
+
+9.3.1 Basic Service Availability
+
+For paid subscription plans, HERE will use commercially reasonable efforts to maintain a target service Availability of 99.9% per month ("Basic Service Availability"). If Availability falls below the Basic Service Availability, HERE will use reasonable commercial efforts to restore operation. HERE may change and suspend its commitments under the service levels if You exceed any use limits (such as Transaction Limits or Request Per Second Limits) set forth in these Terms or Your subscription or in the FAQ available through developer.here.com. Any statements regards service availability do not apply to features, functionalities and options identified as excluded from service levels. Upon HERE introducing new items to the HERE Services (if any), HERE may similarly exclude such new items from service levels.
+
+"Availability" means, for each calendar month, an amount calculated as the number of successful operation tests divided by the number of total tests based on commercially available end-to-end web API monitoring tools (e.g. Keynote) at 5 minute intervals outside of scheduled maintenance windows. It includes the HERE Services and the hardware, software, and hosting facilities used by HERE to provide the HERE Services. It excludes failed tests resulting from force majeure events and Your and end-users' connections between Your systems and the HERE Services (including the Internet and Your and end-users' devices).
+
+9.3.2 Monitoring
+
+HERE will monitor the performance of its obligations under the service levels using automated tools or utilities developed or configured by HERE or contracted with external third parties to validate Availability.
+
+9.3.3 Incident Notification
+
+You can send HERE service level incident notifications applicable to any calendar month no later than 30 days after the end of such calendar month.
+
+9.3.4 Reporting
+
+HERE will make available analytics data in a report showing Availability and publish a report on a monthly basis for the preceding calendar month.
+
+9.3.5 Maintenance Notifications
+
+HERE will use commercially reasonable efforts to give notice by email or by other commercially reasonable means (e.g. service level portal when made available by HERE or Your account) at least 5 calendar days before any scheduled maintenance is performed on its systems if the maintenance is reasonably expected to cause any material service level degradation or drop in Availability below the Basic Service Availability.
+
+9.3.6 HERE Service Maintenance
+
+HERE will use commercially reasonable efforts to coordinate scheduled maintenance windows to coincide with anticipated periods of lower usage of the HERE Services on a global scale. HERE endeavors to keep the HERE Services fully operational during all scheduled maintenance. For any emergency maintenance (i.e. any unplanned modification by HERE that impacts the HERE Services) HERE will use commercially reasonable efforts to provide as much advance notification as possible and will give notice by such means as is reasonably practicable.
+
+9.3.7 Availability
+
+The HERE Services or Content (or both) may not be available in or for all countries or territories and may be provided only in selected languages. HERE expressly disclaims any representation or warranty that any particular data, feature or capability will be available.
+
+10. End-User Terms and Supplier Terms
+
+10.1 HERE End-User Terms
+
+You must ensure that (i) the End-User Terms are made available to end-users of the HERE Services in connection with the Applications; and (ii) each end-user accepts the End-User Terms in such a manner that the End-User Terms are enforceable by HERE. If Applications enable access to the HERE Services only within the surface area in the Application displaying HERE map canvas and if the HERE map canvas stays visible throughout the interaction with the end-user, the requirement in (ii) shall not apply, provided that You make available the links to the End-User Terms and HERE Marks on the HERE map canvas.
+
+The "End-User Terms" means the end-user terms, privacy policy and other end-user communications provided by HERE and/or as set forth at or linked through https://legal.here.com/en/privacy/policy/us/ and "report an issue" links for purposes of reporting e.g. privacy concerns related to images.
+
+10.2 Your end user terms
+
+You must provide end users with end user terms (including a privacy policy) appropriate for the Application and that comply with applicable laws. Such end user terms or the Application (or both), as applicable, must at least include the following: all legally required and otherwise appropriate instructions, warnings, notices and safety information related to the Application and its use, and provisions regarding Your collection and processing of end users’ personal information (if any). Such privacy policy must include the legal requirements, if any, set out in the HERE Developer Guide (Chapter 1: Overview) related to the HERE Materials used for the Application, including (where applicable) a notice related to information collected by HERE on end users’ use of the Application. The HERE Developer Guides are available at https://developer.here.com/documentation/versions (or such replacement site as notified by HERE).
+
+Such end user terms must be made available for acceptance by end users prior to making available the Application, during the first use of the Application and, after the first use, from within the Application, e.g. in Application settings.
+
+10.3 Changes to End User Terms and Implementation
+
+HERE reserves the right to amend or replace End-User Terms from time to time. HERE reserves the right to (i) review the situations where and the manner in which You obtain acceptance to the End-User Terms or Your end user terms; (ii) require You to change the implementation of acceptances; and (iii) acquire or require You to acquire additional consents from end-users if deemed necessary by HERE. You understand that these requirements are of material importance and hereby agree to follow instructions from HERE.
+
+10.4 U.S. Government End-Users
+
+Any Application for U.S. Government end-users or any other entity seeking or applying rights similar to those customarily claimed by the United States government, shall include the following: "[insert 'HERE Services' or such other name that You use specifically to refer to products and services licensed by HERE] (hereinafter "Covered Products and Services") is a "commercial item" as that term is defined at 48 C.F.R. ("FAR") 2.101, is licensed in accordance with [insert the name of the terms/conditions in which this notice is included]", and each copy of Covered Products and Services delivered or otherwise furnished shall be marked and embedded as appropriate with the following "Notice of Use" and shall be treated in accordance with such Notice:
+
+NOTICE OF USE
+
+CONTRACTOR (MANUFACTURER/ SUPPLIER) NAME: HERE
+
+CONTRACTOR (MANUFACTURER/SUPPLIER) ADDRESS: [choose the applicable address: HERE North America LLC, 425 W. Randolph St., Chicago, Illinois 60606; HERE Europe B.V. De Run 1115, 5503 LB Veldhoven, the Netherlands]
+
+These Covered Products and Services are a commercial item as defined in FAR 2.101 and is subject to [insert the name of the terms/conditions in which this notice is included] under which these Covered Products and Services were provided.
+
+©right; 1987 - 2015 HERE - All rights reserved.
+
+If the contracting officer, federal government agency, or any federal official refuses to use the legend provided herein, the contracting officer, federal government agency, or any federal official must notify HERE prior to seeking additional or alternative rights in the Covered Products and Services.
+
+10.5 Supplier Terms
+
+HERE may be obliged to pass through certain supplier terms. You must comply with all such supplier terms. The current supplier terms are available at https://legal.here.com/terms/supplier-requirements/hlp-developers/
+
+HERE reserves the right to amend or replace the supplier terms from time to time.
+
+11. Usage Limits
+
+Your Application’s use of the HERE Services is subject to the use limits that are set forth in the subscription plan You have selected or as outlined in the FAQ available through developer.here.com or in these Terms. The limits may consists of for example Transaction limits and Request Per Second limits. HERE may, but is not obliged to, remind You of Your usage limits by email or through Your account if You are nearing the limits or if You have exceeded them. You are responsible for monitoring Your own use. If You exceed usage limits fees may apply to such excess use. Such overage fees will be set out on developer.here.com.
+
+A "Transaction" means one Request for all HERE Services features, except as follows:
+
+* 2D map tiles: a Transaction equals 15 Requests,
+* traffic tiles: a Transaction equals 15 Requests,
+* multi-reverse geocoding: the number of Transactions equals the number of individual reverse geocoding requests,
+* batch geocoding: the number of Transactions equals the number of individual geocoding requests,
+* venue model: a Transaction equals a JSON model within a venue maps query, and
+* street level imagery: a Transaction equals a query for a 360 degree view from a location and each location query generates a new Transaction.
+
+"Request Per Second" means for each Application the number of Requests per second to HERE Services calculated as an average (number of Requests during a period of 5 minutes) for each of the services set out in the service list for each subscription plan on developer.here.com.
+
+Request Per Second limits are set out in the below table. Batch geocoding is excluded from these Request Per Second limits.
+
+Plan Level    Request per second limit
+Free          1
+Starter       1
+Standard      2
+Advanced      3
+Professional  4
+
+12. Fees and Payment Terms
+
+If You have selected a paid subscription plan, access and license to the HERE Materials and the HERE Services is subject to the timely payment to HERE of the fees set out in the subscription plan You have selected and by using the payment method You have selected in connection with the subscription plan. Fees must be paid in the currency set out in the subscription plan.
+
+Fees are calculated per Application. Fees are subject to any limits (such as Transaction limits and Request Per Second Limits, as applicable) specified in the subscription plan You have selected or in the FAQ available through developer.here.com or in these Terms. If You exceed the limits, HERE will charge to You the applicable overage fees that are set out on developer.here.com. The overage fees will be charged monthly to Your account.
+
+The subscription period and billing cycle (monthly or annually) are set out in the subscription plan. HERE will charge the applicable fees in accordance with the billing cycle using the payment method You have selected. You agree that HERE is permitted to charge the applicable fees to You by using the payment method You have chosen on an ongoing basis and in advance of the subscription period, and any applicable taxes, and other charges You may incur from your subscription. HERE is not responsible for charges You may incur in connection with the payments (such as transaction, overdraft or interest fees and charges). HERE may change the billing cycle and the fees. Any changes will be notified to You in advance. Such changes will only be effective when Your subscription is renewed. If You don't agree to the changes, You as Your sole and exclusive remedy may terminate Your subscription by ceasing to use the HERE Materials and the HERE Services and by notifying HERE and requesting HERE to stop any automatic renewal of Your subscription.
+
+Fees and charges are not refundable unless otherwise provided by applicable mandatory law or expressly stated in these Terms.
+
+13. Intellectual Property Rights
+
+13.1 No Transfer of Ownership
+
+No ownership of any intellectual property rights relating to the HERE Materials, HERE Services, Content, Results, HERE Marks or any other information or material provided by HERE (or an authorized HERE distributor) to You is assigned or transferred to You. All such intellectual property rights are protected by provisions of international treaties and applicable laws. The structure, organization and code of the HERE Materials and the HERE Services are the valuable trade secrets and confidential information of HERE, its licensors and affiliates.
+
+13.2 No Implied Grants
+
+Except as explicitly granted by HERE in the terms and conditions set out in this document, no other right, license, release, covenant not to sue or other rights or immunities, express or implied, by estoppel or otherwise are granted by HERE or its affiliates. Nothing in these Terms prevents HERE or its affiliates from developing, distributing or making use of any products or services that are similar to Applications. The limited licenses granted by HERE to You do not include any licenses, releases, covenants not to sue or any other rights or immunities, whether expressly, impliedly or by estoppel or otherwise, to any enabling technologies, even if such enabling technologies are necessary for the use of the HERE Materials, the HERE Services or otherwise used in connection with same. Enabling technologies are any underlying, enabling or other technologies which are not wholly part of the HERE Materials, including operating systems, communication protocols and cellular and other radio connectivity technologies (e.g. GSM, UMTS, CDMA, LTE, WLAN 802.11, WiMAX, calling and messaging technologies) positioning technologies (e.g. A-GPS), hardware, user interfaces (e.g. screen based interaction), near field communication technologies (e.g. NFC), video coding technologies (e.g. MPEG-4 AVC, MPEG-4 Visual, VC-1, VP8) and social networking technologies.
+
+13.3 Covenant Not to Sue
+
+You agree that You and Your affiliated companies covenant and agree not to bring suit before any court or administrative agency or otherwise assert any claim against HERE or any of its affiliates, suppliers or customers based on any of Your or Your affiliate's intellectual property rights due to the use of the HERE Materials, HERE Services and HERE Marks or implementations thereof.
+
+You agree that You and Your affiliated companies shall impose the obligation stated in the above paragraph on any third party to whom You or Your affiliated companies assign or transfer any intellectual property rights. This obligation is restricted to suits or other assertions based on such assigned or transferred intellectual property rights.
+
+You are released from the covenant and agreement not to sue under this section in relation to a particular beneficiary (but not in relation to any other beneficiary) if: (i) You are first sued for intellectual property rights infringement related to the subject matter of the covenant by such other beneficiary who benefits from Your covenant and agreement as set forth herein; and (ii) the suit is based on Your infringement of such other beneficiary's intellectual property rights which if held by You would be subject to the covenant and agreement not to sue provided for in this section.
+
+14. Error Reporting and Feedback
+
+You may provide HERE either directly or via third party sites and tools with information and feedback concerning errors, suggestions for improvements, ideas, problems, complaints, and other matters related to the HERE Materials and the HERE Services (together "Feedback"). You acknowledge and agree that: (i) You shall not retain, acquire or assert any intellectual property right or other right, title or interest in or to the Feedback; (ii) HERE may have development ideas similar to the Feedback; (iii) Feedback does not contain confidential information or proprietary information from You or any third party; and (iv) HERE is not under any obligation of confidentiality with respect to the Feedback. In the event the transfer of the ownership to the Feedback is not possible due to applicable mandatory laws, You grant HERE and HERE's affiliates an exclusive, transferable, irrevocable, free-of-charge, sub-licensable, unlimited and perpetual right to use (including copy, modify, create derivative works, publish, distribute and commercialize) Feedback in any manner and for any purpose.
+
+15. Representations and Warranties
+
+15.1 Each You and HERE represents and warrants to the other that:
+
+It has all requisite power and authority to execute these Terms and to perform its obligations hereunder;
+The execution and delivery of these Terms will not conflict with or violate any other agreement to which it is a party; and
+It is not a party identified on any governmental export exclusion or denied party lists.
+
+15.2 You represent and warrant that:
+
+* You will comply with all applicable laws, these Terms, any documentation, technical guidelines and other requirements as HERE may provide from time to time with respect to Your use of any of the HERE Materials and the HERE Services, Results and Content;
+* You will implement and comply with appropriate data privacy and security measures in connection with Your collection, processing, transfer and use of personal data, if any, and that You have all necessary consents required for processing of such personal data in accordance with these Terms;
+* You shall not violate, misappropriate, or infringe any intellectual property rights, rights of privacy, or rights of personality or any other right of any third party or of HERE;
+* The Application and Your Content do not contain or distribute any viruses, spam, files, code malware or any other malicious software programs, technology or content that may harm or disrupt the operation of the HERE Materials or the HERE Services; and
+* You will exercise all legally required care and diligence in connection with the design, manufacture, workmanship, testing, distribution and operation of the Application.
+
+EXCLUSION OF WARRANTIES
+
+EXCEPT AS OTHERWISE PROVIDED IN THESE TERMS, THE HERE MATERIALS, THE HERE SERVICES, RESULTS AND THE CONTENT ARE PROVIDED ON AN "AS IS," "AS AVAILABLE" BASIS. YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF THE HERE MATERIALS, THE HERE SERVICES, RESULTS AND THE CONTENT IS AT YOUR SOLE RISK. HERE, ITS AFFILIATES, SUPPLIERS AND LICENSORS MAKE NO WARRANTY THAT THE HERE MATERIALS, THE HERE SERVICES, RESULTS OR THE CONTENT WILL BE UNINTERRUPTED, SECURE, OR ERROR FREE, OR THAT DEFECTS IN THE HERE MATERIALS, THE HERE SERVICES, RESULTS OR THE CONTENT WILL BE CORRECTED. HERE, ITS AFFILIATES, SUPPLIERS AND THEIR LICENSORS SPECIFICALLY DISCLAIM, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, ANY REPRESENTATIONS OR WARRANTIES, EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE REGARDING THE HERE MATERIALS, THE HERE SERVICES, RESULTS AND THE CONTENT, INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, TITLE OR ANY IMPLIED WARRANTIES ARISING FROM COURSE OF DEALING OR PERFORMANCE.
+
+16. Indemnity
+
+You agree to defend, indemnify and hold harmless HERE and its affiliates, contractors, suppliers and licensors from and against all third party claims and all liabilities, assessments, losses, costs and damages resulting from or arising out of (i) Your breach of these Terms, (ii) any use of the HERE Materials, the HERE Services, the Content or any information or Results derived therefrom by You or any third party; and (iii) Your infringement or violation of any intellectual property rights or other rights of a third party. You hereby agree to fully cooperate as reasonably requested in the defense of any claim. HERE reserves the right to alone assume the defense and control of any claim that is subject to Your above indemnification.
+
+17. Limitation of Liability
+
+TO THE MAXIMUM EXTENT NOT PROHIBITED BY APPLICABLE LAW, IN NO EVENT SHALL HERE, ITS AFFILIATES, THEIR EMPLOYEES, DIRECTORS, SUPPLIERS OR LICENSORS BE LIABLE FOR ANY LOST PROFITS, REVENUE, SALES, DATA, OR COST OF PROCUREMENT OF SUBSTITUTE GOODS, SOFTWARE OR SERVICES, PROPERTY DAMAGE, PERSONAL INJURY, INTERRUPTION OF BUSINESS, LOSS OF BUSINESS INFORMATION, OR FOR ANY SPECIAL, DIRECT, INDIRECT, INCIDENTAL, ECONOMIC, COVER, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL LOSSES OR DAMAGES, HOWEVER CAUSED AND WHETHER ARISING UNDER CONTRACT, TORT, NEGLIGENCE, OR OTHER THEORY OF LIABILITY ARISING OUT OF OR RELATED TO (i) THESE TERMS; OR (ii) THE USE OF OR INABILITY TO USE THE HERE MATERIALS, THE HERE SERVICES, THE RESULTS OR THE CONTENT, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH LOSSES OR DAMAGES. BECAUSE SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF LIABILITY, BUT MAY ALLOW LIABILITY TO BE LIMITED, IN SUCH CASES THE LIABILITY OF HERE, ITS AFFILIATES, THEIR EMPLOYEES, DIRECTORS SUPPLIERS AND LICENSORS SHALL BE LIMITED TO U.S. $500.
+
+Subject to the above limits and exclusions, if You have chosen a paid subscription plan, the aggregate and total liability of HERE, its affiliates, their employees, suppliers and licensors will in no event exceed the amount of any actual direct losses up to the fees paid by You to HERE for the subscription plan (or the relevant part of the services subject to the plan) to which Your claim relates in the 12 months preceding the date on which the basis of the claim arose. This applies to all claims arising out of or related to (i) these Terms; or (ii) the use of or inability to use the HERE Materials, the HERE Services, the Results or the Content, even if HERE, its affiliates, their employees, suppliers or licensors are advised of the possibility of such losses, regardless of the nature of the claim or the basis on which the claim is made.
+
+You acknowledge and agree that
+
+* HERE is not responsible for and will have no liability for hardware, software, services or other items or any services provided by any persons other than HERE;
+* the fees and allocation of the risk contained herein reflect the economic basis of the agreement, in the absence of which the agreement would not have been made; and
+* losses from improper use of the HERE Materials, HERE Services, the Results or the Content may be irreparable and therefore HERE is entitled to seek equitable relief, including preliminary injunction and injunction, in addition to all other remedies.
+
+Nothing contained in the agreement shall prejudice the statutory rights of any party dealing as a consumer. HERE is acting on behalf of its employees, directors and affiliates and their suppliers and licensors for the purpose of disclaiming, excluding, and restricting obligations, warranties, and liability as provided in these Terms, but in no other respects and for no other purpose.
+
+18. Confidentiality
+
+Confidential information includes all materials and information concerning the business of one of the parties (either You or HERE) received by the other party, including product and pricing offers, products, designs, business plans, business opportunities, finances, research, development, know-how, personnel, third-party confidential information and trade secrets. Confidential information does not include: (a) information that the party, who owns the information makes generally available to the public; (b) information that either party can demonstrate had rightfully in possession prior to disclosure by the other party; (c) information that is independently developed by one party without the use of any confidential information of the other party; or (d) information that one party rightfully obtains from a third party who has been given the right by the other party to disclose it without confidentiality obligation. Each party receiving confidential information from the other party may disclose such confidential information to the receiving party's affiliates and its and their contractors, provided that those in receipt of such confidential information have a need to know such confidential information and are bound by confidentiality obligations at least as restrictive as those herein. You and HERE both shall keep confidential and not to disclose, publish, or disseminate any confidential information of the other party to any other third party without prior written consent. You and HERE both shall take reasonable precautions to prevent any unauthorized use, disclosure, publication, or dissemination of confidential information of the other party.
+
+19. Term and Termination
+
+19.1 Term
+
+These Terms continue to apply until Your subscription plan is terminated or until Your subscription expires in accordance with the plan You have selected. Your subscription plan may be automatically renewed depending on the plan You have chosen.
+
+19.2 Termination by You
+
+You may terminate Your subscription plan at any time by notice to HERE so that Your subscription plan terminates at the end of the current subscription period. Please note that any fees are not refundable.
+
+You may terminate Your subscription plan by notice to HERE if You do not agree to changes in these Terms or the HERE Services that HERE may make in accordance with section 1.4 or if You do not agree to the billing and fee changes that HERE may make in accordance with section 12.
+
+Together with Your termination notice to HERE You must request HERE to stop any automatic renewal of Your subscription.
+
+19.3 Termination by HERE
+
+In addition to other rights HERE may have under these Terms to terminate this agreement, Your subscription, access or license to the HERE Materials or HERE Services, the following applies.
+
+You must immediately terminate or suspend access by any end-user to the HERE Services who is in violation of the End-User Terms and You must do so also on HERE's request. In such case HERE may suspend Your and Your end-users' access to the HERE Services or terminate Your subscription plan or both.
+
+If any usage limits applicable to Your subscription plan are exceeded HERE may suspend Your and Your end-users' access to the HERE Services or terminate Your subscription plan or both.
+
+HERE may terminate Your subscription plan for convenience at any time without liability to You. If You have opted for a paid subscription plan, HERE will return monies You have paid up-front for any unused part of the subscription if HERE terminates Your subscription for convenience.
+
+All rights and licenses granted under these Terms to You and Your subscription plan shall automatically and immediately terminate without notice if You fail to comply with any provision of these Terms. In such case You must immediately uninstall, delete and destroy, at Your own expense, any HERE Materials, related software, all backup copies, and all other related materials provided by HERE (or an authorized HERE distributor) and cease using the HERE Services.
+
+HERE may close Your account or terminate Your subscription plan (or both) if You have not signed into Your account or made use of the HERE Services with Your access credentials in the past 3 months. In this case fees for any unused subscriptions are not refundable.
+
+19.4 Effects of Termination
+
+Immediately upon expiry or termination of Your subscription plan, Your license to the HERE Materials automatically terminates and you must cease all use and distribution of the Application that uses or includes the HERE Materials or parts thereof and You must no longer make use of the HERE Materials, the HERE Services and the HERE Marks; You will no longer have access to the HERE Services. You must uninstall and destroy all related software, backup copies, and all other related materials received from HERE (whether directly or through an authorized HERE distributor) within 30 days from expiry or termination. Those provisions of these Terms that naturally survive termination shall survive such termination, including sections 1.4; 12; 13; 15; 16; 17; 18; 20; and 21.
+
+Fees paid for a subscription plan are not refundable and HERE has no obligation to return any fees due to termination of Your subscription for any reason unless otherwise explicitly stated in these Terms or provided by applicable mandatory law.
+
+HERE has no obligation to return Your Content but HERE will delete Your Content after the termination of Your subscription.
+
+20. Governing Law and Dispute Resolution
+
+This agreement shall be construed and governed by the substantive laws of (i) The Netherlands if HERE Europe B.V. is the HERE contracting party, or (ii) the State of Illinois (USA) if HERE North America LLC is the HERE contracting party, in either case without giving effect to the conflict of laws provisions. The United Nations Convention of Contracts for the International Sale of Goods shall not apply to this agreement.
+
+If there is a dispute between You and HERE as to matters arising out of or related to this agreement, or the validity, enforceability or interpretation of these Terms, then (i) if Dutch law applies, You and HERE irrevocably submit to the exclusive jurisdiction of the courts in Amsterdam; or (ii) if Illinois law applies, You and HERE irrevocably submit to the exclusive jurisdiction of the Illinois State courts in Chicago and U.S. federal courts in the District of Illinois. The provisions of this section do not prevent either You or HERE from seeking immediate injunctive relief in any court of competent jurisdiction.
+
+21. Miscellaneous
+
+21.1 Severability
+
+If any provision of these Terms is held to be invalid, illegal or unenforceable, the remaining provisions shall be unaffected and remain valid and enforceable as if such provision had not been set forth herein. The parties agree to substitute for such provision a valid provision that most closely approximates the intent of such severed provision.
+
+21.2 Waiver
+
+No waiver will be deemed effective unless set forth in writing and signed by the party charged with such waiver, and no waiver of any right arising from any breach will be deemed to be a waiver or authorization of any other breach or of any other right arising under this agreement.
+
+21.3 Limitation on Action
+
+Except for Your payment obligations or any unauthorized use of HERE's intellectual property rights, any action by either party in connection with this agreement must be brought within 2 years after the cause of action arose.
+
+21.4 Force Majeure
+
+Neither party shall be liable to the other for a failure to perform any of its obligations under this agreement, except for payment obligations, due to force majeure circumstances beyond its reasonable control, provided such party notifies the other of the delay.
+
+21.5 Relationship
+
+This agreement is between You and HERE. No third party beneficiaries are intended except if expressly provided in these Terms. In connection with this agreement, each party is an independent contractor and as such does not have any authority to bind or commit the other. Nothing herein shall be deemed or construed to create a joint venture, partnership or agency relationship between the parties for any purpose.
+
+21.6 Publicity
+
+Unless and to the extent otherwise provided in these Terms, all written press or similar media releases relating to the terms or existence of this agreement must be approved in writing by HERE prior to their release unless the disclosure is required by applicable law in which case You must provide HERE a notice of such requirement in time for HERE to object to such disclosure.
+
+21.7 Notices
+
+You agree that HERE may provide You with notices, including those regarding changes to these Terms, by email, in Your account, by regular mail or through postings to the HERE Service or developer.here.com. Unless otherwise instructed by HERE, You must provide notices to HERE to the address given above.
+
+21.8 Assignment
+
+The rights and obligations of each party herein may not be transferred or assigned without the prior written consent of the other party, except that HERE may assign this agreement to an affiliate or any entity that acquires substantially all of its respective stock, assets or business. Any transfer or assignment attempted in contravention of this section shall be void.
+
+21.9 Entire Agreement
+
+These Terms constitute the entire agreement between You and HERE regarding the subject matter hereof. The agreement supersedes all prior oral or written communications, representations, undertakings and agreements of the parties and prevails over any conflicting or additional terms of any quote, order, acknowledgement, purchase order or similar communication.
+
+21.10 Interpretation
+
+In addition to any other defined words in these Terms, the definitions set out at the beginning of this document apply. Words such as "including", "for example" and "such as" depict non-exhaustive examples. Headings shall not affect the interpretation of the agreement. Reference to a person includes a natural person, corporate or unincorporated body (whether or not having separate legal personality). Unless the context otherwise requires, words in the singular shall include the plural and vice versa and a reference to one gender shall include a reference to the other genders. Defined words in their other forms shall be construed in accordance with their defined form. A reference to law (or similar) is to such law as amended from time to time. Any obligation in these Terms on a person not to do something includes an obligation not to agree or allow that thing to be done.
+
+(C) 1987 - 2016 HERE. All rights reserved.

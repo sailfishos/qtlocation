@@ -1,7 +1,7 @@
 CONFIG += testcase
 TARGET = tst_qgeoroutexmlparser
 
-plugin.path = ../../../src/plugins/geoservices/nokia/
+plugin.path = ../../../src/plugins/geoservices/here/
 
 SOURCES += tst_qgeoroutexmlparser.cpp \
            $$plugin.path/qgeoroutexmlparser.cpp
