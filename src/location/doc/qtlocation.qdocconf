@@ -43,7 +43,7 @@ headerdirs  += .. \
 
 sourcedirs  += .. \
                 ../../imports/location \
-                ../../plugins/geoservices/nokia
+                ../../plugins/geoservices/here
 
 examplesinstallpath = location
 

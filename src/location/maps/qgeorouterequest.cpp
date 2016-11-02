@@ -81,7 +81,7 @@ QT_BEGIN_NAMESPACE
     like cost limits, the maximum number of changes of vehicle, the maximum
     walking time / distance between changes of vehicle.
 
-    There's Nokia / Navteq support for specifying things like Truck attributes
+    There's HERE support for specifying things like Truck attributes
     so you can route around various road restrictions and conditions which
     effect trucks.
 

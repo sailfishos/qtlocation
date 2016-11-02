@@ -65,7 +65,7 @@ testcase = {
         | Launch " + testBinary + " | App launches normally. Map is displayed on the screen |
         | Pan the map | |
         | Select Provider button | Verify that one of the providers is indicated as current service provider |
-        | Select other provider | Verify that map is displayed on the screen, Nokia point is at the centre of the map. |
+        | Select other provider | Verify that map is displayed on the screen, Brisbane Office point is at the centre of the map. |
         "));
     },
 
@@ -90,7 +90,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch " + testBinary + " | App launches normally. |
         | Select Provider button | |
-        | Select nokia provider | Map is displayed on the screen |
+        | Select here provider | Map is displayed on the screen |
         | Press and Hold on the dot which represents Brisbane | |
         | Select 'Get coordinate' menu item | Verify that dialog with coordinates appears on the screen. Latitude is about -27.46, longitude is about 153.02 |"
         ));
@@ -115,9 +115,9 @@ testcase = {
         *Requirements:* " + testRequirements + "<br>
 
         | *Step* | *Verification* |
-        | Launch " + testBinary + " | Verify that map is loaded in 'Street' view. Nokia point is a centre of the map |
+        | Launch " + testBinary + " | Verify that map is loaded in 'Street' view. Brisbane Office point is a centre of the map |
         | Select Provider button | |
-        | Select nokia provider | Verify that map is displayed in 'Street' view |
+        | Select here provider | Verify that map is displayed in 'Street' view |
         | Select 'Map Type' button | |
         | Select 'Satelite Map(day)' | Verify that map is displayed in 'Satelite (day)' view |
         | Pan map | Verify that new map tiles are in 'Satelite (day)' view |
@@ -246,7 +246,7 @@ testcase = {
         *Requirements:* " + testRequirements + "<br>
 
         | *Step* | *Verification* |
-        | Launch " + testBinary + " | Verify that map is loaded with Nokia at the center |
+        | Launch " + testBinary + " | Verify that map is loaded with Brisbane Office at the center |
         | Move slider to the right | Verify that map is zoomed in |
         | Move slider to the left | Verify that map is zoomed out |
         | Move slider to have zoom level between 8 and 9 | |
@@ -365,7 +365,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch " + testBinary + " | App launches normally. Map is displayed on the screen |
         | Select Provider button | |
-        | Select nokia provider | Verify that map is displayed on the screen with default location next to Brisbane |
+        | Select here provider | Verify that map is displayed on the screen with default location next to Brisbane |
         | Select Tools button | |
         | Select Minimap button | Verify that another smaller map above the base map. |
         | | Verify that minimap's zoom level is smaller then base maps zoom level. |
@@ -374,7 +374,7 @@ testcase = {
         | Select Map Type button | |
         | Select Terrain Map button | Verify that base map is in Terrain view and minimap's type is unaltered |
         | Select Provider button | |
-        | Select any other provider except nokia | Verify that map is displayed on the screen Nokia at the centre. |
+        | Select any other provider except here | Verify that map is displayed on the screen Brisbane Office at the centre. |
         | Select Tools button | |
         | Select Minimap button | Verify that another smaller map above the base map. |
         | | Verify that Brisbane is inside red rectangle on the minimap. |
@@ -403,7 +403,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch " + testBinary + " | App launches normally. Map is displayed on the screen |
         | Select Provider button | |
-        | Select nokia provider | |
+        | Select here provider | |
         | Select Tools button | |
         | Select Minimap button | Verify that minimap with logo is displayed on the screen. |"
         ));
