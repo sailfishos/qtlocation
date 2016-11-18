@@ -61,16 +61,14 @@ public:
     void stopUpdates() Q_DECL_OVERRIDE;
     void requestUpdate(int timeout = 0) Q_DECL_OVERRIDE;
 
-    void satelliteChanged(int timestamp, int satellitesUsed, int satellitesVisible,
-                          const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
-
-    void requestUpdateFinished(int timestamp, int satellitesUsed, int satellitesVisible,
-                               const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
-
 private slots:
     void requestUpdateTimeout();
     void positionProviderChanged(const QByteArray &service, const QByteArray &path);
     void satellitesChanged(const QDBusMessage &message);
+    void satelliteChanged(int timestamp, int satellitesUsed, int satellitesVisible,
+                          const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
+    void requestUpdateFinished(int timestamp, int satellitesUsed, int satellitesVisible,
+                               const QList<int> &usedPrn, const QList<QGeoSatelliteInfo> &satInfos);
 
 private:
     bool configureSatelliteSource();
