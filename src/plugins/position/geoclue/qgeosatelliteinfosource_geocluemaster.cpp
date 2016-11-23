@@ -170,6 +170,7 @@ QGeoSatelliteInfoSourceGeoclueMaster::QGeoSatelliteInfoSourceGeoclueMaster(QObje
     m_satellitesChangedConnected(false), m_running(false)
 {
     qRegisterMetaType<QList<QGeoSatelliteInfo> >("QList<QGeoSatelliteInfo>");
+    qRegisterMetaType<QList<int> >("QList<int>");
     m_requestTimer.setSingleShot(true);
     connect(&m_requestTimer, SIGNAL(timeout()), this, SLOT(requestUpdateTimeout()));
 }
