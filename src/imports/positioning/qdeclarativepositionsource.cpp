@@ -600,10 +600,15 @@ void QDeclarativePositionSource::setActive(bool active)
     if (active == m_active)
         return;
 
+    // to ensure that reading back the property will return the most recently set value,
+    // we set the m_active flag here prior to queuing a call to start().
+    m_active = active;
     if (active)
         QTimer::singleShot(0, this, SLOT(start())); // delay ensures all properties have been set
     else
         stop();
+
+    emit activeChanged();
 }
 
 bool QDeclarativePositionSource::isActive() const
@@ -687,6 +692,15 @@ void QDeclarativePositionSource::componentComplete()
                 static_cast<QGeoPositionInfoSource::PositioningMethods>(int(m_preferredPositioningMethods)));
 
             setPosition(m_positionSource->lastKnownPosition());
+            if (m_active) {
+                start();
+            }
+        } else {
+            if (m_active) {
+                // we cannot be active, since we have no valid position source.
+                m_active = false;
+                emit activeChanged();
+            }
         }
 
         if (previousUpdateInterval != updateInterval())
@@ -699,11 +713,6 @@ void QDeclarativePositionSource::componentComplete()
             emit supportedPositioningMethodsChanged();
 
         emit validityChanged();
-
-        if (m_active) {
-            m_active = false;
-            emit activeChanged();
-        }
 
         emit nameChanged();
     }
