@@ -61,6 +61,10 @@ public:
 private:
     GeoclueMasterClient *m_client;
     GeocluePosition *m_masterPosition;
+    friend void createGeoclueMasterClientPositionCallback(GeoclueMasterClient *,
+                                                          GeocluePosition *position,
+                                                          GError *error,
+                                                          QGeoclueMaster *geoclueMaster);
 
     QObject *m_handler;
 };
