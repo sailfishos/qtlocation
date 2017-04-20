@@ -1,6 +1,6 @@
 Name:       qt5-plugin-position-geoclue
 Summary:    Qt Positioning plugin for Geoclue
-Version:    5.0.0
+Version:    mer/5.2.1+git26.1
 Release:    1%{?dist}
 Group:      Qt/Qt
 License:    LGPLv2.1 with exception or GPLv3
