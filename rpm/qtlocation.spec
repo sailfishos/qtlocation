@@ -1,6 +1,6 @@
 Name:       qt5-qtlocation-source
 Summary:    Cross-platform application and UI framework
-Version:    5.0.0
+Version:    5.2.1
 Release:    1%{?dist}
 Group:      Qt/Qt
 License:    LGPLv2.1 with exception or GPLv3
@@ -171,6 +171,7 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Positioning.so.5
 %{_libdir}/libQt5Positioning.so.5.*
+%exclude %{_libdir}/qt5/plugins/position/libqtposition_geoclue.so
 
 %files -n qt5-qtpositioning-devel
 %defattr(-,root,root,-)
