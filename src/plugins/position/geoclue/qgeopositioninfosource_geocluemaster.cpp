@@ -201,8 +201,7 @@ void QGeoPositionInfoSourceGeoclueMaster::regularUpdateFailed()
     m_lastVelocityIsFresh = false;
     if (m_running && !m_regularUpdateTimedOut) {
         m_regularUpdateTimedOut = true;
-        // use a QueuedConnection to emit the signal to ensure that we enter the Qt event loop.
-        QMetaObject::invokeMethod(this, "updateTimeout", Qt::QueuedConnection);
+        emit updateTimeout();
     }
 }
 
@@ -246,8 +245,7 @@ void QGeoPositionInfoSourceGeoclueMaster::updatePosition(GeocluePositionFields f
 
     m_regularUpdateTimedOut = false;
 
-    // use a QueuedConnection to emit the signal to ensure that we enter the Qt event loop.
-    QMetaObject::invokeMethod(this, "positionUpdated", Qt::QueuedConnection, Q_ARG(QGeoPositionInfo, m_lastPosition));
+    emit positionUpdated(m_lastPosition);
 
 #ifdef Q_LOCATION_GEOCLUE_DEBUG
     qDebug() << "Lat, lon, alt, speed:"

@@ -81,13 +81,7 @@ void satellite_changed(GeoclueSatellite *satellite, int timestamp, int satellite
         satInfos.append(satInfo);
     }
 
-    // use a QueuedConnection to ensure that we enter the Qt event loop.
-    QMetaObject::invokeMethod(source, "satelliteChanged", Qt::QueuedConnection,
-                              Q_ARG(int, timestamp),
-                              Q_ARG(int, satellite_used),
-                              Q_ARG(int, satellite_visible),
-                              Q_ARG(QList<int>, usedPrns),
-                              Q_ARG(QList<QGeoSatelliteInfo>, satInfos));
+    source->satelliteChanged(timestamp, satellite_used, satellite_visible, usedPrns, satInfos);
 }
 
 void satellite_callback(GeoclueSatellite *satellite, int timestamp, int satellite_used,
@@ -122,13 +116,7 @@ void satellite_callback(GeoclueSatellite *satellite, int timestamp, int satellit
         satInfos.append(satInfo);
     }
 
-    // use a QueuedConnection to ensure that we enter the Qt event loop.
-    QMetaObject::invokeMethod(source, "requestUpdateFinished", Qt::QueuedConnection,
-                              Q_ARG(int, timestamp),
-                              Q_ARG(int, satellite_used),
-                              Q_ARG(int, satellite_visible),
-                              Q_ARG(QList<int>, usedPrns),
-                              Q_ARG(QList<QGeoSatelliteInfo>, satInfos));
+    source->requestUpdateFinished(timestamp, satellite_used, satellite_visible, usedPrns, satInfos);
 }
 
 }
