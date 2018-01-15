@@ -80,22 +80,6 @@ bool QGeoclueMaster::hasMasterClient() const
     return m_client && m_masterPosition;
 }
 
-void createGeoclueMasterClientPositionCallback(GeoclueMasterClient *,
-                                               GeocluePosition *position,
-                                               GError *error,
-                                               QGeoclueMaster *geoclueMaster)
-{
-    if (error) {
-        qCritical("QGeoclueMaster failed to get master position object");
-        g_error_free(error);
-        g_object_unref(geoclueMaster->m_client);
-        geoclueMaster->m_client = 0;
-        return;
-    }
-
-    geoclueMaster->m_masterPosition = position;
-}
-
 bool QGeoclueMaster::createMasterClient(GeoclueAccuracyLevel accuracy, GeoclueResourceFlags resourceFlags)
 {
     Q_ASSERT(!m_client && !m_masterPosition);
@@ -137,7 +121,13 @@ bool QGeoclueMaster::createMasterClient(GeoclueAccuracyLevel accuracy, GeoclueRe
 
     // Need to create the master position interface even though it will not be used, otherwise
     // GetPositionProvider always returns empty strings.
-    geoclue_master_client_create_position_async(m_client, reinterpret_cast<CreatePositionCallback>(createGeoclueMasterClientPositionCallback), this);
+    m_masterPosition = geoclue_master_client_create_position(m_client, 0);
+    if (!m_masterPosition) {
+        qCritical("QGeoclueMaster failed to get master position object");
+        g_object_unref(m_client);
+        m_client = 0;
+        return false;
+    }
 
     return true;
 }
