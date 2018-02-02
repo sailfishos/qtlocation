@@ -148,6 +148,9 @@ rm -f %{buildroot}/%{_libdir}/*.la
 # We don't need qt5/Qt/
 rm -rf %{buildroot}/%{_includedir}/qt5/Qt
 
+# Duke libqtposition_geoclue.so
+rm -f %{buildroot}/%{_libdir}/qt5/plugins/position/libqtposition_geoclue.so
+
 # Fix wrong path in pkgconfig files
 find %{buildroot}%{_libdir}/pkgconfig -type f -name '*.pc' \
 -exec perl -pi -e "s, -L%{_builddir}/?\S+,,g" {} \;
@@ -171,7 +174,6 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %defattr(-,root,root,-)
 %{_libdir}/libQt5Positioning.so.5
 %{_libdir}/libQt5Positioning.so.5.*
-%exclude %{_libdir}/qt5/plugins/position/libqtposition_geoclue.so
 
 %files -n qt5-qtpositioning-devel
 %defattr(-,root,root,-)
