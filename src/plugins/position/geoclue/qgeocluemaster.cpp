@@ -41,119 +41,93 @@
 
 #include "qgeocluemaster.h"
 
-#include <QtCore/QByteArray>
-#include <QtCore/QMetaMethod>
+#include <master_interface.h>
+#include <geoclue_interface.h>
+#include <masterclient_interface.h>
 
 QT_BEGIN_NAMESPACE
 
-namespace
-{
-
-void position_provider_changed(GeoclueMasterClient *client, char *name, char *description,
-                               char *service, char *path, QObject *handler)
-{
-    Q_UNUSED(client)
-    Q_UNUSED(name)
-    Q_UNUSED(description)
-
-    const QByteArray pService = QByteArray(service);
-    const QByteArray pPath = QByteArray(path);
-
-    QMetaObject::invokeMethod(handler, "positionProviderChanged", Qt::QueuedConnection,
-                              Q_ARG(QByteArray, pService), Q_ARG(QByteArray, pPath));
-}
-
-}
-
-QGeoclueMaster::QGeoclueMaster(QObject *handler)
-:   m_client(0), m_masterPosition(0), m_handler(handler)
+QGeoclueMaster::QGeoclueMaster(QObject *parent)
+:   QObject(parent), m_master(0), m_provider(0), m_client(0)
 {
 }
 
 QGeoclueMaster::~QGeoclueMaster()
 {
     releaseMasterClient();
+
+    delete m_master;
 }
 
 bool QGeoclueMaster::hasMasterClient() const
 {
-    return m_client && m_masterPosition;
+    return m_client;
 }
 
-void createGeoclueMasterClientPositionCallback(GeoclueMasterClient *,
-                                               GeocluePosition *position,
-                                               GError *error,
-                                               QGeoclueMaster *geoclueMaster)
+bool QGeoclueMaster::createMasterClient(Accuracy::Level accuracyLevel, ResourceFlags resourceFlags)
 {
-    if (error) {
-        qCritical("QGeoclueMaster failed to get master position object");
-        g_error_free(error);
-        g_object_unref(geoclueMaster->m_client);
-        geoclueMaster->m_client = 0;
-        return;
+    Q_ASSERT(!m_provider || !m_client);
+
+    if (!m_master) {
+        m_master = new OrgFreedesktopGeoclueMasterInterface(QStringLiteral("org.freedesktop.Geoclue.Master"),
+                                                            QStringLiteral("/org/freedesktop/Geoclue/Master"),
+                                                            QDBusConnection::sessionBus());
     }
 
-    geoclueMaster->m_masterPosition = position;
-}
-
-bool QGeoclueMaster::createMasterClient(GeoclueAccuracyLevel accuracy, GeoclueResourceFlags resourceFlags)
-{
-    Q_ASSERT(!m_client && !m_masterPosition);
-
-    GeoclueMaster *master = geoclue_master_get_default();
-    if (!master) {
-        qCritical("QGeoclueMaster error creating GeoclueMaster");
+    QDBusPendingReply<QDBusObjectPath> client = m_master->Create();
+    if (client.isError()) {
+        QDBusError e = client.error();
+        qCritical("Failed to create Geoclue client interface. Geoclue error: %s",
+                  qPrintable(e.errorString(e.type())));
         return false;
     }
 
-    GError *error = 0;
+    qDebug() << "Geoclue client path:" << client.value().path();
 
-    m_client = geoclue_master_create_client(master, 0, &error);
-    g_object_unref (master);
+    m_provider = new OrgFreedesktopGeoclueInterface(QStringLiteral("org.freedesktop.Geoclue.Master"),
+                                                    client.value().path(), QDBusConnection::sessionBus());
+    m_provider->AddReference();
 
-    if (!m_client) {
-        qCritical("QGeoclueMaster error creating GeoclueMasterClient.");
-        if (error) {
-            qCritical("Geoclue error: %s", error->message);
-            g_error_free(error);
-        }
-        return false;
-    }
+    m_client = new OrgFreedesktopGeoclueMasterClientInterface(QStringLiteral("org.freedesktop.Geoclue.Master"),
+                                                              client.value().path(),
+                                                              QDBusConnection::sessionBus());
 
-    g_signal_connect(G_OBJECT(m_client), "position-provider-changed",
-                     G_CALLBACK(position_provider_changed), m_handler);
+    connect(m_client, SIGNAL(PositionProviderChanged(QString,QString,QString,QString)),
+            this, SIGNAL(positionProviderChanged(QString,QString,QString,QString)));
 
-    if (!geoclue_master_client_set_requirements(m_client, accuracy, 0, true,
-                                                resourceFlags, &error)) {
-        qCritical("QGeoclueMaster geoclue set_requirements failed.");
-        if (error) {
-            qCritical ("Geoclue error: %s", error->message);
-            g_error_free (error);
-        }
-        g_object_unref(m_client);
-        m_client = 0;
+    QDBusPendingReply<> reply = m_client->SetRequirements(accuracyLevel, 0, true, resourceFlags);
+    if (reply.isError()) {
+        QDBusError e = reply.error();
+        qCritical("Failed to set Geoclue positioning requirements. Geoclue error: %s",
+                  qPrintable(e.errorString(e.type())));
+
+        releaseMasterClient();
         return false;
     }
 
     // Need to create the master position interface even though it will not be used, otherwise
     // GetPositionProvider always returns empty strings.
-    geoclue_master_client_create_position_async(m_client, reinterpret_cast<CreatePositionCallback>(createGeoclueMasterClientPositionCallback), this);
+    reply = m_client->PositionStart();
+    if (reply.isError()) {
+        QDBusError e = reply.error();
+        qCritical("Failed to start positioning. Geoclue error: %s",
+                  qPrintable(e.errorString(e.type())));
+
+        releaseMasterClient();
+        return false;
+    }
 
     return true;
 }
 
 void QGeoclueMaster::releaseMasterClient()
 {
-    if (m_masterPosition) {
-        g_object_unref(m_masterPosition);
-        m_masterPosition = 0;
-    }
-    if (m_client) {
-        g_signal_handlers_disconnect_by_func(G_OBJECT(m_client), (void *)position_provider_changed,
-                                             m_handler);
-        g_object_unref(m_client);
-        m_client = 0;
-    }
+    if (m_provider)
+        m_provider->RemoveReference();
+    delete m_provider;
+    m_provider = 0;
+    delete m_client;
+    m_client = 0;
 }
 
 QT_END_NAMESPACE

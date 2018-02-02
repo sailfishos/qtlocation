@@ -42,42 +42,27 @@
 ****************************************************************************/
 
 #include "qgeopositioninfosourcefactory_geoclue.h"
-#include "qgeopositioninfosource_geocluemaster_p.h"
-#ifdef HAS_SATELLITE
+#include "qgeopositioninfosource_geocluemaster.h"
 #include "qgeosatelliteinfosource_geocluemaster.h"
-#endif
 
 Q_DECLARE_METATYPE(QGeoPositionInfo)
 
+QT_BEGIN_NAMESPACE
+
 QGeoPositionInfoSource *QGeoPositionInfoSourceFactoryGeoclue::positionInfoSource(QObject *parent)
 {
-    qRegisterMetaType<QGeoPositionInfo>();
-    QGeoPositionInfoSourceGeoclueMaster *src = new QGeoPositionInfoSourceGeoclueMaster(parent);
-    if (!src->init()) {
-        delete src;
-        src = 0;
-    }
-    return src;
+    return new QGeoPositionInfoSourceGeoclueMaster(parent);
 }
 
 QGeoSatelliteInfoSource *QGeoPositionInfoSourceFactoryGeoclue::satelliteInfoSource(QObject *parent)
 {
-#ifdef HAS_SATELLITE
-    QGeoSatelliteInfoSourceGeoclueMaster *src = new QGeoSatelliteInfoSourceGeoclueMaster(parent);
-    if (!src->init()) {
-        delete src;
-        src = 0;
-    }
-    return src;
-#else
-    Q_UNUSED(parent)
-
-    return 0;
-#endif
+    return new QGeoSatelliteInfoSourceGeoclueMaster(parent);
 }
 
 QGeoAreaMonitorSource *QGeoPositionInfoSourceFactoryGeoclue::areaMonitor(QObject *parent)
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return 0;
 }
+
+QT_END_NAMESPACE
