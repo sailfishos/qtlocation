@@ -147,7 +147,6 @@ rm -rf %{buildroot}
 rm -f %{buildroot}/%{_libdir}/*.la
 # We don't need qt5/Qt/
 rm -rf %{buildroot}/%{_includedir}/qt5/Qt
-
 # Duke libqtposition_geoclue.so
 rm -f %{buildroot}/%{_libdir}/qt5/plugins/position/libqtposition_geoclue.so
 
@@ -160,15 +159,11 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 
 %fdupes %{buildroot}/%{_includedir}
 
-
-
 %post -n qt5-qtpositioning -p /sbin/ldconfig
 %postun -n qt5-qtpositioning -p /sbin/ldconfig
 
 %post -n qt5-qtlocation -p /sbin/ldconfig
 %postun -n qt5-qtlocation -p /sbin/ldconfig
-
-
 
 %files -n qt5-qtpositioning
 %defattr(-,root,root,-)
