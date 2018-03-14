@@ -10,7 +10,7 @@ BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  qt5-qtdbus-devel
 BuildRequires:  qt5-qmake
 BuildRequires:  qt5-tools
-BuildRequires:  geoclue-devel
+Requires:       geoclue
 Obsoletes:      qt5-qtlocation-plugin-position-geoclue <= 5.1.0+git7
 Provides:       qt5-qtlocation-plugin-position-geoclue > 5.1.0+git7
 
