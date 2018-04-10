@@ -66,10 +66,7 @@ int QGeoSatelliteInfoSourceGeoclueMaster::minimumUpdateInterval() const
 
 void QGeoSatelliteInfoSourceGeoclueMaster::setUpdateInterval(int msec)
 {
-    if (msec < 0 || (msec > 0 && msec < MINIMUM_UPDATE_INTERVAL))
-        msec = MINIMUM_UPDATE_INTERVAL;
-
-    QGeoSatelliteInfoSource::setUpdateInterval(msec);
+    QGeoSatelliteInfoSource::setUpdateInterval(qMax(MINIMUM_UPDATE_INTERVAL, msec));
 }
 
 QGeoSatelliteInfoSource::Error QGeoSatelliteInfoSourceGeoclueMaster::error() const
@@ -88,7 +85,7 @@ void QGeoSatelliteInfoSourceGeoclueMaster::startUpdates()
     if (!m_master->hasMasterClient())
         configureSatelliteSource();
 
-    m_requestTimer.start(updateInterval());
+    m_requestTimer.start(qMax(updateInterval(), minimumUpdateInterval()));
 }
 
 void QGeoSatelliteInfoSourceGeoclueMaster::stopUpdates()
@@ -139,6 +136,7 @@ void QGeoSatelliteInfoSourceGeoclueMaster::updateSatelliteInfo(int timestamp, in
                                                                const QList<int> &usedPrn,
                                                                const QList<QGeoSatelliteInfo> &satInfos)
 {
+    m_requestTimer.stop();
     Q_UNUSED(timestamp)
 
     QList<QGeoSatelliteInfo> inUse;
@@ -164,8 +162,6 @@ void QGeoSatelliteInfoSourceGeoclueMaster::updateSatelliteInfo(int timestamp, in
 
     m_inUse = inUse;
     emit satellitesInUseUpdated(m_inUse);
-
-    m_requestTimer.start(updateInterval());
 }
 
 void QGeoSatelliteInfoSourceGeoclueMaster::requestUpdateTimeout()
@@ -193,7 +189,6 @@ void QGeoSatelliteInfoSourceGeoclueMaster::getSatelliteFinished(QDBusPendingCall
     if (reply.isError())
         return;
 
-    m_requestTimer.stop();
     updateSatelliteInfo(reply.argumentAt<0>(), reply.argumentAt<1>(), reply.argumentAt<2>(),
                         reply.argumentAt<3>(), reply.argumentAt<4>());
 }
@@ -297,6 +292,8 @@ void QGeoSatelliteInfoSourceGeoclueMaster::cleanupSatelliteSource()
     m_provider = 0;
     delete m_sat;
     m_sat = 0;
+
+    m_requestTimer.stop();
 }
 
 QT_END_NAMESPACE
