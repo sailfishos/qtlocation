@@ -79,6 +79,8 @@ private:
 };
 
 Q_DECLARE_METATYPE(Accuracy)
+Q_DECLARE_METATYPE(QList<int>)
+Q_DECLARE_METATYPE(QGeoSatelliteInfo)
 Q_DECLARE_METATYPE(QList<QGeoSatelliteInfo>)
 
 
@@ -89,6 +91,7 @@ Q_DECLARE_TYPEINFO(Accuracy, Q_MOVABLE_TYPE);
 QDBusArgument &operator<<(QDBusArgument &arg, const Accuracy &accuracy);
 const QDBusArgument &operator>>(const QDBusArgument &arg, Accuracy &accuracy);
 
+QDBusArgument &operator<<(QDBusArgument &arg, const QGeoSatelliteInfo &si);
 const QDBusArgument &operator>>(const QDBusArgument &arg, QGeoSatelliteInfo &si);
 const QDBusArgument &operator>>(const QDBusArgument &arg, QList<QGeoSatelliteInfo> &sis);
 
