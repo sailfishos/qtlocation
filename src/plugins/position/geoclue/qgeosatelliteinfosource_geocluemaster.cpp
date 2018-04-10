@@ -94,8 +94,8 @@ void QGeoSatelliteInfoSourceGeoclueMaster::stopUpdates()
         return;
 
     if (m_sat) {
-        disconnect(m_sat, SIGNAL(SatelliteChanged(qint32,qint32,qint32,QList<qint32>,QList<QGeoSatelliteInfo>)),
-                   this, SLOT(satelliteChanged(qint32,qint32,qint32,QList<qint32>,QList<QGeoSatelliteInfo>)));
+        disconnect(m_sat, SIGNAL(SatelliteChanged(int,int,int,QList<int>,QList<QGeoSatelliteInfo>)),
+                   this, SLOT(satelliteChanged(int,int,int,QList<int>,QList<QGeoSatelliteInfo>)));
     }
 
     m_running = false;
@@ -123,7 +123,7 @@ void QGeoSatelliteInfoSourceGeoclueMaster::requestUpdate(int timeout)
     m_requestTimer.start(qMax(timeout, minimumUpdateInterval()));
 
     if (m_sat) {
-        QDBusPendingReply<qint32, qint32, qint32, QList<qint32>, QList<QGeoSatelliteInfo> > reply =
+        QDBusPendingReply<int, int, int, QList<int>, QList<QGeoSatelliteInfo> > reply =
             m_sat->GetSatellite();
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
         connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -183,7 +183,7 @@ void QGeoSatelliteInfoSourceGeoclueMaster::requestUpdateTimeout()
 
 void QGeoSatelliteInfoSourceGeoclueMaster::getSatelliteFinished(QDBusPendingCallWatcher *watcher)
 {
-    QDBusPendingReply<qint32, qint32, qint32, QList<qint32>, QList<QGeoSatelliteInfo> > reply = *watcher;
+    QDBusPendingReply<int, int, int, QList<int>, QList<QGeoSatelliteInfo> > reply = *watcher;
     watcher->deleteLater();
 
     if (reply.isError())
@@ -248,8 +248,8 @@ void QGeoSatelliteInfoSourceGeoclueMaster::positionProviderChanged(const QString
     m_sat = new OrgFreedesktopGeoclueSatelliteInterface(providerService, providerPath, QDBusConnection::sessionBus());
 
     if (m_running) {
-        connect(m_sat, SIGNAL(SatelliteChanged(qint32,qint32,qint32,QList<qint32>,QList<QGeoSatelliteInfo>)),
-                this, SLOT(satelliteChanged(qint32,qint32,qint32,QList<qint32>,QList<QGeoSatelliteInfo>)));
+        connect(m_sat, SIGNAL(SatelliteChanged(int,int,int,QList<int>,QList<QGeoSatelliteInfo>)),
+                this, SLOT(satelliteChanged(int,int,int,QList<int>,QList<QGeoSatelliteInfo>)));
     }
 }
 
