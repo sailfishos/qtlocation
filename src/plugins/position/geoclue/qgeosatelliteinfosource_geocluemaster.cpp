@@ -40,14 +40,15 @@
 
 #define MINIMUM_UPDATE_INTERVAL 1000
 
-Q_DECLARE_METATYPE(QList<int>)
-
 QT_BEGIN_NAMESPACE
 
 QGeoSatelliteInfoSourceGeoclueMaster::QGeoSatelliteInfoSourceGeoclueMaster(QObject *parent)
 :   QGeoSatelliteInfoSource(parent), m_master(new QGeoclueMaster(this)), m_provider(0), m_sat(0),
     m_error(NoError), m_satellitesChangedConnected(false), m_running(false)
 {
+    qDBusRegisterMetaType<QGeoSatelliteInfo>();
+    qDBusRegisterMetaType<QList<QGeoSatelliteInfo> >();
+
     connect(m_master, SIGNAL(positionProviderChanged(QString,QString,QString,QString)),
             this, SLOT(positionProviderChanged(QString,QString,QString,QString)));
     m_requestTimer.setSingleShot(true);
