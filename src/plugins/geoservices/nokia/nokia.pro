@@ -1,5 +1,4 @@
-TARGET = qtgeoservices_nokia
-
+TARGET = qtgeoservices_here
 QT += location-private positioning-private network
 
 HEADERS += \
