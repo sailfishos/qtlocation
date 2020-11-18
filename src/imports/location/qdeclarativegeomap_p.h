@@ -176,6 +176,7 @@ private Q_SLOTS:
     void mapZoomLevelChanged(qreal zoom);
     void pluginReady();
     void onMapChildrenChanged();
+    void onMinimumZoomLevelChanged();
 
 private:
     void setupMapView(QDeclarativeGeoMapItemView *view);

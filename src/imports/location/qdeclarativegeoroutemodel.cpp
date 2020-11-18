@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -89,7 +89,7 @@ QT_BEGIN_NAMESPACE
     \code
     Plugin {
         id: aPlugin
-        name: "nokia"
+        name: "here"
     }
 
     RouteQuery {
@@ -795,21 +795,18 @@ QJSValue QDeclarativeGeoRouteQuery::waypoints()
 {
     QQmlContext *context = QQmlEngine::contextForObject(parent());
     QQmlEngine *engine = context->engine();
-    QV8Engine *v8Engine = QQmlEnginePrivate::getV8Engine(engine);
-    QV4::ExecutionEngine *v4 = QV8Engine::getV4(v8Engine);
+    QV4::ExecutionEngine *v4 = QQmlEnginePrivate::getV4Engine(engine);
 
     QV4::Scope scope(v4);
     QV4::Scoped<QV4::ArrayObject> waypointArray(scope, v4->newArrayObject(request_.waypoints().length()));
     for (int i = 0; i < request_.waypoints().length(); ++i) {
         const QGeoCoordinate &c = request_.waypoints().at(i);
 
-        QQmlValueType *vt = QQmlValueTypeFactory::valueType(qMetaTypeId<QGeoCoordinate>());
-        QV4::ScopedValue cv(scope, QV4::QmlValueTypeWrapper::create(v8Engine, QVariant::fromValue(c), vt));
-
+        QV4::ScopedValue cv(scope, v4->fromVariant(QVariant::fromValue(c)));
         waypointArray->putIndexed(i, cv);
     }
 
-    return new QJSValuePrivate(v4, QV4::ValueRef(waypointArray));
+    return QJSValue(v4, waypointArray.asReturnedValue());
 }
 
 void QDeclarativeGeoRouteQuery::setWaypoints(const QJSValue &value)
@@ -854,21 +851,18 @@ QJSValue QDeclarativeGeoRouteQuery::excludedAreas() const
 {
     QQmlContext *context = QQmlEngine::contextForObject(parent());
     QQmlEngine *engine = context->engine();
-    QV8Engine *v8Engine = QQmlEnginePrivate::getV8Engine(engine);
-    QV4::ExecutionEngine *v4 = QV8Engine::getV4(v8Engine);
+    QV4::ExecutionEngine *v4 = QQmlEnginePrivate::getV4Engine(engine);
 
     QV4::Scope scope(v4);
     QV4::Scoped<QV4::ArrayObject> excludedAreasArray(scope, v4->newArrayObject(request_.excludeAreas().length()));
     for (int i = 0; i < request_.excludeAreas().length(); ++i) {
         const QGeoRectangle &r = request_.excludeAreas().at(i);
 
-        QQmlValueType *vt = QQmlValueTypeFactory::valueType(qMetaTypeId<QGeoRectangle>());
-        QV4::ScopedValue cv(scope, QV4::QmlValueTypeWrapper::create(v8Engine, QVariant::fromValue(r), vt));
-
+        QV4::ScopedValue cv(scope, v4->fromVariant(QVariant::fromValue(r)));
         excludedAreasArray->putIndexed(i, cv);
     }
 
-    return new QJSValuePrivate(v4, QV4::ValueRef(excludedAreasArray));
+    return QJSValue(v4, excludedAreasArray.asReturnedValue());
 }
 
 void QDeclarativeGeoRouteQuery::setExcludedAreas(const QJSValue &value)

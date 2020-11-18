@@ -1,6 +1,10 @@
 /****************************************************************************
 **
+<<<<<<< HEAD
 ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
+=======
+** Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
+>>>>>>> eb9adb6d... Make QtLocation work after internal valuetype changes in QtQML
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtPositioning module of the Qt Toolkit.
@@ -44,6 +48,12 @@ class QGeoShapePrivate;
 
 class Q_POSITIONING_EXPORT QGeoShape
 {
+    Q_GADGET
+    Q_PROPERTY(ShapeType type READ type)
+    Q_PROPERTY(bool isValid READ isValid)
+    Q_PROPERTY(bool isEmpty READ isEmpty)
+    Q_ENUMS(ShapeType)
+
 public:
     QGeoShape();
     QGeoShape(const QGeoShape &other);
@@ -59,7 +69,7 @@ public:
 
     bool isValid() const;
     bool isEmpty() const;
-    bool contains(const QGeoCoordinate &coordinate) const;
+    Q_INVOKABLE bool contains(const QGeoCoordinate &coordinate) const;
 
     void extendShape(const QGeoCoordinate &coordinate);
 
@@ -68,6 +78,7 @@ public:
 
     QGeoShape &operator=(const QGeoShape &other);
 
+    Q_INVOKABLE QString toString() const;
 protected:
     QGeoShape(QGeoShapePrivate *d);
 
@@ -88,6 +99,14 @@ Q_POSITIONING_EXPORT QDebug operator<<(QDebug, const QGeoShape &);
 Q_POSITIONING_EXPORT QDataStream &operator<<(QDataStream &stream, const QGeoShape &shape);
 Q_POSITIONING_EXPORT QDataStream &operator>>(QDataStream &stream, QGeoShape &shape);
 #endif
+
+// FIXME: Exists to satisfy QMetaType::registerComparators() which is required for
+//        QML value type. Remove once QMetaType has been fixed.
+inline bool operator<(const QGeoShape &/*lhs*/, const QGeoShape &/*rhs*/)
+{
+    qWarning("'<' operator not valid for QGeoShape\n");
+    return false;
+}
 
 QT_END_NAMESPACE
 

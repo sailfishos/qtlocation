@@ -1,6 +1,9 @@
 TARGET = QtPositioning
 QT = core-private
 
+MODULE_PLUGIN_TYPES = \
+    position
+
 QMAKE_DOCS = $$PWD/doc/qtpositioning.qdocconf
 OTHER_FILES += doc/src/*.qdoc   # show .qdoc files in Qt Creator
 

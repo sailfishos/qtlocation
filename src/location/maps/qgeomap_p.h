@@ -53,6 +53,7 @@
 QT_BEGIN_NAMESPACE
 
 class QGeoCoordinate;
+class QGeoRectangle;
 
 class QGeoMappingManager;
 
@@ -89,6 +90,7 @@ public:
     QGeoCameraData cameraData() const;
     QGeoCameraCapabilities cameraCapabilities() const;
 
+    QGeoRectangle visibleRegion() const;
     QGeoCoordinate screenPositionToCoordinate(const QDoubleVector2D &pos, bool clipToViewport = true) const;
     QDoubleVector2D coordinateToScreenPosition(const QGeoCoordinate &coordinate, bool clipToViewport = true) const;
 
@@ -96,6 +98,8 @@ public:
     const QGeoMapType activeMapType() const;
 
     QString pluginString();
+
+    qreal minimumZoom() const;
 
 public Q_SLOTS:
     void update();
@@ -106,6 +110,7 @@ Q_SIGNALS:
     void updateRequired();
     void activeMapTypeChanged();
     void copyrightsChanged(const QImage &copyrightsImage, const QPoint &copyrightsPos);
+    void minimumZoomChanged();
 
 private:
     QGeoMapData *mapData_;

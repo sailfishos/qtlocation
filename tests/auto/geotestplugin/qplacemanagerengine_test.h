@@ -39,6 +39,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
+#include <QtCore/QLocale>
 #include <QtCore/QUuid>
 #include <QtPositioning/QGeoCoordinate>
 #include <QtPositioning/QGeoLocation>
@@ -286,7 +287,7 @@ public:
                                     review.setRating(ro.value("rating").toDouble());
 
                                 if (ro.contains(QStringLiteral("dateTime")))
-                                    review.setDateTime(QDateTime::fromString(
+                                    review.setDateTime(QLocale::c().toDateTime(
                                                            ro.value(QStringLiteral("dateTime")).toString(),
                                                            QStringLiteral("hh:mm dd-MM-yyyy")));
                                 if (ro.contains(QStringLiteral("reviewId")))

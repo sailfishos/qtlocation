@@ -193,6 +193,7 @@ QDeclarativeGeoMap::QDeclarativeGeoMap(QQuickItem *parent)
     setFiltersChildMouseEvents(true);
 
     connect(this, SIGNAL(childrenChanged()), this, SLOT(onMapChildrenChanged()), Qt::QueuedConnection);
+    connect(this, SIGNAL(minimumZoomLevelChanged()), this, SLOT(onMinimumZoomLevelChanged()));
 
     // Create internal flickable and pinch area.
     gestureArea_ = new QDeclarativeGeoMapGestureArea(this, this);
@@ -258,6 +259,11 @@ void QDeclarativeGeoMap::onMapChildrenChanged()
 
     // put the copyrights notice object at the highest z order
     copyrights->setCopyrightsZ(maxChildZ + 1);
+}
+
+void QDeclarativeGeoMap::onMinimumZoomLevelChanged()
+{
+    setZoomLevel(qBound(minimumZoomLevel(), zoomLevel(), maximumZoomLevel()));
 }
 
 /*!
@@ -470,6 +476,7 @@ void QDeclarativeGeoMap::mappingManagerInitialized()
             SIGNAL(updateRequired()),
             this,
             SLOT(update()));
+    connect(map_, SIGNAL(minimumZoomChanged()), this, SIGNAL(minimumZoomLevelChanged()));
     connect(map_->mapController(),
             SIGNAL(centerChanged(QGeoCoordinate)),
             this,
@@ -562,12 +569,18 @@ void QDeclarativeGeoMap::setMinimumZoomLevel(qreal minimumZoomLevel)
 
 qreal QDeclarativeGeoMap::minimumZoomLevel() const
 {
+    qreal sceneZoom = -1.0;
+    qreal gestureZoom = -1.0;
+    qreal managerZoom = -1.0;
+
+    if (map_)
+        sceneZoom = map_->minimumZoom();
     if (gestureArea_->minimumZoomLevel() != -1)
-        return gestureArea_->minimumZoomLevel();
-    else if (mappingManager_ && mappingManagerInitialized_)
-        return mappingManager_->cameraCapabilities().minimumZoomLevel();
-    else
-        return -1.0;
+        gestureZoom = gestureArea_->minimumZoomLevel();
+    if (mappingManager_ && mappingManagerInitialized_)
+        managerZoom = mappingManager_->cameraCapabilities().minimumZoomLevel();
+
+    return qMax(sceneZoom, qMax(gestureZoom, managerZoom));
 }
 
 /*!
@@ -775,7 +788,8 @@ void QDeclarativeGeoMap::touchEvent(QTouchEvent *event)
     }
     QLOC_TRACE0;
     event->accept();
-    gestureArea_->touchEvent(event);
+    if (!gestureArea_->touchEvent(event))
+        event->ignore();
 }
 
 /*!
@@ -794,7 +808,7 @@ void QDeclarativeGeoMap::wheelEvent(QWheelEvent *event)
 */
 bool QDeclarativeGeoMap::childMouseEventFilter(QQuickItem *item, QEvent *event)
 {
-    Q_UNUSED(item)
+    Q_UNUSED(item);
     QLOC_TRACE0;
     switch (event->type()) {
     case QEvent::MouseButtonPress:
@@ -817,6 +831,8 @@ bool QDeclarativeGeoMap::childMouseEventFilter(QQuickItem *item, QEvent *event)
             return false;
         grabMouse();
         return true;
+    case QEvent::TouchCancel:
+        return gestureArea_->filterMapChildTouchEvent(static_cast<QTouchEvent *>(event));
     case QEvent::Wheel:
         return gestureArea_->wheelEvent(static_cast<QWheelEvent *>(event));
     default:

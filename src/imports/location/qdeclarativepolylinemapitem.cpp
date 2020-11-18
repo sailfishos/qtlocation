@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
+ ** Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
  ** Contact: http://www.qt-project.org/legal
  **
  ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -217,7 +217,9 @@ void QGeoMapPolylineGeometry::updateSourcePoints(const QGeoMap &map,
             return;
 
         // unwrap x to preserve geometry if moved to border of map
-        if (preserveGeometry_ && point.x() < unwrapBelowX && !qFuzzyCompare(point.x(), unwrapBelowX))
+        if (preserveGeometry_ && point.x() < unwrapBelowX
+                && !qFuzzyCompare(geoLeftBound_.longitude(), coord.longitude())
+                && !qFuzzyCompare(point.x(), unwrapBelowX))
             point.setX(unwrapBelowX + geoDistanceToScreenWidth(map, geoLeftBound_, coord));
 
         if (!foundValid) {
@@ -462,7 +464,7 @@ void QDeclarativePolylineMapItem::updateAfterLinePropertiesChanged()
 {
     // mark dirty just in case we're a width change
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -473,7 +475,7 @@ void QDeclarativePolylineMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *
     QDeclarativeGeoMapItemBase::setMap(quickMap,map);
     if (map) {
         geometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -488,21 +490,18 @@ QJSValue QDeclarativePolylineMapItem::path() const
 {
     QQmlContext *context = QQmlEngine::contextForObject(parent());
     QQmlEngine *engine = context->engine();
-    QV8Engine *v8Engine = QQmlEnginePrivate::getV8Engine(engine);
-    QV4::ExecutionEngine *v4 = QV8Engine::getV4(v8Engine);
+    QV4::ExecutionEngine *v4 = QQmlEnginePrivate::getV4Engine(engine);
 
     QV4::Scope scope(v4);
     QV4::Scoped<QV4::ArrayObject> pathArray(scope, v4->newArrayObject(path_.length()));
     for (int i = 0; i < path_.length(); ++i) {
         const QGeoCoordinate &c = path_.at(i);
 
-        QQmlValueType *vt = QQmlValueTypeFactory::valueType(qMetaTypeId<QGeoCoordinate>());
-        QV4::ScopedValue cv(scope, QV4::QmlValueTypeWrapper::create(v8Engine, QVariant::fromValue(c), vt));
-
+        QV4::ScopedValue cv(scope, v4->fromVariant(QVariant::fromValue(c)));
         pathArray->putIndexed(i, cv);
     }
 
-    return new QJSValuePrivate(v4, QV4::ValueRef(pathArray));
+    return QJSValue(v4, pathArray.asReturnedValue());
 }
 
 void QDeclarativePolylineMapItem::setPath(const QJSValue &value)
@@ -530,7 +529,7 @@ void QDeclarativePolylineMapItem::setPath(const QJSValue &value)
     path_ = pathList;
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -547,7 +546,7 @@ void QDeclarativePolylineMapItem::addCoordinate(const QGeoCoordinate &coordinate
     path_.append(coordinate);
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -576,7 +575,7 @@ void QDeclarativePolylineMapItem::removeCoordinate(const QGeoCoordinate &coordin
     path_.removeAt(index);
 
     geometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -642,7 +641,7 @@ void QDeclarativePolylineMapItem::geometryChanged(const QRectF &newGeometry, con
                            + newCoordinate.longitude() - firstLongitude));
         geometry_.setPreserveGeometry(true, leftBoundCoord);
         geometry_.markSourceDirty();
-        updateMapItem();
+        polish();
         emit pathChanged();
     }
 
@@ -678,13 +677,13 @@ void QDeclarativePolylineMapItem::afterViewportChanged(const QGeoMapViewportChan
     }
     geometry_.setPreserveGeometry(true, geometry_.geoLeftBound());
     geometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
     \internal
 */
-void QDeclarativePolylineMapItem::updateMapItem()
+void QDeclarativePolylineMapItem::updatePolish()
 {
     if (!map() || path_.count() == 0)
         return;

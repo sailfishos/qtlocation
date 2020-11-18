@@ -75,13 +75,14 @@ public:
     virtual QSGNode *updateMapItemPaintNode(QSGNode *, UpdatePaintNodeData *);
 
 protected Q_SLOTS:
-    virtual void updateMapItem() = 0;
     virtual void afterChildrenChanged();
     virtual void afterViewportChanged(const QGeoMapViewportChangeEvent &event) = 0;
 
 protected:
     float zoomLevelOpacity() const;
     bool childMouseEventFilter(QQuickItem *item, QEvent *event);
+    void setVisibleOnMap(bool visible);
+    bool visibleOnMap() const;
 
 private Q_SLOTS:
     void baseCameraDataChanged(const QGeoCameraData &camera);
@@ -92,6 +93,7 @@ private:
 
     QSizeF lastSize_;
     QGeoCameraData lastCameraData_;
+    bool visibleOnMap_;
 };
 
 QT_END_NAMESPACE

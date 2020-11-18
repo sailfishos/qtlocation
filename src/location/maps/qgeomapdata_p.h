@@ -96,6 +96,9 @@ public:
     QGeoMappingManagerEngine *engine();
     virtual void prefetchData() {}
 
+    void setMinimumZoom(qreal zoom);
+    qreal minimumZoom() const;
+
 protected:
     virtual void mapResized(int width, int height) = 0;
     virtual void changeCameraData(const QGeoCameraData &oldCameraData) = 0;
@@ -109,6 +112,7 @@ Q_SIGNALS:
     void updateRequired();
     void activeMapTypeChanged();
     void copyrightsChanged(const QImage &copyrightsImage, const QPoint &copyrightsPos);
+    void minimumZoomChanged();
 
 private:
     QGeoMapDataPrivate *d_ptr;

@@ -68,7 +68,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -105,7 +105,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -142,7 +142,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -182,7 +182,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -218,7 +218,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -261,7 +261,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -277,7 +277,7 @@ testcase = {
 
     qml_place_reviews_data: {
         tripadviser:["48.9", "2.4", "sushi", "Tamako(sushi/coreen) 2.2km", "1", "Nous y allons...", "Nous avons decouvert ce...", "4", "TripAdvisor"],
-        nokiauser:["48.9", "2.4", "marfil", "marfil (le) 8.3km", "1", "empty", "Nice place, good food", "3", "Nokia User"]
+        hereuser:["48.9", "2.4", "marfil", "marfil (le) 8.3km", "1", "empty", "Nice place, good food", "3", "HERE User"]
     },
 
     qml_place_reviews: function(latitude, longitude, search_string, place, reviews, review_name, review_text, review_raiting, review_author)
@@ -301,7 +301,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -348,7 +348,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -390,7 +390,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -519,7 +519,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Center] button | |
         | Fill in [" + latitude + "] in Latitude field | |
@@ -544,7 +544,7 @@ testcase = {
         | Select [Delete] | |
         | Hide search results | |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Fill in [" + search_string + "] in Search field | |
         | Select Loupe icon | |
         | Expand panel with results | Verify that [" + place + "] has no star |
@@ -583,7 +583,7 @@ testcase = {
         | *Step* | *Verification* |
         | Launch [" + testBinary + "] | App launches normally |
         | Select [Provider] button | |
-        | Select [nokia] | |
+        | Select [here] | |
         | Select [Search] button | |
         | Select [Search Options] button | |
         | Fill in [" + locale + "] in Locale(s) field | |

@@ -488,7 +488,7 @@ Item {
 
     /*    GeocodeModel {
         id: geocodeModel
-        plugin : Plugin { name : "nokia"}
+        plugin : Plugin { name : "here"}
         onLocationsChanged: {
             if (geocodeModel.count > 0) {
                 console.log('setting the coordinate as locations changed in model.')

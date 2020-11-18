@@ -143,7 +143,7 @@ void QDeclarativeGeoMapQuickItem::setCoordinate(const QGeoCoordinate &coordinate
 
     coordinate_ = coordinate;
 
-    updateMapItem();
+    polish();
 
     emit coordinateChanged();
 }
@@ -155,10 +155,11 @@ void QDeclarativeGeoMapQuickItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *
 {
     QDeclarativeGeoMapItemBase::setMap(quickMap,map);
     if (map && quickMap) {
-        QObject::connect(quickMap, SIGNAL(heightChanged()), this, SLOT(updateMapItem()));
-        QObject::connect(quickMap, SIGNAL(widthChanged()), this, SLOT(updateMapItem()));
-        QObject::connect(map, SIGNAL(cameraDataChanged(QGeoCameraData)), this, SLOT(updateMapItem()));
-        updateMapItem();
+        connect(quickMap, SIGNAL(heightChanged()), this, SLOT(updateMapItemAssumeDirty()));
+        connect(quickMap, SIGNAL(widthChanged()), this, SLOT(updateMapItemAssumeDirty()));
+        connect(map, SIGNAL(cameraDataChanged(QGeoCameraData)),
+                this, SLOT(updateMapItemAssumeDirty()));
+        polish();
     }
 }
 
@@ -181,6 +182,11 @@ void QDeclarativeGeoMapQuickItem::geometryChanged(const QRectF &newGeometry, con
     // call to this function.
 }
 
+void QDeclarativeGeoMapQuickItem::updateMapItemAssumeDirty()
+{
+    polish();
+}
+
 /*!
     \internal
 */
@@ -200,7 +206,7 @@ void QDeclarativeGeoMapQuickItem::setSourceItem(QQuickItem *sourceItem)
         return;
     sourceItem_ = sourceItem;
 
-    updateMapItem();
+    polish();
 
     emit sourceItemChanged();
 }
@@ -246,7 +252,7 @@ void QDeclarativeGeoMapQuickItem::setAnchorPoint(const QPointF &anchorPoint)
     if (anchorPoint == anchorPoint_)
         return;
     anchorPoint_ = anchorPoint;
-    updateMapItem();
+    polish();
     emit anchorPointChanged();
 }
 
@@ -278,7 +284,7 @@ void QDeclarativeGeoMapQuickItem::setZoomLevel(qreal zoomLevel)
     if (zoomLevel == zoomLevel_)
         return;
     zoomLevel_ = zoomLevel;
-    updateMapItem();
+    polish();
     emit zoomLevelChanged();
 }
 
@@ -290,7 +296,7 @@ qreal QDeclarativeGeoMapQuickItem::zoomLevel() const
 /*!
     \internal
 */
-void QDeclarativeGeoMapQuickItem::updateMapItem()
+void QDeclarativeGeoMapQuickItem::updatePolish()
 {
     if (!quickMap() && sourceItem_) {
         mapAndSourceItemSet_ = false;
@@ -308,13 +314,13 @@ void QDeclarativeGeoMapQuickItem::updateMapItem()
         sourceItem_.data()->setParentItem(opacityContainer_);
         sourceItem_.data()->setTransformOrigin(QQuickItem::TopLeft);
         connect(sourceItem_.data(), SIGNAL(xChanged()),
-                this, SLOT(updateMapItem()));
+                this, SLOT(updateMapItemAssumeDirty()));
         connect(sourceItem_.data(), SIGNAL(yChanged()),
-                this, SLOT(updateMapItem()));
+                this, SLOT(updateMapItemAssumeDirty()));
         connect(sourceItem_.data(), SIGNAL(widthChanged()),
-                this, SLOT(updateMapItem()));
+                this, SLOT(updateMapItemAssumeDirty()));
         connect(sourceItem_.data(), SIGNAL(heightChanged()),
-                this, SLOT(updateMapItem()));
+                this, SLOT(updateMapItemAssumeDirty()));
     }
 
     QScopedValueRollback<bool> rollback(updatingGeometry_);

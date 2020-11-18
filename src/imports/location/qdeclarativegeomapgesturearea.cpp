@@ -35,12 +35,12 @@
 #include "qdeclarativegeomap_p.h"
 #include "error_messages.h"
 
+#include <QtCore/QVariantAnimation>
 #include <QtGui/QGuiApplication>
 #include <QtGui/qevent.h>
 #include <QtGui/QWheelEvent>
 #include <QtGui/QStyleHints>
 #include <QtQml/qqmlinfo.h>
-#include <QPropertyAnimation>
 #include <QDebug>
 #include "math.h"
 #include "qgeomap_p.h"
@@ -329,6 +329,7 @@ QDeclarativeGeoMapGestureArea::QDeclarativeGeoMapGestureArea(QDeclarativeGeoMap 
     : QObject(parent),
       declarativeMap_(map),
       enabled_(true),
+      usingTouch_(false),
       activeGestures_(ZoomGesture | PanGesture | FlickGesture)
 {
     map_ = 0;
@@ -339,8 +340,8 @@ QDeclarativeGeoMapGestureArea::QDeclarativeGeoMapGestureArea(QDeclarativeGeoMap 
     touchPointState_ = touchPoints0;
     pinchState_ = pinchInactive;
     panState_ = panInactive;
-
 }
+
 /*!
     \internal
 */
@@ -349,11 +350,11 @@ void QDeclarativeGeoMapGestureArea::setMap(QGeoMap *map)
     if (map_ || !map)
         return;
     map_ = map;
-    pan_.animation_ = new QPropertyAnimation(map_->mapController(), "center", this);
+    pan_.animation_ = new QVariantAnimation(this);
     pan_.animation_->setEasingCurve(QEasingCurve(QEasingCurve::OutQuad));
+    connect(pan_.animation_, SIGNAL(valueChanged(QVariant)), this, SLOT(updateFlick(QVariant)));
     connect(pan_.animation_, SIGNAL(finished()), this, SLOT(endFlick()));
-    connect(this, SIGNAL(movementStopped()),
-            map_, SLOT(cameraStopped()));
+    connect(this, SIGNAL(movementStopped()), map_, SLOT(cameraStopped()));
 }
 
 QDeclarativeGeoMapGestureArea::~QDeclarativeGeoMapGestureArea()
@@ -601,27 +602,52 @@ bool QDeclarativeGeoMapGestureArea::mouseReleaseEvent(QMouseEvent *)
 /*!
     \internal
 */
-void QDeclarativeGeoMapGestureArea::touchEvent(QTouchEvent *event)
+bool QDeclarativeGeoMapGestureArea::touchEvent(QTouchEvent *event)
 {
+    usingTouch_ = true;
+
+    if (!(enabled_ && activeGestures_))
+        return false;
+
     switch (event->type()) {
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
-        touchPoints_.clear();
-        for (int i = 0; i < event->touchPoints().count(); ++i) {
-            if (!(event->touchPoints().at(i).state() & Qt::TouchPointReleased)) {
-                touchPoints_ << event->touchPoints().at(i);
+        foreach (const QTouchEvent::TouchPoint &p, event->touchPoints()) {
+            QList<QTouchEvent::TouchPoint>::iterator i;
+            for (i = touchPoints_.begin(); i != touchPoints_.end(); ++i) {
+                if (i->id() == p.id()) {
+                    i = touchPoints_.erase(i);
+                    break;
+                }
+            }
+            switch (p.state()) {
+            case Qt::TouchPointPressed:
+            case Qt::TouchPointMoved:
+            case Qt::TouchPointStationary:
+                touchPoints_.insert(i, p);
+                break;
+            case Qt::TouchPointReleased:
+                // already removed
+                break;
+            default:
+                break;
             }
         }
         update();
         break;
+
     case QEvent::TouchEnd:
+    case QEvent::TouchCancel:
         touchPoints_.clear();
         update();
         break;
+
     default:
         // no-op
         break;
     }
+
+    return true;
 }
 
 bool QDeclarativeGeoMapGestureArea::wheelEvent(QWheelEvent *event)
@@ -635,26 +661,35 @@ bool QDeclarativeGeoMapGestureArea::wheelEvent(QWheelEvent *event)
 */
 bool QDeclarativeGeoMapGestureArea::filterMapChildMouseEvent(QMouseEvent *event)
 {
-    bool used = false;
+    if (usingTouch_)
+        return false;
+
+    if (!(enabled_ && activeGestures_))
+        return false;
+
+    if (isPanActive() || isPinchActive())
+        return true;
+
+    // Don't filter the event, but use it to see if we should start
+    // a gesture.
     switch (event->type()) {
     case QEvent::MouseButtonPress:
-        used = mousePressEvent(event);
+        mousePressEvent(event);
         break;
     case QEvent::MouseButtonRelease:
-        used = mouseReleaseEvent(event);
+        mouseReleaseEvent(event);
         break;
     case QEvent::MouseMove:
-        used = mouseMoveEvent(event);
+        mouseMoveEvent(event);
         break;
     case QEvent::UngrabMouse:
         touchPoints_.clear();
         update();
         break;
     default:
-        used = false;
         break;
     }
-    return used && (isPanActive() || isPinchActive());
+    return false;
 }
 
 /*!
@@ -662,8 +697,18 @@ bool QDeclarativeGeoMapGestureArea::filterMapChildMouseEvent(QMouseEvent *event)
 */
 bool QDeclarativeGeoMapGestureArea::filterMapChildTouchEvent(QTouchEvent *event)
 {
+    usingTouch_ = true;
+
+    if (!(enabled_ && activeGestures_))
+        return false;
+
+    if (event->touchPoints().count() > 1 || isPanActive() || isPinchActive())
+        return true;
+
+    // Don't filter the event, but use it to see if we should start
+    // a gesture.
     touchEvent(event);
-    return isPanActive() || isPinchActive();
+    return false;
 }
 
 /*!
@@ -671,8 +716,8 @@ bool QDeclarativeGeoMapGestureArea::filterMapChildTouchEvent(QTouchEvent *event)
 */
 void QDeclarativeGeoMapGestureArea::clearTouchData()
 {
-    velocityX_ = 0;
-    velocityY_ = 0;
+    velocity_.setX(0);
+    velocity_.setY(0);
     sceneCenter_.setX(0);
     sceneCenter_.setY(0);
     touchCenterCoord_.setLongitude(0);
@@ -699,8 +744,8 @@ void QDeclarativeGeoMapGestureArea::updateVelocityList(const QPointF &pos)
         lastPosTime_.restart();
         qreal velX = qreal(dxFromLastPos) / elapsed;
         qreal velY = qreal(dyFromLastPos) / elapsed;
-        velocityX_ = qBound<qreal>(-pan_.maxVelocity_, velX, pan_.maxVelocity_);
-        velocityY_ = qBound<qreal>(-pan_.maxVelocity_, velY, pan_.maxVelocity_);
+        velocity_.setX(qBound<qreal>(-pan_.maxVelocity_, velX, pan_.maxVelocity_));
+        velocity_.setY(qBound<qreal>(-pan_.maxVelocity_, velY, pan_.maxVelocity_));
     }
 }
 
@@ -737,7 +782,7 @@ void QDeclarativeGeoMapGestureArea::touchPointStateMachine()
             clearTouchData();
             startOneTouchPoint();
             touchPointState_ = touchPoints1;
-        } else if (touchPoints_.count() == 2) {
+        } else if (touchPoints_.count() >= 2) {
             clearTouchData();
             startTwoTouchPoints();
             touchPointState_ = touchPoints2;
@@ -1081,68 +1126,67 @@ bool QDeclarativeGeoMapGestureArea::tryStartFlick()
     if ((activeGestures_ & FlickGesture) == 0)
         return false;
     // if we drag then pause before release we should not cause a flick.
-    qreal velocityX = 0.0;
-    qreal velocityY = 0.0;
-    if (lastPosTime_.elapsed() < QML_MAP_FLICK_VELOCITY_SAMPLE_PERIOD) {
-        velocityY = velocityY_;
-        velocityX = velocityX_;
+
+    QVector2D velocity = (lastPosTime_.elapsed() < QML_MAP_FLICK_VELOCITY_SAMPLE_PERIOD)
+                       ? velocity_
+                       : QVector2D();
+
+    if (velocity.length() > MinimumFlickVelocity) {
+        QVector2D panDistance = QVector2D(sceneCenter_ - sceneStartPoint1_);
+        if (panDistance.length() > FlickThreshold) {
+            // Calculate flick animation values
+            int flickTime = static_cast<int>(1000 * velocity.length() / pan_.deceleration_);
+            if (flickTime > 0) {
+                QVector2D flickPixels = flickTime * velocity / (1000.0 * 2);
+                startFlick(flickPixels, flickTime);
+                return true;
+            }
+        }
     }
-    int flickTimeY = 0;
-    int flickTimeX = 0;
-    int flickPixelsX = 0;
-    int flickPixelsY = 0;
-    if (qAbs(velocityY) > MinimumFlickVelocity && qAbs(sceneCenter_.y() - sceneStartPoint1_.y()) > FlickThreshold) {
-        // calculate Y flick animation values
-        qreal acceleration = pan_.deceleration_;
-        if ((velocityY > 0.0f) == (pan_.deceleration_ > 0.0f))
-            acceleration = acceleration * -1.0f;
-        flickTimeY = static_cast<int>(-1000 * velocityY / acceleration);
-        flickPixelsY = (flickTimeY * velocityY) / (1000.0 * 2);
-    }
-    if (qAbs(velocityX) > MinimumFlickVelocity && qAbs(sceneCenter_.x() - sceneStartPoint1_.x()) > FlickThreshold) {
-        // calculate X flick animation values
-        qreal acceleration = pan_.deceleration_;
-        if ((velocityX > 0.0f) == (pan_.deceleration_ > 0.0f))
-            acceleration = acceleration * -1.0f;
-        flickTimeX = static_cast<int>(-1000 * velocityX / acceleration);
-        flickPixelsX = (flickTimeX * velocityX) / (1000.0 * 2);
-    }
-    int flickTime = qMax(flickTimeY, flickTimeX);
-    if (flickTime > 0) {
-        startFlick(flickPixelsX, flickPixelsY, flickTime);
-        return true;
-    }
+
     return false;
 }
 
 /*!
     \internal
 */
-// FIXME:
-// - not left right / up down flicking, so if map is rotated, will act unintuitively
-void QDeclarativeGeoMapGestureArea::startFlick(int dx, int dy, int timeMs)
+void QDeclarativeGeoMapGestureArea::startFlick(const QVector2D &pixelChange, int timeMs)
 {
     if (timeMs < 0)
         return;
 
-    QGeoCoordinate animationStartCoordinate = map_->mapController()->center();
-
-    if (pan_.animation_->state() == QPropertyAnimation::Running)
+    if (pan_.animation_->state() == QAbstractAnimation::Running)
         pan_.animation_->stop();
-    QGeoCoordinate animationEndCoordinate = map_->mapController()->center();
+
+    pan_.previous_ = QPointF();
+    pan_.animation_->setStartValue(QVariant::fromValue(pan_.previous_));
+    pan_.animation_->setEndValue(QVariant::fromValue(pixelChange.toPointF()));
     pan_.animation_->setDuration(timeMs);
-    animationEndCoordinate.setLongitude(animationStartCoordinate.longitude() - (dx / pow(2.0, map_->mapController()->zoom())));
-    animationEndCoordinate.setLatitude(animationStartCoordinate.latitude() + (dy / pow(2.0, map_->mapController()->zoom())));
-    pan_.animation_->setStartValue(QVariant::fromValue(animationStartCoordinate));
-    pan_.animation_->setEndValue(QVariant::fromValue(animationEndCoordinate));
     pan_.animation_->start();
+
     emit flickStarted();
+}
+
+void QDeclarativeGeoMapGestureArea::updateFlick(const QVariant &value)
+{
+    if (pan_.animation_->state() != QAbstractAnimation::Running)
+        return;
+
+    QPointF newValue = value.toPointF();
+    QPointF change = newValue - pan_.previous_;
+    pan_.previous_ = newValue;
+
+    QGeoCoordinate center = map_->mapController()->center();
+    QDoubleVector2D screenCenter = map_->coordinateToScreenPosition(center, false);
+    QDoubleVector2D newScreenCenter = screenCenter - QDoubleVector2D(change);
+    center = map_->screenPositionToCoordinate(newScreenCenter, false);
+    map_->mapController()->setCenter(center);
 }
 
 void QDeclarativeGeoMapGestureArea::stopPan()
 {
-    velocityX_ = 0;
-    velocityY_ = 0;
+    velocity_.setX(0);
+    velocity_.setY(0);
     if (panState_ == panFlick) {
         endFlick();
     } else if (panState_ == panActive) {
@@ -1158,17 +1202,12 @@ void QDeclarativeGeoMapGestureArea::stopPan()
 void QDeclarativeGeoMapGestureArea::endFlick()
 {
     emit panFinished();
-    if (pan_.animation_->state() == QPropertyAnimation::Running)
+    if (pan_.animation_->state() == QAbstractAnimation::Running)
         pan_.animation_->stop();
     emit flickFinished();
     panState_ = panInactive;
     emit movementStopped();
 }
-
-
-
-
-
 
 #include "moc_qdeclarativegeomapgesturearea_p.cpp"
 

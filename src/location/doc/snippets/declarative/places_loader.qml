@@ -48,8 +48,8 @@ Rectangle {
 
     Plugin {
         id: myPlugin
-        name: "nokia"
-        //specify plugin parameters if necessary
+        name: "here"
+        //specify plugin parameters if necessary, e.g. app_id and app_code
         //PluginParameter {...}
         //PluginParameter {...}
         //...

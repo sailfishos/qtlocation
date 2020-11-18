@@ -46,6 +46,15 @@
 
 QT_BEGIN_NAMESPACE
 
+void QGeoTiledMappingManagerEnginePrivate::ensureTileCacheCreated(const QString &cacheDir)
+{
+    if (!tileCache_) {
+        tileCache_ = new QGeoTileCache(cacheDir);
+        tileCache_->setTileSize(tileSize_);
+    }
+}
+
+
 QGeoTiledMappingManagerEngine::QGeoTiledMappingManagerEngine(QObject *parent)
     : QGeoMappingManagerEngine(parent),
       d_ptr(new QGeoTiledMappingManagerEnginePrivate)
@@ -267,15 +276,14 @@ QGeoTileCache *QGeoTiledMappingManagerEngine::createTileCacheWithDir(const QStri
 {
     Q_D(QGeoTiledMappingManagerEngine);
     Q_ASSERT_X(!d->tileCache_, Q_FUNC_INFO, "This should be called only once");
-    d->tileCache_ = new QGeoTileCache(cacheDirectory);
+    d->ensureTileCacheCreated(cacheDirectory);
     return d->tileCache_;
 }
 
 QGeoTileCache *QGeoTiledMappingManagerEngine::tileCache()
 {
     Q_D(QGeoTiledMappingManagerEngine);
-    if (!d->tileCache_)
-        d->tileCache_ = new QGeoTileCache();
+    d->ensureTileCacheCreated();
     return d->tileCache_;
 }
 

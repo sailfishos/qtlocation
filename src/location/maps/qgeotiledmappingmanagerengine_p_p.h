@@ -72,6 +72,8 @@ public:
     QGeoTileCache *tileCache_;
     QGeoTileFetcher *fetcher_;
 
+    void ensureTileCacheCreated(const QString &cacheDir = QString());
+
 private:
     Q_DISABLE_COPY(QGeoTiledMappingManagerEnginePrivate)
 };

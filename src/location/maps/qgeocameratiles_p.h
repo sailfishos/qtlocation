@@ -66,6 +66,7 @@ public:
     void setCamera(const QGeoCameraData &camera);
     void setScreenSize(const QSize &size);
     void setTileSize(int tileSize);
+    void setMinimumZoomLevel(int minZoom);
     void setMaximumZoomLevel(int maxZoom);
 
     int tileSize() const;
@@ -75,7 +76,7 @@ public:
     void setMapVersion(int mapVersion);
 
     QSet<QGeoTileSpec> tiles() const;
-    void findPrefetchTiles();
+    QSet<QGeoTileSpec> prefetchTiles() const;
 
 private:
     QGeoCameraTilesPrivate *d_ptr;

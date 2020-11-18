@@ -94,7 +94,7 @@ Item {
         //![MapObjectView]
         Map {
             id: map
-            plugin : Plugin { name : "nokia" }
+            plugin : Plugin { name : "here" }
             anchors.fill: parent; size.width: parent.width; size.height: parent.height; zoomLevel: 12
             center: myPositionSource.position.coordinate
 

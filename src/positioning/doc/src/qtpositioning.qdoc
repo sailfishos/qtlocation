@@ -63,7 +63,8 @@ The Qt Positioning API provides positioning information via QML and C++ interfac
 
 Currently the API is supported on \l{Qt for Android}{Android},
 \l{Qt for BlackBerry}{BlackBerry 10}, \l{Qt for iOS}{iOS} and
-\l{Qt for Linux/X11}{Linux} (using \l{http://www.freedesktop.org/wiki/Software/GeoClue}{GeoClue}).
+\l{Qt for Linux/X11}{Linux} (using
+\l{http://www.freedesktop.org/wiki/Software/GeoClue}{GeoClue version 0.12.99}).
 
 \section1 Overview
 

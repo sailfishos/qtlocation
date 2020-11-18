@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
+ ** Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
  ** Contact: http://www.qt-project.org/legal
  **
  ** This file is part of the QtLocation module of the Qt Toolkit.
@@ -176,7 +176,9 @@ void QGeoMapPolygonGeometry::updateSourcePoints(const QGeoMap &map,
             return;
 
         // unwrap x to preserve geometry if moved to border of map
-        if (preserveGeometry_ && point.x() < unwrapBelowX && !qFuzzyCompare(point.x(), unwrapBelowX))
+        if (preserveGeometry_ && point.x() < unwrapBelowX
+                && !qFuzzyCompare(point.x(), unwrapBelowX)
+                && !qFuzzyCompare(geoLeftBound_.longitude(), coord.longitude()))
             point.setX(unwrapBelowX + geoDistanceToScreenWidth(map, geoLeftBound_, coord));
 
         if (i == 0) {
@@ -330,7 +332,7 @@ QDeclarativePolygonMapItem::QDeclarativePolygonMapItem(QQuickItem *parent)
 void QDeclarativePolygonMapItem::handleBorderUpdated()
 {
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
 }
 
 QDeclarativePolygonMapItem::~QDeclarativePolygonMapItem()
@@ -365,7 +367,7 @@ void QDeclarativePolygonMapItem::setMap(QDeclarativeGeoMap *quickMap, QGeoMap *m
     if (map) {
         geometry_.markSourceDirty();
         borderGeometry_.markSourceDirty();
-        updateMapItem();
+        polish();
     }
 }
 
@@ -381,21 +383,18 @@ QJSValue QDeclarativePolygonMapItem::path() const
 {
     QQmlContext *context = QQmlEngine::contextForObject(parent());
     QQmlEngine *engine = context->engine();
-    QV8Engine *v8Engine = QQmlEnginePrivate::getV8Engine(engine);
-    QV4::ExecutionEngine *v4 = QV8Engine::getV4(v8Engine);
+    QV4::ExecutionEngine *v4 = QQmlEnginePrivate::getV4Engine(engine);
 
     QV4::Scope scope(v4);
     QV4::Scoped<QV4::ArrayObject> pathArray(scope, v4->newArrayObject(path_.length()));
     for (int i = 0; i < path_.length(); ++i) {
         const QGeoCoordinate &c = path_.at(i);
 
-        QQmlValueType *vt = QQmlValueTypeFactory::valueType(qMetaTypeId<QGeoCoordinate>());
-        QV4::ScopedValue cv(scope, QV4::QmlValueTypeWrapper::create(v8Engine, QVariant::fromValue(c), vt));
-
+        QV4::ScopedValue cv(scope, v4->fromVariant(QVariant::fromValue(c)));
         pathArray->putIndexed(i, cv);
     }
 
-    return new QJSValuePrivate(v4, QV4::ValueRef(pathArray));
+    return QJSValue(v4, pathArray.asReturnedValue());
 }
 
 void QDeclarativePolygonMapItem::setPath(const QJSValue &value)
@@ -424,7 +423,7 @@ void QDeclarativePolygonMapItem::setPath(const QJSValue &value)
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -442,7 +441,7 @@ void QDeclarativePolygonMapItem::addCoordinate(const QGeoCoordinate &coordinate)
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -473,7 +472,7 @@ void QDeclarativePolygonMapItem::removeCoordinate(const QGeoCoordinate &coordina
 
     geometry_.markSourceDirty();
     borderGeometry_.markSourceDirty();
-    updateMapItem();
+    polish();
     emit pathChanged();
 }
 
@@ -497,7 +496,7 @@ void QDeclarativePolygonMapItem::setColor(const QColor &color)
 
     color_ = color;
     dirtyMaterial_ = true;
-    updateMapItem();
+    polish();
     emit colorChanged(color_);
 }
 
@@ -527,7 +526,7 @@ QSGNode *QDeclarativePolygonMapItem::updateMapItemPaintNode(QSGNode *oldNode, Up
 /*!
     \internal
 */
-void QDeclarativePolygonMapItem::updateMapItem()
+void QDeclarativePolygonMapItem::updatePolish()
 {
     if (!map() || path_.count() == 0)
         return;
@@ -590,7 +589,7 @@ void QDeclarativePolygonMapItem::afterViewportChanged(const QGeoMapViewportChang
     borderGeometry_.setPreserveGeometry(true, borderGeometry_.geoLeftBound());
     geometry_.markScreenDirty();
     borderGeometry_.markScreenDirty();
-    updateMapItem();
+    polish();
 }
 
 /*!
@@ -647,7 +646,7 @@ void QDeclarativePolygonMapItem::geometryChanged(const QRectF &newGeometry, cons
         borderGeometry_.setPreserveGeometry(true, leftBoundCoord);
         geometry_.markSourceDirty();
         borderGeometry_.markSourceDirty();
-        updateMapItem();
+        polish();
         emit pathChanged();
     }
 

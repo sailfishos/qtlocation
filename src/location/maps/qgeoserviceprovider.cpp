@@ -99,7 +99,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
 
     \list
         \li "osm" -> \l {Qt Location Open Street Map Plugin}{OpenStreetMap}
-        \li "nokia" -> \l {Qt Location Nokia Plugin}{Nokia Services}
+        \li "here" -> \l {Qt Location HERE Plugin}{HERE Services}
     \endlist
 */
 
