@@ -2,9 +2,8 @@ Name:       qt5-plugin-position-geoclue
 Summary:    Qt Positioning plugin for Geoclue
 Version:    5.4.2
 Release:    1%{?dist}
-Group:      Qt/Qt
-License:    LGPLv2.1 with exception or GPLv3
-URL:        http://qt-project.org/
+License:    (LGPLv2 or LGPLv3) with exception or GPLv3 or Qt Commercial
+URL:        https://www.qt.io/
 Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  qt5-qtdbus-devel
@@ -51,6 +50,8 @@ rm %{buildroot}/%{_libdir}/cmake/Qt5Positioning/Qt5Positioning_QGeoPositionInfoS
 
 %files
 %defattr(-,root,root,-)
+%license LICENSE.LGPLv* LGPL_EXCEPTION.txt
+%license LICENSE.FDL LICENSE.GPLv*
 %{_libdir}/qt5/plugins/position/*geoclue*
 
 
