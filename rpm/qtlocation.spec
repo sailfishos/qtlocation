@@ -2,9 +2,8 @@ Name:       qt5-qtlocation-source
 Summary:    Cross-platform application and UI framework
 Version:    5.4.2
 Release:    1%{?dist}
-Group:      Qt/Qt
-License:    LGPLv2.1 with exception or GPLv3
-URL:        http://qt-project.org/
+License:    (LGPLv2 or LGPLv3) with exception or GPLv3 or Qt Commercial
+URL:        https://www.qt.io/
 Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  qt5-qtcore
 BuildRequires:  qt5-qtcore-devel
@@ -30,7 +29,6 @@ mobile and embedded systems without rewriting the source code.
 
 %package -n qt5-qtpositioning
 Summary:    The QtPositioning library
-Group:      Qt/Qt
 Requires(post):     /sbin/ldconfig
 Requires(postun):   /sbin/ldconfig
 
@@ -40,7 +38,6 @@ This package contains the QtPositioning library
 
 %package -n qt5-qtpositioning-devel
 Summary:    Development files for QtPositioning
-Group:      Qt/Qt
 Requires:   qt5-qtpositioning = %{version}-%{release}
 
 %description -n qt5-qtpositioning-devel
@@ -50,7 +47,6 @@ that use the QtPositioning library
 
 %package -n qt5-plugin-position-poll
 Summary:    Qt positioning plugin (pollling)
-Group:      Qt/Qt
 Requires:   qt5-qtpositioning = %{version}-%{release}
 Obsoletes:  qt5-qtlocation-plugin-position-poll <= 5.1.0+git7
 Provides:   qt5-qtlocation-plugin-position-poll > 5.1.0+git7
@@ -62,7 +58,6 @@ generic polling based area monitor.
 
 %package -n qt5-qtdeclarative-import-positioning
 Summary:    QtDeclarative positioning import
-Group:      Qt/Qt
 Requires:   qt5-qtpositioning = %{version}-%{release}
 Requires:   qt5-qtdeclarative
 
@@ -74,7 +69,6 @@ This package contains the Positioning import for QtDeclarative
 
 %package -n qt5-qtlocation
 Summary:    The QtLocation library
-Group:      Qt/Qt
 Requires:   qt5-qtpositioning = %{version}-%{release}
 Requires(post):     /sbin/ldconfig
 Requires(postun):   /sbin/ldconfig
@@ -85,7 +79,6 @@ This package contains the QtLocation library
 
 %package -n qt5-qtlocation-devel
 Summary:    Development files for QtLocation
-Group:      Qt/Qt
 Requires:   qt5-qtlocation = %{version}-%{release}
 Requires:   qt5-qtpositioning-devel = %{version}-%{release}
 
@@ -96,7 +89,6 @@ applications that use QtLocation
 
 %package -n qt5-plugin-geoservices-here
 Summary:    Qt Geoservices plugin using HERE location services
-Group:      Qt/Qt
 Requires:   qt5-qtlocation = %{version}-%{release}
 Obsoletes:  qt5-qtlocation-plugin-geoservices-nokia
 Provides:   qt5-qtlocation-plugin-geoservices-here
@@ -107,7 +99,6 @@ This package contains the geoservices plugin using HERE location services
 
 %package -n qt5-plugin-geoservices-osm
 Summary:    Qt Geoservices plugin for OpenStreetMaps
-Group:      Qt/Qt
 Requires:   qt5-qtlocation = %{version}-%{release}
 Obsoletes:  qt5-qtlocation-plugin-geoservices-osm <= 5.1.0+git7
 Provides:   qt5-qtlocation-plugin-geoservices-osm > 5.1.0+git7
@@ -118,7 +109,6 @@ This package contains the geoservices plugin for OpenStreetMaps
 
 %package -n qt5-qtdeclarative-import-location
 Summary:    QtDeclarative location import
-Group:      Qt/Qt
 Requires:   qt5-qtlocation = %{version}-%{release}
 Requires:   qt5-qtdeclarative
 
@@ -167,6 +157,8 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 
 %files -n qt5-qtpositioning
 %defattr(-,root,root,-)
+%license LICENSE.LGPLv* LGPL_EXCEPTION.txt
+%license LICENSE.FDL LICENSE.GPLv*
 %{_libdir}/libQt5Positioning.so.5
 %{_libdir}/libQt5Positioning.so.5.*
 
