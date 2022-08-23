@@ -3,7 +3,7 @@ Summary:    Cross-platform application and UI framework
 Version:    5.4.2
 Release:    1%{?dist}
 License:    (LGPLv2 or LGPLv3) with exception or GPLv3 or Qt Commercial
-URL:        https://www.qt.io/
+URL:        https://github.com/sailfishos/qtlocation
 Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  qt5-qtcore
 BuildRequires:  qt5-qtcore-devel
@@ -138,8 +138,8 @@ This package contains the Location import for QtDeclarative
 export QTDIR=/usr/share/qt5
 touch .git
 %qmake5
-make %{?_smp_mflags}
-make %{?_smp_mflags} docs
+%make_build
+%make_build docs
 
 
 %install
