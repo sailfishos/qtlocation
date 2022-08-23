@@ -3,7 +3,7 @@ Summary:    Cross-platform application and UI framework
 Version:    5.4.2
 Release:    1%{?dist}
 License:    (LGPLv2 or LGPLv3) with exception or GPLv3 or Qt Commercial
-URL:        https://www.qt.io/
+URL:        https://github.com/sailfishos/qtlocation
 Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  qt5-qtcore
 BuildRequires:  qt5-qtcore-devel
@@ -19,6 +19,7 @@ BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtdeclarative-qtquick-devel
 BuildRequires:  qt5-qmake
 BuildRequires:  qt5-tools
+BuildRequires:  qt5-qttools-qthelp-devel
 BuildRequires:  fdupes
 
 %description
@@ -44,6 +45,11 @@ Requires:   qt5-qtpositioning = %{version}-%{release}
 This package contains the files necessary to develop applications
 that use the QtPositioning library
 
+%package -n qt5-qtpositioning-doc
+Summary:    Documentation for QtPositioning
+
+%description -n qt5-qtpositioning-doc
+%{summary}.
 
 %package -n qt5-plugin-position-poll
 Summary:    Qt positioning plugin (pollling)
@@ -86,6 +92,11 @@ Requires:   qt5-qtpositioning-devel = %{version}-%{release}
 This package contains the files necessary to develop
 applications that use QtLocation
 
+%package -n qt5-qtlocation-doc
+Summary:    Documentation for QtLocation
+
+%description -n qt5-qtlocation-doc
+%{summary}.
 
 %package -n qt5-plugin-geoservices-here
 Summary:    Qt Geoservices plugin using HERE location services
@@ -127,7 +138,8 @@ This package contains the Location import for QtDeclarative
 export QTDIR=/usr/share/qt5
 touch .git
 %qmake5
-make %{?_smp_mflags}
+%make_build
+%make_build docs
 
 
 %install
@@ -146,6 +158,14 @@ find %{buildroot}%{_libdir}/pkgconfig -type f -name '*.pc' \
 # Fix wrong path in prl files
 find %{buildroot}%{_libdir} -type f -name '*.prl' \
 -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/" {} \;
+
+#install docs
+mkdir -p %{buildroot}/%{_docdir}/qtlocation/
+mkdir -p %{buildroot}/%{_docdir}/qtpositioning/
+cp -R doc/qtlocation/* %{buildroot}/%{_docdir}/qtlocation/
+cp doc/qtlocation.qch %{buildroot}/%{_docdir}/qtlocation/
+cp -R doc/qtpositioning/* %{buildroot}/%{_docdir}/qtpositioning/
+cp doc/qtpositioning.qch %{buildroot}/%{_docdir}/qtpositioning/
 
 %fdupes %{buildroot}/%{_includedir}
 
@@ -172,6 +192,10 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %{_datadir}/qt5/mkspecs/modules/qt_lib_positioning_private.pri
 %{_libdir}/cmake/Qt5Positioning/
 
+%files -n qt5-qtpositioning-doc
+%defattr(-,root,root,-)
+%{_docdir}/qtpositioning/*
+
 %files -n qt5-plugin-position-poll
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/position/*positionpoll*
@@ -196,6 +220,10 @@ find %{buildroot}%{_libdir} -type f -name '*.prl' \
 %{_datadir}/qt5/mkspecs/modules/qt_lib_location.pri
 %{_datadir}/qt5/mkspecs/modules/qt_lib_location_private.pri
 %{_libdir}/cmake/Qt5Location/
+
+%files -n qt5-qtlocation-doc
+%defattr(-,root,root,-)
+%{_docdir}/qtlocation/*
 
 %files -n qt5-plugin-geoservices-here
 %defattr(-,root,root,-)
