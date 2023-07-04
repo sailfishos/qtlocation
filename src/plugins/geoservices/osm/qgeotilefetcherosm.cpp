@@ -65,11 +65,11 @@ QGeoTiledMapReply *QGeoTileFetcherOsm::getTileImage(const QGeoTileSpec &spec)
                                 QString::number(spec.y()) + QStringLiteral(".png")));
             break;
         case 2:
-            // opensteetmap.org satellite map
-            request.setUrl(QUrl(QStringLiteral("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/") +
+            // opentopomap.org topographical 
+            request.setUrl(QUrl(QStringLiteral("https://c.tile.opentopomap.org/") +
                                 QString::number(spec.zoom()) + QLatin1Char('/') +
                                 QString::number(spec.x()) + QLatin1Char('/') +
-                                QString::number(spec.y()) ));
+                                QString::number(spec.y()) + QStringLiteral(".png")));
             break;
         default:
             qWarning("Unknown map id %d\n", spec.mapId());
