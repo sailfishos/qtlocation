@@ -1,7 +1,7 @@
 Name:       qt5-qtlocation-source
 Summary:    Cross-platform application and UI framework
 Version:    5.4.2
-Release:    1%{?dist}
+Release:    1
 License:    (LGPLv2 or LGPLv3) with exception or GPLv3 or Qt Commercial
 URL:        https://github.com/sailfishos/qtlocation
 Source0:    %{name}-%{version}.tar.xz
@@ -135,7 +135,6 @@ This package contains the Location import for QtDeclarative
 %setup -q -n %{name}-%{version}
 
 %build
-export QTDIR=/usr/share/qt5
 touch .git
 %qmake5
 %make_build
@@ -143,14 +142,13 @@ touch .git
 
 
 %install
-rm -rf %{buildroot}
 %qmake5_install
 # Remove unneeded .la files
 rm -f %{buildroot}/%{_libdir}/*.la
 # We don't need qt5/Qt/
-rm -rf %{buildroot}/%{_includedir}/qt5/Qt
+rm -rf %{buildroot}/%{_qt5_includedir}/Qt
 # Duke libqtposition_geoclue.so
-rm -f %{buildroot}/%{_libdir}/qt5/plugins/position/libqtposition_geoclue.so
+rm -f %{buildroot}/%{_qt5_plugindir}/position/libqtposition_geoclue.so
 
 # Fix wrong path in pkgconfig files
 find %{buildroot}%{_libdir}/pkgconfig -type f -name '*.pc' \
@@ -179,18 +177,18 @@ cp doc/qtpositioning.qch %{buildroot}/%{_docdir}/qtpositioning/
 %defattr(-,root,root,-)
 %license LICENSE.LGPLv* LGPL_EXCEPTION.txt
 %license LICENSE.FDL LICENSE.GPLv*
-%{_libdir}/libQt5Positioning.so.5
-%{_libdir}/libQt5Positioning.so.5.*
+%{_qt5_libdir}/libQt5Positioning.so.5
+%{_qt5_libdir}/libQt5Positioning.so.5.*
 
 %files -n qt5-qtpositioning-devel
 %defattr(-,root,root,-)
-%{_libdir}/libQt5Positioning.so
-%{_libdir}/libQt5Positioning.prl
-%{_libdir}/pkgconfig/Qt5Positioning.pc
-%{_includedir}/qt5/QtPositioning
-%{_datadir}/qt5/mkspecs/modules/qt_lib_positioning.pri
-%{_datadir}/qt5/mkspecs/modules/qt_lib_positioning_private.pri
-%{_libdir}/cmake/Qt5Positioning/
+%{_qt5_libdir}/libQt5Positioning.so
+%{_qt5_libdir}/libQt5Positioning.prl
+%{_qt5_libdir}/pkgconfig/Qt5Positioning.pc
+%{_qt5_includedir}/QtPositioning
+%{_qt5_archdatadir}/mkspecs/modules/qt_lib_positioning.pri
+%{_qt5_archdatadir}/mkspecs/modules/qt_lib_positioning_private.pri
+%{_qt5_libdir}/cmake/Qt5Positioning/
 
 %files -n qt5-qtpositioning-doc
 %defattr(-,root,root,-)
@@ -198,28 +196,28 @@ cp doc/qtpositioning.qch %{buildroot}/%{_docdir}/qtpositioning/
 
 %files -n qt5-plugin-position-poll
 %defattr(-,root,root,-)
-%{_libdir}/qt5/plugins/position/*positionpoll*
+%{_qt5_plugindir}/position/*positionpoll*
 
 %files -n qt5-qtdeclarative-import-positioning
 %defattr(-,root,root,-)
-%{_libdir}/qt5/qml/QtPositioning/
+%{_qt5_archdatadir}/qml/QtPositioning/
 
 
 
 %files -n qt5-qtlocation
 %defattr(-,root,root,-)
-%{_libdir}/libQt5Location.so.5
-%{_libdir}/libQt5Location.so.5.*
+%{_qt5_libdir}/libQt5Location.so.5
+%{_qt5_libdir}/libQt5Location.so.5.*
 
 %files -n qt5-qtlocation-devel
 %defattr(-,root,root,-)
-%{_libdir}/libQt5Location.so
-%{_libdir}/libQt5Location.prl
-%{_libdir}/pkgconfig/Qt5Location.pc
-%{_includedir}/qt5/QtLocation
-%{_datadir}/qt5/mkspecs/modules/qt_lib_location.pri
-%{_datadir}/qt5/mkspecs/modules/qt_lib_location_private.pri
-%{_libdir}/cmake/Qt5Location/
+%{_qt5_libdir}/libQt5Location.so
+%{_qt5_libdir}/libQt5Location.prl
+%{_qt5_libdir}/pkgconfig/Qt5Location.pc
+%{_qt5_includedir}/QtLocation
+%{_qt5_archdatadir}/mkspecs/modules/qt_lib_location.pri
+%{_qt5_archdatadir}/mkspecs/modules/qt_lib_location_private.pri
+%{_qt5_libdir}/cmake/Qt5Location/
 
 %files -n qt5-qtlocation-doc
 %defattr(-,root,root,-)
@@ -227,14 +225,14 @@ cp doc/qtpositioning.qch %{buildroot}/%{_docdir}/qtpositioning/
 
 %files -n qt5-plugin-geoservices-here
 %defattr(-,root,root,-)
-%{_libdir}/qt5/plugins/geoservices/*here*
+%{_qt5_plugindir}/geoservices/*here*
 
 %files -n qt5-plugin-geoservices-osm
 %defattr(-,root,root,-)
-%{_libdir}/qt5/plugins/geoservices/*osm*
+%{_qt5_plugindir}/plugins/geoservices/*osm*
 
 %files -n qt5-qtdeclarative-import-location
 %defattr(-,root,root,-)
-%{_libdir}/qt5/qml/QtLocation/
+%{_qt5_archdatadir}/qml/QtLocation/
 
 
